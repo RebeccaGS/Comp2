@@ -47,7 +47,7 @@ MultiplicarMatrizes (unsigned short linhas1, /* numero de linhas da matriz 1 (E)
                 /* incrementar func*/
                 matrizProduto[m][p] += matriz1[m][n] * matriz2[n][p];
             }
-        }
+        }  
     }        
     return ok;
 }
