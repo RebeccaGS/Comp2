@@ -1,0 +1,59 @@
+
+Primeiro: cout; cin; std; namespace
+{
+
+    #include <iostream>
+    using namespace std;    
+
+    int main() {
+    int x;  
+    cout << "Digite um num:";
+    cin >> x;
+    cout << "Hello World!" << x;
+    return 0;
+    }
+
+    -- std é objeto que guarda funcoes; namespace é tipo "adicione um sobrenome"
+    -- cin: input
+    -- cout: output
+
+    como se fosse:
+
+    #include <iostream>
+
+    int main() {
+        int x;  
+        std::cout << "Digite um num:";
+        std::cin >> x;
+        std::cout << "Hello World!" << x;
+        return 0;
+    }
+}
+
+Segundo:
+{
+    
+}
+
+// python: so botar py main2.py
+
+// #define <nome_da_constante> <valor>
+
+// :%s/024/035/g - troca tudo q ta 024 pra 035
+
+
+
+// #define  FILE_H
+// #ifndef  FILE_H
+
+//     #include <stdio.h>
+//     #include <malloc.h>
+//     #include <stdarg.h>
+//     #include <unistd.h>
+//     #include <string.h>
+
+//     void method_01(void);
+//     int method_02(int , int);
+//     const char * method_return_string();
+
+// #endif  /*FILE_H*/

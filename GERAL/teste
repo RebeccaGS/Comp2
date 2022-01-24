@@ -1,0 +1,206 @@
+
+
+
+//-------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Universidade Federal do Rio de Janeiro
+Escola Politecnica
+Departamento de Eletronica e de Computacao
+EEL270 - Computacao II - Turma 2021/2
+Prof. Marcelo Luiz Drumond Lanza
+Autor: Rebecca Gomes Simao
+Descricao: Codigo que calcula ultimo numero do RG
+
+$Author$
+$Date$
+$Log$ */
+
+/* recebe 8 digitos - tratamento de erro */
+/* deve ser printado assim: XX.XXX.XXX-X */
+/* return eh o nono digito */
+
+#include "aula0501.h"
+#include <stdio.h>
+
+
+//------------------------------
+
+#include "aula0501.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <limits.h>
+#include <errno.h>
+
+#define NUMERO_ARGUMENTOS                       2
+
+#define OK										0
+#define NUMERO_ARGUMENTOS_INVALIDO				1
+#define COMPRIMENTO_ARGUMENTO_INVALIDO			2
+#define ARGUMENTO_CONTEM_CARACTERE_INVALIDO		3
+
+#define END_OF_STRING			    	    	'\0'
+
+int main (int argc, char **argv){
+
+    /* definir variaveis usadas */
+    byte bytes [COMPRIMENTO_RG];
+    tipoErros retorno = GerarDigitosVerificadoresRg (bytes);
+    int numero;
+
+    /* conferir se o retorno ta ok */
+    if (retorno != ok)
+        printf ("Erro executando a funcao. Erro numero %u.\n", retorno);
+
+    /* pegar variaveis a serem usadas */
+
+
+    /* tratamento de erro */
+    /* tratamento de erro */
+    if (argc != NUMERO_ARGUMENTOS){
+        printf ("Uso: %s <d1d2d3d4d5d6d7d8>\n", argv [0]);
+        exit (NUMERO_ARGUMENTOS_INVALIDO);
+    }
+
+    if (strlen (argv [1]) != COMPRIMENTO_DRE - 1){
+            printf ("Argumento apresenta comprimento invalido\n");
+            exit (COMPRIMENTO_ARGUMENTO_INVALIDO);
+    }
+
+
+    /* printar rg na tela */
+    for (numero = 0; numero < COMPRIMENTO_RG; numero++){
+        if (numero == 2 || numero == 5)
+            printf(".");
+        if (numero == 8)
+            printf("-");
+        printf("%u", bytes[numero]);
+    }
+    printf("\n");
+    printf("ultimo: %u\n",bytes[numero]);
+    return bytes[numero];
+}
+
+//------------------------------
+
+tipoErros
+GerarDigitosVerificadoresRg (byte rg [COMPRIMENTO_RG]){ 
+    printf("entrei\n");   
+    /* definir variaveis usadas*/
+    int somaDosProdutos = 0;
+    int peso = 2;
+    byte indice;
+
+    /* if (rg == NULL) */
+    printf("rg: %u\n",rg);
+    printf("rg comprimento: %u\n",rg[COMPRIMENTO_RG]);
+
+    // if (rg == NULL)
+    //     printf("\nargumento nulo\n");
+    //     return argumentoNulo;
+
+    for (indice = 0; indice < COMPRIMENTO_RG -1; indice++){
+        if (rg[indice] > 9)
+            printf("digito invalido\n");
+            return digitoInvalido;
+        somaDosProdutos = somaDosProdutos + rg[indice]*peso;  
+        peso++; 
+    }
+    printf("soma dos produtos: %d\n", somaDosProdutos);
+    rg[indice] = 11 - somaDosProdutos%11;
+    printf("ok\n");
+    return ok;
+}
+
+/* $RCSfile$ */
+
+
+// ----------------------------------------------------------------------------------------------
+
+/* Universidade Federal do Rio de Janeiro
+Escola Politecnica
+Departamento de Eletronica e de Computacao
+EEL270 - Computacao II - Turma 2021/2
+Prof. Marcelo Luiz Drumond Lanza
+Autor: Rebecca Gomes Simao
+Descricao: Codigo que calcula ultimo numero do RG
+
+$Author$
+$Date$
+$Log$ */
+
+/* recebe 8 digitos - tratamento de erro */
+/* deve ser printado assim: XX.XXX.XXX-X */
+/* return eh o nono digito */
+
+#include "aula0501.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <limits.h>
+#include <errno.h>
+
+#define NUMERO_ARGUMENTOS                       2
+
+#define OK										0
+#define NUMERO_ARGUMENTOS_INVALIDO				1
+#define COMPRIMENTO_ARGUMENTO_INVALIDO			2
+#define ARGUMENTO_CONTEM_CARACTERE_INVALIDO		3
+
+#define END_OF_STRING			    	    	'\0'
+
+int main (int argc, char **argv){
+
+    /* definir variaveis usadas */
+    byte bytes [COMPRIMENTO_RG];
+    tipoErros retorno = GerarDigitosVerificadoresRg (bytes);
+    int numero;
+
+    /* conferir se o retorno ta ok */
+    if (retorno != ok)
+        printf ("Erro executando a funcao. Erro numero %u.\n", retorno);
+
+    /* pegar variaveis a serem usadas */
+
+
+    /* tratamento de erro */
+    if (argc != NUMERO_ARGUMENTOS){
+        printf ("Uso: %s <d1d2d3d4d5d6d7d8>\n", argv [0]);
+        exit (NUMERO_ARGUMENTOS_INVALIDO);
+    }
+
+    if (strlen (argv [1]) != COMPRIMENTO_DRE - 1){
+            printf ("Argumento apresenta comprimento invalido\n");
+            exit (COMPRIMENTO_ARGUMENTO_INVALIDO);
+    }
+
+    
+    /* printar rg na tela */
+    for (numero = 0; numero < COMPRIMENTO_RG; numero++){
+        if (numero == 2 || numero == 5)
+            printf(".");
+        if (numero == 8)
+            printf("-");
+        printf("%d", bytes[numero]);
+    }
+    printf("\n");
+    return 0;
+}
+
+
+/* $RCSfile$ */

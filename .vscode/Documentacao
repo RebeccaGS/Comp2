@@ -1,0 +1,23 @@
+//python: so botar py main2.py
+
+/* */
+
+// == comparar
+//#define <nome_da_constante> <valor>
+
+
+// #define  FILE_H
+// #ifndef  FILE_H
+
+//     #include <stdio.h>
+//     #include <malloc.h>
+//     #include <stdarg.h>
+//     #include <unistd.h>
+//     #include <string.h>
+
+//     void method_01(void);
+//     int method_02(int , int);
+//     const char * method_return_string();
+
+// #endif  /*FILE_H*/
+

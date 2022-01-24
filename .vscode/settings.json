@@ -1,0 +1,20 @@
+// Place your settings in this file to overwrite default and user settings.
+{
+	"files.eol": "\n",
+	"debug.openDebug": "neverOpen",
+	"python.linting.enabled": false,
+	"python.languageServer": "None",
+	"files.associations": {
+		"aula0201.h": "c",
+		"stdio.h": "c",
+		"documentacao": "c",
+		"aula0301.h": "c",
+		"stdlib.h": "c",
+		"limits.h": "c",
+		"teste": "c",
+		"aula0501.h": "c",
+		"string.h": "c",
+		"aula0504.h": "c",
+		"aula0601.h": "c"
+	}
+}

@@ -1,0 +1,61 @@
+fazer: 
+- comentar aula0501.h entendendo tudo! (exemplos 47.h e 47.c)
+
+
+------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------
+                printf("oi\n");
+                printf("m: %d | p: %d | n: %d\n",m,p,n);
+                printf("matriz1: %2lf\n",matriz1[0][0]);
+                printf("matriz1: %2lf\n",matriz1[m][n]);
+                printf("matriz2: %2lf\n",matriz2[n][p]);
+                printf("matrizProduto: %lf\n",matrizProduto[m][p]);
+                printf("matriz1: %2lf\n",matriz1[m][n]);
+                printf("matriz2: %2lf\n",matriz2[n][p]);
+                printf("matrizProduto 2: %lf\n",matrizProduto[0][0]);
+
+
+------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------
+GNU E BSD:
+
+make -DGCC - compila/linkedita usando o gcc e o dialeto ANSI (somente FreeBSD).
+make -DCLANG - compila/linkedita usando o clang e o dialeto ANSI (somente FreeBSD).
+
+make -DCLANG -DC89
+make -DCLANG -DC11
+make -DCLANG -DC99
+make -DCLANG -DC90
+make -DGCC -DC89 
+make -DGCC -DC11
+make -DGCC -DC99
+make -DGCC -DC90
+
+make cc=GCC - compila/linkedita usando o gcc e o dialeto ANSI (somente CentOS).
+make cc=CLANG - compila/linkedita usando o clang e o dialeto ANSI (somente CentOS).
+make cc=CLANG dialeto=C99 - compila/linkedita usando o clang e o dialeto C99 (somente CentOS).
+
+make cc=GCC dialeto=C90 aula0404a 
+make cc=GCC dialeto=C11 aula0404a
+make cc=GCC dialeto=C11 aula0404a 
+make cc=GCC dialeto=C99 aula0404a 
+make cc=CLANG dialeto=C90 aula0404a 
+make cc=CLANG dialeto=C11 aula0404a 
+make cc=CLANG dialeto=C89 aula0404a 
+make cc=CLANG dialeto=C99 aula0404a
+
+C90, C89, C99 ou C11.
+
+/* Universidade Federal do Rio de Janeiro
+Escola Politecnica
+Departamento de Eletronica e de Computacao
+EEL270 - Computacao II - Turma 2021/2
+Prof. Marcelo Luiz Drumond Lanza
+Autor: Rebecca Gomes Simao
+Descricao: <descrição sucinta dos objetivos do programa>
+
+$Author$
+$Date$
+$Log$ */
+
+/* $RCSfile$ */
