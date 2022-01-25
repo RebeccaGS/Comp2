@@ -36,7 +36,7 @@ int main (int argc, char **argv){
     unsigned short ordem;
     unsigned short linha;
     unsigned short coluna;
-    double *menorComplementar;
+    double *complementoAlgebrico;
     char *verificacao;
     unsigned short i = 1; /* indice dos for */
     unsigned short m;
@@ -126,7 +126,7 @@ int main (int argc, char **argv){
 
 
     /* enviar argumentos */
-    tipoErros retorno = CalcularMenorComplementar(ordem,linha,coluna,matriz,menorComplementar);
+    tipoErros retorno = CalcularComplementoAlgebrico(ordem,linha,coluna,matriz,complementoAlgebrico);
     
     /* conferir se o retorno ta ok */
     if (retorno != ok)
@@ -140,6 +140,8 @@ int main (int argc, char **argv){
             }
             printf("\n");
         }
+        printf("elemento: %.5lf\n",matriz[linha][coluna]);
+        printf("complemento Algebrico: %.5lf\n",complementoAlgebrico);
     }
     
     return OK;
