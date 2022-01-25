@@ -93,8 +93,8 @@ int main (int argc, char **argv){
     }
 
     /* pegar argumentos a serem usados */
-    for (m = 0; m < colunasOriginal; m++){
-        for (n = 0; n < linhasOriginal; n++){
+    for (m = 0; m < linhasOriginal; m++){
+        for (n = 0; n < colunasOriginal; n++){
             matrizOriginal[m][n] = strtod(argv[i], &verificacao);
             i++;
         }
@@ -133,4 +133,5 @@ int main (int argc, char **argv){
     return OK;
 
 }
+
 /* $RCSfile$ */
