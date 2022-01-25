@@ -11,17 +11,6 @@ $Date$
 $Log$ */
 
 
-// NOTS
-// CONFERIR TRATAMENTOS DE ERRO
-// botar .h e nao .c
-// conferir defines e includes
-
-//     argc > minimo
-//     conferencia strOUL para cada um
-//     arc total
-//     conferencia strOD para cada um (sem base)
-//     verificar retorno 
-
 #define OK										0
 #define NUMERO_ARGUMENTOS_INVALIDO              1
 #define BASE_INVALIDA                           2
@@ -30,7 +19,7 @@ $Log$ */
 
 #define EOS				      					'\0'
 
-#include "aula0601.c"
+#include "aula0601.h"
 #include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -142,7 +131,7 @@ int main (int argc, char **argv){
 
     if (errno == ERANGE)
   	{
-  		printf ("Valor fornecido em elemento matriz 1 ultrapassa o valor maximo permitido para double (%d)\n",DBL_MAX);
+  		printf ("Valor fornecido em elemento matriz 1 ultrapassa o valor maximo permitido para double (%f)\n",DBL_MAX);
         exit (VALOR_MAXIMO_EXCEDIDO);
   	}
     
@@ -164,7 +153,7 @@ int main (int argc, char **argv){
 
     if (errno == ERANGE)
   	{
-  	    printf ("Valor fornecido em elemento matriz 2 ultrapassa o valor maximo permitido para double (%d)\n",DBL_MAX);
+  	    printf ("Valor fornecido em elemento matriz 2 ultrapassa o valor maximo permitido para double (%f)\n",DBL_MAX);
         exit (VALOR_MAXIMO_EXCEDIDO);
   	}
     
@@ -182,7 +171,7 @@ int main (int argc, char **argv){
 
     /* conferir se o retorno ta ok */
     if (retorno != ok)
-        printf ("Erro executando a funcao. Erro numero %u.\n", retorno); // eh % u msm?
+        printf ("Erro executando a funcao. Erro numero %u.\n", retorno);
 
     else{
         /* printar matriz na tela */

@@ -20,7 +20,7 @@ $Log$
 
 #define EOS				      					'\0'
 
-#include "aula0601.c"
+#include "aula0601.h"
 #include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -36,7 +36,7 @@ int main (int argc, char **argv){
     unsigned short ordem;
     unsigned short linha;
     unsigned short coluna;
-    double *complementoAlgebrico;
+    double *complementoAlgebrico = NULL;
     char *verificacao;
     unsigned short i = 1; /* indice dos for */
     unsigned short m;
@@ -114,7 +114,7 @@ int main (int argc, char **argv){
 
     /* verificacao de erros na coleta de elementos matriz */
     if (errno == ERANGE){
-  		printf ("Valor fornecido ultrapassa o valor maximo permitido para double (%d)\n",DBL_MAX);
+  		printf ("Valor fornecido ultrapassa o valor maximo permitido para double (%f)\n",DBL_MAX);
         exit (VALOR_MAXIMO_EXCEDIDO);
   	}
     
@@ -130,7 +130,7 @@ int main (int argc, char **argv){
     
     /* conferir se o retorno ta ok */
     if (retorno != ok)
-        printf ("Erro executando a funcao. Erro numero %u.\n", retorno); // eh % u msm?
+        printf ("Erro executando a funcao. Erro numero %u.\n", retorno);
 
     else{
         /* printar matriz na tela */
@@ -141,7 +141,7 @@ int main (int argc, char **argv){
             printf("\n");
         }
         printf("elemento: %.5lf\n",matriz[linha][coluna]);
-        printf("complemento Algebrico: %.5lf\n",complementoAlgebrico);
+        printf("complemento Algebrico: %.5lf\n",*complementoAlgebrico);
     }
     
     return OK;

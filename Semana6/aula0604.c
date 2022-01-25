@@ -21,7 +21,7 @@ $Log$
 
 #define EOS				      					'\0'
 
-#include "aula0601.c"
+#include "aula0601.h"
 #include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -38,7 +38,7 @@ int main (int argc, char **argv){
     char *verificacao;
     unsigned short i = 1;
     double matriz [LINHAS_MATRIZES][COLUNAS_MATRIZES];
-    double *determinante;
+    double *determinante = NULL;
 
     /* se possui no minimo a linha, a coluna e um elemento de matriz */
     if (argc < 3){
@@ -81,7 +81,7 @@ int main (int argc, char **argv){
     
     /* verificacao de erros na coleta de variaveis */
     if (errno == ERANGE){
-  		printf ("Valor fornecido para elemento da matriz ultrapassa o valor maximo permitido para double (%d)\n",DBL_MAX);
+  		printf ("Valor fornecido para elemento da matriz ultrapassa o valor maximo permitido para double (%f)\n",DBL_MAX);
         exit (VALOR_MAXIMO_EXCEDIDO);
   	}
     
@@ -97,7 +97,7 @@ int main (int argc, char **argv){
 
     /* conferir se o retorno ta ok */
     if (retorno != ok)
-        printf ("Erro executando a funcao. Erro numero %u.\n", retorno); // eh % u msm?
+        printf ("Erro executando a funcao. Erro numero %u.\n", retorno);
 
     else{
         /* printar matriz na tela */
