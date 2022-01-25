@@ -41,8 +41,8 @@ int main (int argc, char **argv){
     double *determinante;
 
     /* se possui no minimo a linha, a coluna e um elemento de matriz */
-    if (argc < 4){
-        printf("%s", ">linha matriz< >coluna matriz< >elementos matriz<\n");
+    if (argc < 3){
+        printf("%s", ">ordem< >elementos matriz<\n");
         exit (NUMERO_ARGUMENTOS_INVALIDO);
     }
 
@@ -66,14 +66,14 @@ int main (int argc, char **argv){
 
     /* tratamento de erros - numero de argumentos */
     if (argc != (ordem*ordem+2)){
-        printf("%s", ">ordem< >elementos matriz<\n");
+        printf("%s", "Argumentos: >ordem< >elementos matriz<\n");
         exit (NUMERO_ARGUMENTOS_INVALIDO);
     }
 
     /* pegar argumentos a serem usados */
     for (m = 0; m < ordem; m++){
         for (n = 0; n < ordem; n++){
-            matriz[m][n] = strod(argv[i], &verificacao);
+            matriz[m][n] = strtod(argv[i], &verificacao);
             i++;
         }
     }
@@ -107,7 +107,7 @@ int main (int argc, char **argv){
             }
             printf("\n");
         }
-        printf ("Determinante matriz: %lf\n",*determinante);
+        printf ("Determinante matriz: %.5lf\n",*determinante);
     }
     
     return OK;

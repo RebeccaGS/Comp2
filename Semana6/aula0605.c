@@ -133,6 +133,7 @@ int main (int argc, char **argv){
         printf ("Erro executando a funcao. Erro numero %u.\n", retorno); // eh % u msm?
 
     else{
+
         /* printar matriz na tela */
         for (m = 0; m < ordem; m++){
             for (n = 0; n < ordem; n++){

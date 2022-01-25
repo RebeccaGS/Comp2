@@ -95,7 +95,7 @@ int main (int argc, char **argv){
     /* pegar argumentos a serem usados */
     for (m = 0; m < colunasOriginal; m++){
         for (n = 0; n < linhasOriginal; n++){
-            matrizOriginal[m][n] = strod(argv[i], &verificacao);
+            matrizOriginal[m][n] = strtod(argv[i], &verificacao);
             i++;
         }
     }

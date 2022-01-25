@@ -73,7 +73,13 @@ MultiplicarMatrizes (unsigned short linhas1, /* numero de linhas da matriz 1 (E)
                 matrizProduto[m][p] += matriz1[m][n] * matriz2[n][p];
             }
         }  
-    }        
+    }  
+    for (m = 0; m < linhas1; m++){
+        for (p = 0; p < colunas2; p++){
+            printf("%.5lf ", matrizProduto[m][p]);
+        }
+        printf("\n\n");
+    }      
     return ok;
 }
 
@@ -170,10 +176,6 @@ CalcularDeterminanteMatriz (unsigned short ordem, /* ordem da matriz (E) */
     return ok;
 }
 
-
-/* ok = 0, matriz1nula = 21, matriz2nula = 22, matrizresultadonulo = 23, matrizInvalida = 24,
-linhas1excedidas = 25, colunas1excedidas = 26, linhas2excedidas = 27, colunas2excedidas = 28,
-ordemInvalida = 29, determinanteNulo = 30*/
 
 /* cria matriz auxiliar e possui ja seu determinante */
 tipoErros
