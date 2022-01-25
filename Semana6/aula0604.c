@@ -21,7 +21,7 @@ $Log$
 
 #define EOS				      					'\0'
 
-#include "aula0601.h"
+#include "aula0601.c"
 #include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -38,7 +38,7 @@ int main (int argc, char **argv){
     char *verificacao;
     unsigned short i = 1;
     double matriz [LINHAS_MATRIZES][COLUNAS_MATRIZES];
-    double *determinante = NULL;
+    double determinante;
 
     /* se possui no minimo a linha, a coluna e um elemento de matriz */
     if (argc < 3){
@@ -93,7 +93,7 @@ int main (int argc, char **argv){
 
 
     /* enviar argumentos para montagem de matrizprodutos */
-    tipoErros retorno = CalcularDeterminanteMatriz(ordem,matriz,determinante);
+    tipoErros retorno = CalcularDeterminanteMatriz(ordem,matriz, &determinante);
 
     /* conferir se o retorno ta ok */
     if (retorno != ok)
@@ -107,7 +107,7 @@ int main (int argc, char **argv){
             }
             printf("\n");
         }
-        printf ("Determinante matriz: %.5lf\n",*determinante);
+        printf ("Determinante matriz: %.5lf\n", determinante);
     }
     
     return OK;

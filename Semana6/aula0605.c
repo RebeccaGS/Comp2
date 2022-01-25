@@ -5,7 +5,7 @@ Departamento de Eletronica e de Computacao
 EEL270 - Computacao II - Turma 2021/2
 Prof. Marcelo Luiz Drumond Lanza
 Autor: REBECCA GOMES SIMAO
-Descricao: implementacao de calcular complemento Algebrico
+Descricao: implementacao de calcular menor complementar
 
 $Author$
 $Date$
@@ -20,7 +20,7 @@ $Log$
 
 #define EOS				      					'\0'
 
-#include "aula0601.h"
+#include "aula0601.c"
 #include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -36,7 +36,7 @@ int main (int argc, char **argv){
     unsigned short ordem;
     unsigned short linha;
     unsigned short coluna;
-    double *complementoAlgebrico = NULL;
+    double menorComplementar;
     char *verificacao;
     unsigned short i = 1; /* indice dos for */
     unsigned short m;
@@ -126,13 +126,14 @@ int main (int argc, char **argv){
 
 
     /* enviar argumentos */
-    tipoErros retorno = CalcularComplementoAlgebrico(ordem,linha,coluna,matriz,complementoAlgebrico);
+    tipoErros retorno = CalcularMenorComplementar(ordem,linha,coluna,matriz, &menorComplementar);
     
     /* conferir se o retorno ta ok */
     if (retorno != ok)
         printf ("Erro executando a funcao. Erro numero %u.\n", retorno);
 
     else{
+
         /* printar matriz na tela */
         for (m = 0; m < ordem; m++){
             for (n = 0; n < ordem; n++){
@@ -141,9 +142,8 @@ int main (int argc, char **argv){
             printf("\n");
         }
         printf("elemento: %.5lf\n",matriz[linha][coluna]);
-        printf("complemento Algebrico: %.5lf\n",*complementoAlgebrico);
-    }
-    
+        printf("Menor complementar: %.5lf\n", menorComplementar);
+    }    
     return OK;
 }
 

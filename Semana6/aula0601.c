@@ -74,12 +74,7 @@ MultiplicarMatrizes (unsigned short linhas1, /* numero de linhas da matriz 1 (E)
             }
         }  
     }  
-    for (m = 0; m < linhas1; m++){
-        for (p = 0; p < colunas2; p++){
-            printf("%.5lf ", matrizProduto[m][p]);
-        }
-        printf("\n\n");
-    }      
+ 
     return ok;
 }
 
@@ -130,8 +125,6 @@ CalcularDeterminanteMatriz (unsigned short ordem, /* ordem da matriz (E) */
                                            double matriz[LINHAS_MATRIZES][COLUNAS_MATRIZES], /* matriz (E) */
                                            double *determinante){ /* determinante (S) */
     unsigned short i;
-  
-    printf("entrou");
     /* verificar se linhas e colunas > 100 */
     if (ordem > LINHAS_MATRIZES){
         return ordemInvalida;
@@ -142,21 +135,13 @@ CalcularDeterminanteMatriz (unsigned short ordem, /* ordem da matriz (E) */
         return matriz1nula;
     }
 
-
-    printf("entrou2");
     /* calculo determinante */
     if (ordem == 1){
         *determinante = matriz[0][0];
-    }
-
+    }    
     else if (ordem == 2){
-         printf("entrou3");
-         double prod = matriz[0][0]*matriz[1][1] - matriz[0][1]*matriz[1][0];
-         printf("\ne %lf\n",prod);
-        *determinante = prod;
-         printf("saiu0");
+        *determinante = matriz[0][0]*matriz[1][1] - matriz[0][1]*matriz[1][0];
     }
-
     else if (ordem == 3){
         /* regra de Sarrus */
         *determinante = 0;
@@ -164,7 +149,7 @@ CalcularDeterminanteMatriz (unsigned short ordem, /* ordem da matriz (E) */
         *determinante -= (matriz[0][2]*matriz[1][1]*matriz[2][0] + matriz[0][0]*matriz[1][2]*matriz[2][1] + matriz[0][1]*matriz[1][0]*matriz[2][2]);
     }
 
-    else if (ordem > 3){
+    else if (ordem > 3){          
         /* laplace */
         *determinante = 0;
         /* pegar elementos da primeira linha (0) e calcular */
@@ -174,13 +159,10 @@ CalcularDeterminanteMatriz (unsigned short ordem, /* ordem da matriz (E) */
             *determinante +=  matriz[0][i] * complementoAlgebrico;
         }
     }
-    printf("saiu2");
-    
     /* Verificar se determinante vazio */
     if (determinante == NULL){
         return determinanteNulo;
-    }
-    
+    }    
     return ok;
 }
 
@@ -232,15 +214,7 @@ CalcularMenorComplementar (unsigned short ordem, /* ordem da matriz (E) */
         k = 0;
     }    
     /* enviar matriz auxiliar para calcular o determinante */    
-    CalcularDeterminanteMatriz(ordem-1,matrizComplementar,menorComplementar);
-    printf("saiu");
-    
-        /* Verificar se determinante vazio */
-    if (menorComplementar == NULL){
-        return determinanteNulo;
-    }
-
-    return ok;
+    return CalcularDeterminanteMatriz(ordem-1,matrizComplementar,menorComplementar);        
 }
 
 /* calcula o cofator */
@@ -253,7 +227,6 @@ CalcularComplementoAlgebrico (unsigned short ordem, /* ordem da matriz (E) */
     
     double menorComplementar;
     int pot;
-    
     /* verificar se linhas e colunas > 100 */
     if (ordem > LINHAS_MATRIZES){
         return ordemInvalida;
@@ -272,20 +245,15 @@ CalcularComplementoAlgebrico (unsigned short ordem, /* ordem da matriz (E) */
         return matriz1nula;
     }
 
-
-    CalcularMenorComplementar(ordem,linha,coluna,matriz,&menorComplementar);
+    tipoErros retorno = CalcularMenorComplementar(ordem,linha,coluna,matriz,&menorComplementar);
     if ((linha+coluna)%2 == 0)
       pot = 1;
     else
       pot = -1;
     *complementoAlgebrico = pot * menorComplementar;
     
-    /* Verificar se determinante vazio */
-    if (complementoAlgebrico == NULL){
-        return determinanteNulo;
-    }
-    
-    return ok;
+    return retorno;
 }
+
 
 /* $RCSfile$ */
