@@ -5,7 +5,7 @@ Departamento de Eletronica e de Computacao
 EEL270 - Computacao II - Turma 2021/2
 Prof. Marcelo Luiz Drumond Lanza
 Autor: REBECCA GOMES SIMAO
-Descricao: implementacao de determinantesMatriz
+Descricao: implementacao de calcular menor complementar
 
 $Author$
 $Date$
