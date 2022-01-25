@@ -5,7 +5,7 @@ Departamento de Eletronica e de Computacao
 EEL270 - Computacao II - Turma 2021/2
 Prof. Marcelo Luiz Drumond Lanza
 Autor: REBECCA GOMES SIMAO
-Descricao: implementacao de calcular menor complementar
+Descricao: implementacao de calcular complemento Algebrico
 
 $Author$
 $Date$
@@ -44,7 +44,7 @@ int main (int argc, char **argv){
 
     /* se possui no minimo ordem, linha, coluna e 1 elemento */
     if (argc < 5){
-        printf("%s", ">ordem< >linhas< >coluna< >elementos func<\n");
+        printf("%s", ">ordem< >linhas< >coluna< >elementos matriz<\n");
         exit (NUMERO_ARGUMENTOS_INVALIDO);
     }
 

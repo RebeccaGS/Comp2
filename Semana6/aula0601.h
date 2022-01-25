@@ -13,20 +13,14 @@ $Log$
 */
 
 
-// ERROS E ANOTACOES:
-// Verificar cada tipo erro
-
 #ifndef   _AULA0601_
 #define   _AULA0601_    "@(#)aula0601.h $Revision$"
 
 #define LINHAS_MATRIZES      100
 #define COLUNAS_MATRIZES     100
 
-/* Considere que as matrizes podem ter no máximo 100 linhas por 100 colunas.
-Defina duas macros correspondendo a estes limites.
-*/
 
-typedef enum {ok = 0, matriz1nula = 21, matriz2nula = 22, matrizresultado = 23, matrizInvalida = 24,
+typedef enum {ok = 0, matriz1nula = 21, matriz2nula = 22, matrizresultadonulo = 23, matrizInvalida = 24,
                          linhas1excedidas = 25, colunas1excedidas = 26, linhas2excedidas = 27, colunas2excedidas = 28, ordemInvalida = 29, determinanteNulo = 30} tipoErros;
 
 tipoErros

@@ -47,49 +47,74 @@ int main (int argc, char **argv){
     unsigned short m;
     unsigned short n;
 
+    /* se possui no minimo a ordem e um elemento de matriz */
+    if (argc < 3){
+        printf("%s", ">ordem matriz< >elementos matriz<\n");
+        exit (NUMERO_ARGUMENTOS_INVALIDO);
+    }
+
     /* pegar argumentos a serem usados */
-    linhasOriginal = strtol(argv[i++], &verificacao, 10);
-    colunasOriginal = strtol(argv[i++], &verificacao, 10);
-    printf("linhasOriginal: %d\n",linhasOriginal);
-    printf("colunasOriginal: %d\n",colunasOriginal);
+    linhasOriginal = strtoul(argv[i++], &verificacao, 10);
+    if (errno == EINVAL){
+  		printf ("Base em quantidade de linhas da matriz invalida\n");
+        exit (BASE_INVALIDA);
+    }
+    if (errno == ERANGE){
+  		printf ("Valor fornecido para quantidade de linhas da matriz ultrapassa o valor maximo permitido para unsigned short (%d)\n",USHRT_MAX);
+        exit (VALOR_MAXIMO_EXCEDIDO);
+  	}
+    
+    if (*verificacao != EOS){
+        printf ("Quantidade de Linhas da matriz contem caractere invalido.\n");
+        printf ("Primeiro caractere invalido: \'%c\'\n", *verificacao);
+        exit (CONTEM_CARACTERE_INVALIDO);
+    }
+  
+
+    colunasOriginal = strtoul(argv[i++], &verificacao, 10);
+    if (errno == EINVAL){
+  		printf ("Base em quantidade de colunas da matriz invalida\n");
+        exit (BASE_INVALIDA);
+    }
+    if (errno == ERANGE){
+  		printf ("Valor fornecido para quantidade de colunas da matriz ultrapassa o valor maximo permitido para unsigned short (%d)\n",USHRT_MAX);
+        exit (VALOR_MAXIMO_EXCEDIDO);
+  	}
+    if (*verificacao != EOS){
+        printf ("Quantidade de colunas da matriz contem caractere invalido.\n");
+        printf ("Primeiro caractere invalido: \'%c\'\n", *verificacao);
+        exit (CONTEM_CARACTERE_INVALIDO);
+    }
 
     /* tratamento de erros - numero de argumentos */
     if (argc != (linhasOriginal*colunasOriginal +3)){
-        printf("%s", "complete ambas as matrizes\n");
+        printf("%s", ">linhas matriz< >colunas matriz< >elementos matriz<\n");
         exit (NUMERO_ARGUMENTOS_INVALIDO);
     }
 
     /* pegar argumentos a serem usados */
     for (m = 0; m < colunasOriginal; m++){
         for (n = 0; n < linhasOriginal; n++){
-            matrizOriginal[m][n] = strtol(argv[i], &verificacao, 10);
+            matrizOriginal[m][n] = strod(argv[i], &verificacao);
             i++;
         }
+    }
+
+    /* verificacao de erros na coleta de elementos matriz */
+    if (errno == ERANGE){
+  		printf ("Valor fornecido para elemento da matriz ultrapassa o valor maximo permitido para double (%d)\n",DBL_MAX);
+        exit (VALOR_MAXIMO_EXCEDIDO);
+  	}
+    
+    if (*verificacao != EOS){
+        printf ("Argumento fornecido para matriz contem caractere invalido.\n");
+        printf ("Primeiro caractere invalido: \'%c\'\n", *verificacao);
+        exit (CONTEM_CARACTERE_INVALIDO);
     }
 
     /* enviar argumentos para montagem de matrizprodutos */
     tipoErros retorno = ObterMatrizTransposta(linhasOriginal,colunasOriginal,matrizOriginal,matrizTransposta);
     
-    /* verificacao de erros na coleta de variaveis */
-    if (errno == EINVAL)
-    {
-  		printf ("Base invalida\n");
-        exit (BASE_INVALIDA);
-    }
-  
-    if (errno == ERANGE)
-  	{
-  		printf ("Valor fornecido ultrapassa o valor maximo permitido para double (%d)\n", 
-  						 DBL_MAX);
-        exit (VALOR_MAXIMO_EXCEDIDO);
-  	}
-    
-    if (*verificacao != EOS)
-    {
-        printf ("Argumento contem caractere invalido.\n");
-        printf ("Primeiro caractere invalido: \'%c\'\n", *verificacao);
-        exit (CONTEM_CARACTERE_INVALIDO);
-    }
 
     /* conferir se o retorno ta ok */
     if (retorno != ok)
@@ -99,8 +124,7 @@ int main (int argc, char **argv){
         /* printar matriz na tela */
         for (m = 0; m < colunasOriginal; m++){
             for (n = 0; n < linhasOriginal; n++){
-                printf("| n e m: %.5lf |", matrizTransposta[n][m]);
-                printf("| m e n: %.5lf |", matrizTransposta[m][n]);
+                printf("%.5lf ", matrizTransposta[m][n]);
             }
             printf("\n");
         }

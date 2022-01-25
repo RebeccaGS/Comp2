@@ -10,25 +10,17 @@ $Author$
 $Date$
 $Log$ */
 
-/* $RCSfile$ */
-
-/*
-Crie o arquivo "aula0602.c" contendo o programa de testes para a função MultiplicarMatrizes.
-O programa deverá receber,  através dos argumentos de linha de comando, as dimensões de cada matriz
-e os valores de cada elemento das matrizes de entrada. Após executar a função de multiplicação de matrizes,
-o programa deverá exibir a matriz produto (em formato de matriz). Os valores desta matriz deverão ser exibidos
-com no mínimo 5 casas decimais. Este programa NÃO pode utilizar alocação dinâmica de memória.
-
-Exemplo:
-./aula0602 3 2 2 4 a11 a12 a13 a21 ... b31 b32 b33 b34
-
-No exemplo acima, a matriz A terá 3 linhas x 2 colunas, enquanto que a matriz B terá 2 linhas x 4 colunas.
-*/
 
 // NOTS
 // CONFERIR TRATAMENTOS DE ERRO
 // botar .h e nao .c
 // conferir defines e includes
+
+//     argc > minimo
+//     conferencia strOUL para cada um
+//     arc total
+//     conferencia strOD para cada um (sem base)
+//     verificar retorno 
 
 #define OK										0
 #define NUMERO_ARGUMENTOS_INVALIDO              1
@@ -62,25 +54,85 @@ int main (int argc, char **argv){
     unsigned short n;
     unsigned short i = 1; /* indice dos for */
 
-    // argc > minimo
-    // conferencia strOUL para cada um
-    // arc total
-    // conferencia strOD para cada um (sem base)
-    // verificar retorno 
-    
-    /* pegar argumentos a serem usados */
-    linhas1 = strtoul(argv[i++], &verificacao, 10);
-    colunas1 = strtoul(argv[i++], &verificacao, 10);
-    linhas2 = strtoul(argv[i++], &verificacao, 10);
-    colunas2 = strtoul(argv[i++], &verificacao, 10);
-
-    /* tratamento de erros - numero de argumentos */
-    if (argc != (linhas1*colunas1 +5 + linhas2*colunas2)){
-        printf("%s", "complete ambas as matrizes\n");
+  
+    /* se possui no minimo as linha, as coluna e 1 elemento de cada */
+    if (argc < 7){
+        printf("%s", ">linhas matriz 1< >colunas matriz 1< >linhas matriz 2< >colunas matriz 2< >elementos matriz 1< >elementos matriz 2<\n");
         exit (NUMERO_ARGUMENTOS_INVALIDO);
     }
 
     /* pegar argumentos a serem usados */
+    linhas1 = strtoul(argv[i++], &verificacao, 10);
+    if (errno == EINVAL){
+  		printf ("Base em quantidade de linhas da matriz 1 invalida\n");
+        exit (BASE_INVALIDA);
+    }
+    if (errno == ERANGE){
+  		printf ("Valor fornecido para quantidade de linhas da matriz 1 ultrapassa o valor maximo permitido para unsigned short (%d)\n",USHRT_MAX);
+        exit (VALOR_MAXIMO_EXCEDIDO);
+  	}
+    
+    if (*verificacao != EOS){
+        printf ("Quantidade de Linhas da matriz 1 contem caractere invalido.\n");
+        printf ("Primeiro caractere invalido: \'%c\'\n", *verificacao);
+        exit (CONTEM_CARACTERE_INVALIDO);
+    }
+  
+    colunas1 = strtoul(argv[i++], &verificacao, 10);
+    if (errno == EINVAL){
+  		printf ("Base em quantidade de colunas da matriz 1 invalida\n");
+        exit (BASE_INVALIDA);
+    }
+    if (errno == ERANGE){
+  		printf ("Valor fornecido para quantidade de colunas da matriz 1 ultrapassa o valor maximo permitido para unsigned short (%d)\n",USHRT_MAX);
+        exit (VALOR_MAXIMO_EXCEDIDO);
+  	}
+    
+    if (*verificacao != EOS){
+        printf ("Quantidade de colunas da matriz 1 contem caractere invalido.\n");
+        printf ("Primeiro caractere invalido: \'%c\'\n", *verificacao);
+        exit (CONTEM_CARACTERE_INVALIDO);
+    }
+
+    linhas2 = strtoul(argv[i++], &verificacao, 10);
+    if (errno == EINVAL){
+  		printf ("Base em quantidade de linhas da matriz 2 invalida\n");
+        exit (BASE_INVALIDA);
+    }
+    if (errno == ERANGE){
+  		printf ("Valor fornecido para quantidade de linhas da matriz 2 ultrapassa o valor maximo permitido para unsigned short (%d)\n",USHRT_MAX);
+        exit (VALOR_MAXIMO_EXCEDIDO);
+  	}
+    
+    if (*verificacao != EOS){
+        printf ("Quantidade de Linhas da matriz 2 contem caractere invalido.\n");
+        printf ("Primeiro caractere invalido: \'%c\'\n", *verificacao);
+        exit (CONTEM_CARACTERE_INVALIDO);
+    }
+
+    colunas2 = strtoul(argv[i++], &verificacao, 10);
+    if (errno == EINVAL){
+  		printf ("Base em quantidade de colunas da matriz 2 invalida\n");
+        exit (BASE_INVALIDA);
+    }
+    if (errno == ERANGE){
+  		printf ("Valor fornecido para quantidade de colunas da matriz 2 ultrapassa o valor maximo permitido para unsigned short (%d)\n",USHRT_MAX);
+        exit (VALOR_MAXIMO_EXCEDIDO);
+  	}
+    
+    if (*verificacao != EOS){
+        printf ("Quantidade de colunas da matriz 2 contem caractere invalido.\n");
+        printf ("Primeiro caractere invalido: \'%c\'\n", *verificacao);
+        exit (CONTEM_CARACTERE_INVALIDO);
+    }
+
+    /* tratamento de erros - numero de argumentos */
+    if (argc != (linhas1*colunas1 +5 + linhas2*colunas2)){
+        printf("%s", ">linhas matriz 1< >colunas matriz 1< >linhas matriz 2< >colunas matriz 2< >elementos matriz 1< >elementos matriz 2<\n");
+        exit (NUMERO_ARGUMENTOS_INVALIDO);
+    }
+
+    /* pegar elementos para matriz 1*/
     for (m = 0; m < linhas1; m++){
         for (n = 0; n < colunas1; n++){
             matriz1[m][n] = strtod(argv[i], &verificacao);
@@ -88,36 +140,44 @@ int main (int argc, char **argv){
         }
     }
 
+    if (errno == ERANGE)
+  	{
+  		printf ("Valor fornecido em elemento matriz 1 ultrapassa o valor maximo permitido para double (%d)\n",DBL_MAX);
+        exit (VALOR_MAXIMO_EXCEDIDO);
+  	}
+    
+    if (*verificacao != EOS)
+    {
+        printf ("Argumento fornecido como elemento da matriz 1 contem caractere invalido.\n");
+        printf ("Primeiro caractere invalido: \'%c\'\n", *verificacao);
+        exit (CONTEM_CARACTERE_INVALIDO);
+    }
+
+
+    /* pegar elementos para matriz 2*/
     for (n = 0; n < linhas2; n++){
         for (p = 0; p < colunas2; p++){
             matriz2[n][p] = strtod(argv[i], &verificacao);
             i++;
         }
     }
-    
-    /* enviar argumentos para montagem de matrizprodutos */
-    tipoErros retorno = MultiplicarMatrizes(linhas1,colunas1,linhas2,colunas2,matriz1,matriz2,matrizProduto);
-    
-    /* verificacao de erros na coleta de variaveis */
-    if (errno == EINVAL)
-    {
-  		printf ("Base invalida\n");
-        exit (BASE_INVALIDA);
-    }
-  
+
     if (errno == ERANGE)
   	{
-  		printf ("Valor fornecido ultrapassa o valor maximo permitido para double (%d)\n", 
-  						 DBL_MAX);
+  	    printf ("Valor fornecido em elemento matriz 2 ultrapassa o valor maximo permitido para double (%d)\n",DBL_MAX);
         exit (VALOR_MAXIMO_EXCEDIDO);
   	}
     
     if (*verificacao != EOS)
     {
-        printf ("Argumento contem caractere invalido.\n");
+        printf ("Argumento fornecido como elemento da matriz 2 contem caractere invalido.\n");
         printf ("Primeiro caractere invalido: \'%c\'\n", *verificacao);
         exit (CONTEM_CARACTERE_INVALIDO);
     }
+
+
+    /* enviar argumentos para montagem de matrizprodutos */
+    tipoErros retorno = MultiplicarMatrizes(linhas1,colunas1,linhas2,colunas2,matriz1,matriz2,matrizProduto);
 
 
     /* conferir se o retorno ta ok */
@@ -136,3 +196,6 @@ int main (int argc, char **argv){
     
     return OK;
 }
+
+
+/* $RCSfile$ */

@@ -44,7 +44,7 @@ int main (int argc, char **argv){
 
     /* se possui no minimo ordem, linha, coluna e 1 elemento */
     if (argc < 5){
-        printf("%s", ">ordem< >linhas< >coluna< >elementos func<\n");
+        printf("%s", ">ordem< >linhas< >coluna< >elementos matriz<\n");
         exit (NUMERO_ARGUMENTOS_INVALIDO);
     }
 

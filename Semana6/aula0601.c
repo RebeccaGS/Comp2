@@ -13,10 +13,6 @@ $Log$
 */
 
 
-// ERROS E ANOTACOES:
-// Verificar cada tipo erro
-// nao ta printando certo
-
 #include "aula0601.h"
 #include <stdio.h> /* incluir NULL */
 #include <math.h>
@@ -35,11 +31,40 @@ MultiplicarMatrizes (unsigned short linhas1, /* numero de linhas da matriz 1 (E)
     unsigned short p;
     unsigned short n;
 
-    /*tipo erros se argumento nulo ou se matriz eh invalida */
+    /* verificar se linhas e colunas > 100 */
+    if (linhas1 > LINHAS_MATRIZES){
+        return linhas1excedidas;
+    }
+    if (linhas2 > LINHAS_MATRIZES){
+        return linhas2excedidas;
+    }
+    if (colunas1 > COLUNAS_MATRIZES){
+        return colunas1excedidas;
+    }
+    if (colunas2 > COLUNAS_MATRIZES){
+        return colunas2excedidas;
+    }
+    
+    
+    /* verificar se sao validas para multiplicacao de matrizes */
     if (colunas1 != linhas2){
         return matrizInvalida;
     }
 
+    /* Verificar se matrizes vazias */
+    if (matriz1 == NULL){
+        return matriz1nula;
+    }
+
+    if (matriz2 == NULL){
+        return matriz2nula;
+    }
+
+    if (matrizProduto == NULL){
+            return matrizresultadonulo;
+        }
+
+    /* calcular matriz produto*/
     for (m = 0; m < linhas1; m++){
         for (p = 0; p < colunas2; p++){
             matrizProduto[m][p] = 0;
@@ -52,6 +77,8 @@ MultiplicarMatrizes (unsigned short linhas1, /* numero de linhas da matriz 1 (E)
     return ok;
 }
 
+
+
 tipoErros
 ObterMatrizTransposta (unsigned short linhasOriginal, /* numero de linhas da matriz original (E) */
                                     unsigned short colunasOriginal, /* numero de colunas da matriz original (E) */
@@ -62,6 +89,25 @@ ObterMatrizTransposta (unsigned short linhasOriginal, /* numero de linhas da mat
     unsigned short m;
     unsigned short p;
 
+    /* verificar se linhas e colunas > 100 */
+    if (linhasOriginal > LINHAS_MATRIZES){
+        return linhas1excedidas;
+    }
+ 
+    if (colunasOriginal > COLUNAS_MATRIZES){
+        return colunas1excedidas;
+    }
+
+    /* Verificar se matrizes vazias */
+    if (matrizOriginal == NULL){
+        return matriz1nula;
+    }
+
+    if (matrizTransposta == NULL){
+        return matriz2nula;
+    }
+
+    /* matriz transposta */
     for (m = 0; m < colunasOriginal; m++){
         for (p = 0; p < linhasOriginal; p++){
             matrizTransposta[m][p] = matrizOriginal[p][m];
@@ -72,12 +118,30 @@ ObterMatrizTransposta (unsigned short linhasOriginal, /* numero de linhas da mat
 }
 
 
+
 tipoErros
 CalcularDeterminanteMatriz (unsigned short ordem, /* ordem da matriz (E) */
                                            double matriz[LINHAS_MATRIZES][COLUNAS_MATRIZES], /* matriz (E) */
                                            double *determinante){ /* determinante (S) */
     unsigned short i;
 
+    
+    /* verificar se linhas e colunas > 100 */
+    if (ordem > LINHAS_MATRIZES){
+        return ordemInvalida;
+    }
+
+    /* Verificar se matriz vazia */
+    if (matriz == NULL){
+        return matriz1nula;
+    }
+
+    /* Verificar se determinante vazio */
+    if (determinante == NULL){
+        return determinanteNulo;
+    }
+
+    /* calculo determinante */
     if (ordem ==1){
         *determinante = matriz[0][0];
     }
@@ -106,6 +170,11 @@ CalcularDeterminanteMatriz (unsigned short ordem, /* ordem da matriz (E) */
     return ok;
 }
 
+
+/* ok = 0, matriz1nula = 21, matriz2nula = 22, matrizresultadonulo = 23, matrizInvalida = 24,
+linhas1excedidas = 25, colunas1excedidas = 26, linhas2excedidas = 27, colunas2excedidas = 28,
+ordemInvalida = 29, determinanteNulo = 30*/
+
 /* cria matriz auxiliar e possui ja seu determinante */
 tipoErros
 CalcularMenorComplementar (unsigned short ordem, /* ordem da matriz (E) */
@@ -120,6 +189,30 @@ CalcularMenorComplementar (unsigned short ordem, /* ordem da matriz (E) */
     unsigned short l = 0; /* linha matriz auxiliar */
     unsigned short k = 0;
 
+    /* verificar se linhas e colunas > 100 */
+    if (ordem > LINHAS_MATRIZES){
+        return ordemInvalida;
+    }
+
+    if (linha > LINHAS_MATRIZES){
+        return linhas1excedidas;
+    }
+
+    if (coluna > LINHAS_MATRIZES){
+        return colunas1excedidas;
+    }
+
+    /* Verificar se matriz vazia */
+    if (matriz == NULL){
+        return matriz1nula;
+    }
+
+    /* Verificar se determinante vazio */
+    if (menorComplementar == NULL){
+        return determinanteNulo;
+    }
+
+    /* Criar matriz auxiliar sem a linha e a coluna em questao */
     for (m = 0; m < ordem; m++){
         if (m == linha){
             m = m+1;
@@ -132,6 +225,7 @@ CalcularMenorComplementar (unsigned short ordem, /* ordem da matriz (E) */
         }
     }    
     
+    /* enviar matriz auxiliar para calcular o determinante */
     tipoErros retorno = CalcularDeterminanteMatriz(ordem-1,matrizComplementar,menorComplementar);
 
     return ok;
@@ -146,6 +240,30 @@ CalcularComplementoAlgebrico (unsigned short ordem, /* ordem da matriz (E) */
                                                 double *complementoAlgebrico){ /* complemento algebrico ou cofator (S) */
     
     double menorComplementar;
+    
+    /* verificar se linhas e colunas > 100 */
+    if (ordem > LINHAS_MATRIZES){
+        return ordemInvalida;
+    }
+
+    if (linha > LINHAS_MATRIZES){
+        return linhas1excedidas;
+    }
+
+    if (coluna > LINHAS_MATRIZES){
+        return colunas1excedidas;
+    }
+
+    /* Verificar se matriz vazia */
+    if (matriz == NULL){
+        return matriz1nula;
+    }
+
+    /* Verificar se determinante vazio */
+    if (complementoAlgebrico == NULL){
+        return determinanteNulo;
+    }
+
     tipoErros retorno = CalcularMenorComplementar(ordem,linha,coluna,matriz,&menorComplementar);
     double pot = pow(-1,linha+coluna);
     *complementoAlgebrico = pot * menorComplementar;
