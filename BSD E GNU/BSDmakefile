@@ -287,14 +287,13 @@ aula0604: $(AULA0604OBJS)
 	cp $@ $@-$(OS)-$(CC)-$(DIALETO)   
 
 aula0605: $(AULA0605OBJS)
-  $(LD) $(LFLAGS) -o $@ $(AULA0605OBJS)  
+	$(LD) $(LFLAGS) -o $@ $(AULA0605OBJS)  
 	cp $@ $@-$(OS)-$(CC)-$(DIALETO)   
-
+ 
 aula0606: $(AULA0606OBJS)
 	$(LD) $(LFLAGS) -o $@ $(AULA0606OBJS)  
 	cp $@ $@-$(OS)-$(CC)-$(DIALETO)   
 
-  
 
             
 libmatematicarecursao.a: $(LIBMATEMATICARECURSAOOBJS)
