@@ -24,7 +24,8 @@ $Log$
 #define DEFEITUOSO                '.'
 
 
-typedef enum {ok = 0, linhaInvalida = 1, colunaInvalida = 2, falhaEspera = 3} tipoErros;
+typedef enum {ok = 0, linhaInvalida = 1, colunaInvalida = 2, falhaEspera = 3,
+                                falhaPercentual = 4} tipoErros;
 
 typedef enum {apagado = 0, aceso = 1, defeituoso = -1} tipoPixel;
 
@@ -35,6 +36,12 @@ MostrarMonitor (useconds_t tempoEspera, /* E */
                         unsigned numeroMaximoColunas /* E */ );
 
 
-#endif  
+tipoErros
+GrerarDistribuicaoInicial (tipoPixel monitor [NUMERO_MAXIMO_LINHAS ][ NUMERO_MAXIMO_COLUNAS], /* E/S */
+                                     unsigned numeroMaximoLinhas /* E */,
+                                     unsigned numeroMaximoColunas, /* E */
+                                     float percentualDefeituosos, /* E */
+                                     float percentualApagados /* E */);
+#endif
 
 /* $RCSfile$ */

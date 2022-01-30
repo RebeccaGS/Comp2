@@ -12,25 +12,9 @@ $Date$
 $Log$
 */
 
-/* Crie o arquivo "aula0701.c" contendo o código fonte da função MostrarMonitor. Esta função deverá conter,
-antes da exibição do conteúdo, uma chamada para a função system executando o comando clear. Após a exibição
-do conteúdo, esta função deverá conter uma chamada para a função usleep (com o tempo recebido).
-A função deverá retornar ok (ZERO) ou o código de erro correspondente (todas as possíveis condições de erro
-detectáveis na função).
-
-Antes de exibir o conteúdo correspondente ao dispositivo de saída em questão, a função deverá exibir uma linha
-N hifens (N deverá ser igual ao número de colunas do dispositivo + 4) seguida por uma linha contendo os caracteres
-delimitadores "|" (pipe) como definido abaixo.
-
-À esquerda do conteúdo cada linha deverá conter um caractere "|" seguido por um caractere de espaço. À direita
-do conteúdo cada linha deverá conter um caractere de espaço seguido por um caractere "|". Após a exibição do
-conteúdo deverá ser exibida uma linha contendo os caracteres delimitadores, seguida por uma linha com N hifens.
-
-Entre dois caracteres representando dois pixels vizinhos NÃO PODERÁ ser exibido nenhum caractere. */
-
 // ANOTACOES:
 //
-//
+// ver tipoErros (separar falhas percentuais? falta alguma? implementei todas?)
 // SE ERRO COM USLEEP: Adicionar modulos
 //# define CLEAR_SCREEN system ("clear")
 // testar outros modulos salvos em Pendencias - system(clear)
@@ -54,6 +38,7 @@ tipoErros MostrarMonitor(useconds_t tempoEspera, /* E */
     
     /* definir variaveis */
     unsigned short d;
+    unsigned short m;
     int retornoEspera;
     
     /* limpa monitor */
@@ -65,6 +50,7 @@ tipoErros MostrarMonitor(useconds_t tempoEspera, /* E */
         return falhaEspera;
     }
     
+    /* reescreve matriz para 'o', ' ' e '.' ao inves de 1, 0 e -1*/
     for (d = 0; d < numeroMaximoLinhas; d++){
         for (m = 0; m < numeroMaximoColunas; m++){
             if (monitor[d][m] == apagado){
@@ -79,6 +65,49 @@ tipoErros MostrarMonitor(useconds_t tempoEspera, /* E */
         }
     }
     
+    return ok;
+}
+
+tipoErros
+GrerarDistribuicaoInicial (tipoPixel monitor [NUMERO_MAXIMO_LINHAS][NUMERO_MAXIMO_COLUNAS], /* E/S */
+                                     unsigned numeroMaximoLinhas /* E */,
+                                     unsigned numeroMaximoColunas, /* E */
+                                     float percentualDefeituosos, /* E */
+                                     float percentualApagados /* E */){
+    
+    /* definir variaveis */
+    unsigned short numeroElementosTotais
+    unsigned short numeroElementosDefeituosos;
+    unsigned short numeroElementosAcessos;
+    unsigned short numeroElementosApagados;
+
+    /* decobrir quant de elementos */
+    numeroElementosTotais = numeroMaximoColunas*numeroMaximoLinhas;
+    numeroElementosDefeituosos = percentualDefeituosos*numeroElementosTotais/100;
+    numeroElementosApagados = percentualApagados*numeroElementosTotais/100;
+    numeroElementosAcessos = numeroElementosTotais - numeroElementosDefeituosos - numeroElementosApagados;
+    
+    /* adicionar valores a elementos da matriz original */
+    for (d = 0; d < numeroMaximoLinhas; d++){
+        for (m = 0; m < numeroMaximoColunas; m++){
+            if (numeroElementosDefeituosos>0){
+                monitor[d][m] == defeituoso;
+                numeroElementosDefeituosos--;
+            }
+            elif (numeroElementosAcessos>0){
+                monitor[d][m] == aceso;
+                numeroElementosAcessos--;
+            }
+            elif (numeroElementosApagados>0){
+                monitor[d][m] == apagado;
+                numeroElementosApagados--;
+            }
+        }
+    }
+
+    /* tornar aleatorio */
+    random()
+
     return ok;
 }
     

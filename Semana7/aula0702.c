@@ -1,5 +1,5 @@
 int main (){
-    /* cobrir nunero de linhas iniciais */
+    /* cobrir numero de linhas iniciais */
     for (d = 0; d < numeroMaximoColunas+4; d++)
         {         
             printf("-");
@@ -13,7 +13,7 @@ int main (){
         printf(" |\n");
     }
 
-    /* cobrir nunero de colunas finais */
+    /* cobrir numero de colunas finais */
     for (d = 0; d < numeroMaximoColunas+4; d++)
         {         
             printf("-");
