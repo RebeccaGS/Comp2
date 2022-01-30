@@ -4,16 +4,19 @@ fazer:
 
 ------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------
-                printf("oi\n");
-                printf("m: %d | p: %d | n: %d\n",m,p,n);
-                printf("matriz1: %2lf\n",matriz1[0][0]);
-                printf("matriz1: %2lf\n",matriz1[m][n]);
-                printf("matriz2: %2lf\n",matriz2[n][p]);
-                printf("matrizProduto: %lf\n",matrizProduto[m][p]);
-                printf("matriz1: %2lf\n",matriz1[m][n]);
-                printf("matriz2: %2lf\n",matriz2[n][p]);
-                printf("matrizProduto 2: %lf\n",matrizProduto[0][0]);
-
+    
+    CLEAR - System
+    #if defined _WIN32
+    system("cls");
+        //clrscr(); // including header file : conio.h
+    #elif defined (__LINUX__) || defined(__gnu_linux__) || defined(__linux__)
+        system("clear");
+        //std::cout<< u8"\033[2J\033[1;1H"; //Using ANSI Escape Sequences 
+    #elif defined (__APPLE__)
+        system("clear");
+    #endif
+    
+    //https://www.ibm.com/support/pages/example-using-c-api-usleep
 
 ------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------
@@ -34,8 +37,8 @@ make -DGCC -DC90
 make cc=GCC - compila/linkedita usando o gcc e o dialeto ANSI (somente CentOS).
 make cc=CLANG - compila/linkedita usando o clang e o dialeto ANSI (somente CentOS).
 make cc=CLANG dialeto=C99 - compila/linkedita usando o clang e o dialeto C99 (somente CentOS).
-
 make cc=GCC dialeto=C90 aula0404a 
+
 make cc=GCC dialeto=C11 aula0404a
 make cc=GCC dialeto=C11 aula0404a 
 make cc=GCC dialeto=C99 aula0404a 
