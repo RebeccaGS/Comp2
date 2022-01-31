@@ -42,6 +42,11 @@ GrerarDistribuicaoInicial (tipoPixel monitor [NUMERO_MAXIMO_LINHAS ][ NUMERO_MAX
                                      unsigned numeroMaximoColunas, /* E */
                                      float percentualDefeituosos, /* E */
                                      float percentualApagados /* E */);
+
+tipoErros
+LimparMonitor (tipoPixel monitor [NUMERO_MAXIMO_LINHAS ][ NUMERO_MAXIMO_COLUNAS], /* E/S */
+                       unsigned numeroMaximoLinhas, /* E */
+                       unsigned numeroMaximoColunas);
 #endif
 
 /* $RCSfile$ */

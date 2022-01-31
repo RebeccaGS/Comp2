@@ -32,7 +32,7 @@ $Log$
 #endif
 
 tipoErros MostrarMonitor(useconds_t tempoEspera, /* E */
-                        tipoPixel monitor [NUMERO_MAXIMO_LINHAS] [NUMERO_MAXIMO_COLUNAS] , /* E */
+                        tipoPixel monitor [NUMERO_MAXIMO_LINHAS][NUMERO_MAXIMO_COLUNAS] , /* E */
                         unsigned numeroMaximoLinhas, /* E */
                         unsigned numeroMaximoColunas /* E */ ){
     
@@ -69,7 +69,7 @@ tipoErros MostrarMonitor(useconds_t tempoEspera, /* E */
 }
 
 tipoErros
-GrerarDistribuicaoInicial (tipoPixel monitor [NUMERO_MAXIMO_LINHAS][NUMERO_MAXIMO_COLUNAS], /* E/S */
+GerarDistribuicaoInicial (tipoPixel monitor [NUMERO_MAXIMO_LINHAS][NUMERO_MAXIMO_COLUNAS], /* E/S */
                                      unsigned numeroMaximoLinhas /* E */,
                                      unsigned numeroMaximoColunas, /* E */
                                      float percentualDefeituosos, /* E */
@@ -80,6 +80,10 @@ GrerarDistribuicaoInicial (tipoPixel monitor [NUMERO_MAXIMO_LINHAS][NUMERO_MAXIM
     unsigned short numeroElementosDefeituosos;
     unsigned short numeroElementosAcessos;
     unsigned short numeroElementosApagados;
+    int linhaSorteada;
+    int colunaSorteada;
+    unsigned short d;
+    unsigned short m;
 
     /* decobrir quant de elementos */
     numeroElementosTotais = numeroMaximoColunas*numeroMaximoLinhas;
@@ -106,9 +110,28 @@ GrerarDistribuicaoInicial (tipoPixel monitor [NUMERO_MAXIMO_LINHAS][NUMERO_MAXIM
     }
 
     /* tornar aleatorio */
-    random()
+    for (d = 0; d < numeroMaximoLinhas; d++){
+        for (m = 0; m < numeroMaximoColunas; m++){
+                linhaSorteada = d + rand() % (numeroMaximoLinhas - d + 1);
+                colunaSorteada = m + rand() % (numeroMaximoColunas - m + 1);
+                monitor[d][m] = monitor[linhaSorteada][colunaSorteada];
+        }
+    }    
 
     return ok;
 }
-    
+
+
+/*
+Inclua, no arquivo "aula0701.h", a definição do protótipo da função LimparMonitor. Esta função deverá receber uma matriz de pixels (tipoPixel) correspondendo ao monitor e suas dimensões reais (numeroMaximoLinhas e numeroMaximoColunas). Se todos os argumentos forem válidos, a função deverá "apagar" todos os pixels do dispositivo (na matriz correspondente). Não deverão ser apagados os pixels marcados como defeituosos. A função deverá retornar ok (ZERO) ou o código de erro correspondente (todas as possíveis condições de erro detectáveis na função).
+*/
+
+tipoErros
+LimparMonitor (tipoPixel monitor [NUMERO_MAXIMO_LINHAS ][ NUMERO_MAXIMO_COLUNAS], /* E/S */
+                       unsigned numeroMaximoLinhas, /* E */
+                       unsigned numeroMaximoColunas){
+
+}
+
+
 /* $RCSfile$ */
