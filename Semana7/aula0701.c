@@ -1,3 +1,28 @@
+
+// ANOTACOES:
+// COMO RESOLVER RETORNO? BOTAR ISSO EM GERAR DISTRIBUICAO MSM COM UM PRINT E UM EXIT ANTES DE PRINTAR?
+// ver tipoErros (separar falhas percentuais? falta alguma? implementei todas?)
+// SE ERRO COM USLEEP: Adicionar modulos
+//# define CLEAR_SCREEN puts("\x1b[H\x1b[2J")
+// testar outros modulos salvos em Pendencias - system(clear)
+// indef depuracao (?) [PERGUNTAR]
+
+// IR PRA MONITORIA COM:
+// 4 - 01: 01 implementada [CHECK] / testada [CHECK] / tipo erros [CHECK]
+// 5 - 01: 02 implementada [CHECK] / testada [CHECK] / tipo erros [CHECK] 
+// 7 - 01: 03 implementada [CHECK] / testada [CHECK] / tipo erros [CHECK]
+// 1 - 01: 04 implementada
+// 2 - 01: 05 implementada
+// 3 - 01: 06 implementada
+// 6 - 02: testado [CHECK] / erros implementados [CHECK] / Ternario implementado
+// 9 - 03: testado [CHECK] / erros implementados [CHECK]
+// 8 - BSD e GNU parcialmente feitos
+
+// PERGUNTAR NA MONITORIA:
+// Sobre retornos (percentual em teste tambem? sao os msms, nao devia conferir apenas 1 vez?)
+//
+//
+
 /*
 Universidade Federal do Rio de Janeiro
 Escola Politecnica
@@ -11,23 +36,6 @@ $Author$
 $Date$
 $Log$
 */
-
-// ANOTACOES:
-// ver tipoErros (separar falhas percentuais? falta alguma? implementei todas?)
-// SE ERRO COM USLEEP: Adicionar modulos
-//# define CLEAR_SCREEN puts("\x1b[H\x1b[2J")
-// testar outros modulos salvos em Pendencias - system(clear)
-// indef depuracao (?) [PERGUNTAR]
-
-// IR PRA MONITORIA COM:
-// 4 - 01: 01 implementada [CHECK] / testada [CHECK] / tipo erros 
-// 5 - 01: 02 implementada [CHECK] / testada [CHECK] / tipo erros 
-// 7 - 01: 03 implementada [CHECK] / testada         / tipo erros 
-// 1 - 01: 04 implementada
-// 2 - 01: 05 implementada
-// 3 - 01: 06 implementada
-// 6 - 02: com erros corrigidos feitos
-// 8 - BSD e GNU parcialmente feitos
 
 #include "aula0701.h"
 #include <stdlib.h>
@@ -52,6 +60,18 @@ tipoErros MostrarMonitor(useconds_t tempoEspera, /* E */
     
     /* limpa monitor */
     //CLEAR_SCREEN;
+
+    /* verificar se linhas e colunas excedidas */
+    if (numeroMaximoLinhas > NUMERO_MAXIMO_LINHAS){
+        return linhaInvalida;
+    }
+    if (numeroMaximoColunas > NUMERO_MAXIMO_COLUNAS){
+        return colunaInvalida;
+    }
+
+    if (monitor == NULL){
+        return monitorNulo;
+    }
     
     /* espera tempo / retorna 0 se sucesso e -1, se falha. */
     retornoEspera = usleep(tempoEspera);
@@ -69,16 +89,7 @@ tipoErros MostrarMonitor(useconds_t tempoEspera, /* E */
     for (d = 0; d < numeroMaximoLinhas; d++){
         printf("\n| ");
         for (m = 0; m < numeroMaximoColunas; m++){
-            if (monitor[d][m] == apagado){
-                printf("%c",APAGADO);
-            }
-            else if (monitor[d][m] == aceso){
-                printf("%c",ACESO);
-            }
-            else if (monitor[d][m] == defeituoso){
-                printf("%c",DEFEITUOSO);
-            }
-        }
+            monitor[d][m] == apagado ? printf("%c",APAGADO) : (monitor[d][m] == aceso ? printf("%c",ACESO) : printf("%c",DEFEITUOSO);
         printf(" |\n");
     }
     
@@ -91,6 +102,10 @@ tipoErros MostrarMonitor(useconds_t tempoEspera, /* E */
     return ok;
 }
 
+/* -------------------------------------------------------------------------
+----------------------------------------------------------------------------
+---------------------------------------------------------------------------- */
+
 tipoErros
 GerarDistribuicaoInicial (tipoPixel monitor [NUMERO_MAXIMO_LINHAS][NUMERO_MAXIMO_COLUNAS], /* E/S */
                                      unsigned numeroMaximoLinhas /* E */,
@@ -99,16 +114,36 @@ GerarDistribuicaoInicial (tipoPixel monitor [NUMERO_MAXIMO_LINHAS][NUMERO_MAXIMO
                                      float percentualApagados /* E */){
     
     /* definir variaveis */
-    unsigned short numeroElementosTotais;
-    unsigned short numeroElementosDefeituosos;
-    unsigned short numeroElementosAcesos;
-    unsigned short numeroElementosApagados;
-    int linhaSorteada;
-    int colunaSorteada;
-    unsigned short d;
-    unsigned short m;
+    unsigned short numeroElementosTotais, numeroElementosDefeituosos, 
+                        numeroElementosAcesos, numeroElementosApagados;
+    int linhaSorteada, colunaSorteada;
+    unsigned short d, m;
     tipoPixel auxiliar;
 
+    /* verificar tipoErros */
+    if (numeroMaximoLinhas > NUMERO_MAXIMO_LINHAS){
+        return linhaInvalida;
+    }
+    if (numeroMaximoColunas > NUMERO_MAXIMO_COLUNAS){
+        return colunaInvalida;
+    }
+
+    if (monitor == NULL){
+        return monitorNulo;
+    }
+
+    if (percentualDefeituosos < 0 || percentualDefeituosos > 100){
+        return percentualForaRange;
+    }
+
+    if (percentualApagados < 0 || percentualApagados > 100){
+        return percentualForaRange;
+    }
+    
+    if (percentualDefeituosos+percentualApagados > 100){
+        return falhaPercentual;
+    }
+    
     /* decobrir quant de elementos */
     numeroElementosTotais = numeroMaximoColunas*numeroMaximoLinhas;
     numeroElementosDefeituosos = percentualDefeituosos*numeroElementosTotais/100;
@@ -149,6 +184,10 @@ GerarDistribuicaoInicial (tipoPixel monitor [NUMERO_MAXIMO_LINHAS][NUMERO_MAXIMO
 
 
 
+/* -------------------------------------------------------------------------
+----------------------------------------------------------------------------
+---------------------------------------------------------------------------- */
+
 tipoErros
 LimparMonitor (tipoPixel monitor [NUMERO_MAXIMO_LINHAS][NUMERO_MAXIMO_COLUNAS], /* E/S */
                        unsigned numeroMaximoLinhas, /* E */
@@ -156,18 +195,35 @@ LimparMonitor (tipoPixel monitor [NUMERO_MAXIMO_LINHAS][NUMERO_MAXIMO_COLUNAS], 
 
     unsigned short d, m;
     
+    /* verificar tipoErros */
+    if (numeroMaximoLinhas > NUMERO_MAXIMO_LINHAS){
+        return linhaInvalida;
+    }
+    if (numeroMaximoColunas > NUMERO_MAXIMO_COLUNAS){
+        return colunaInvalida;
+    }
+
+    if (monitor == NULL){
+        return monitorNulo;
+    }
+
     /* ir elemento a elemento para conferir se eh valido e apagar apenas estes */
     // pra transformar em 0 e apagar em mostrar matrizes OU transformar em ' ' direto?
     // pq tipo, vai ficar 0s e '.'?
     for (d = 0; d < numeroMaximoLinhas; d++){
         for (m = 0; m < numeroMaximoColunas; m++){
-            if (monitor[d][m] != DEFEITUOSO){
+            if (monitor[d][m] != defeituoso){
                 monitor[d][m] = apagado;
             }
         }
     }
     return ok;
 }
+
+
+/* -------------------------------------------------------------------------
+----------------------------------------------------------------------------
+---------------------------------------------------------------------------- */
 
 tipoErros
 DesenharReta (tipoPixel monitor [NUMERO_MAXIMO_LINHAS][NUMERO_MAXIMO_COLUNAS], /* E/S */
@@ -178,7 +234,7 @@ DesenharReta (tipoPixel monitor [NUMERO_MAXIMO_LINHAS][NUMERO_MAXIMO_COLUNAS], /
                        unsigned linhaB, /* E */
                        unsigned colunaB /* E */){
     /* definir variaveis */
-    unsigned short linhas, colunas, relacao, d, m;
+    unsigned short linhas, colunas, relacao, d, m, i;
 
     /* conferir se caminho defeituoso*/
 
@@ -206,18 +262,22 @@ DesenharReta (tipoPixel monitor [NUMERO_MAXIMO_LINHAS][NUMERO_MAXIMO_COLUNAS], /
     }
 
     /* acendendo a reta */
-    for (d = linhaA; d < numeroMaximoLinhas; d++){
-        for (m = colunaA; m < numeroMaximoColunas; m++){
-            if (monitor[d][m] != DEFEITUOSO){
-                monitor[d][m] ;
-            }
-            else{
-                return retaInvalida;
-            }
-        }
-    }
     
-
+    
+    /* caso 1: pra baixo e pra direita */
+    if (linhaA < linhaB && colunaA < colunaB){
+        relacao = (linhaB - linhaA)/(colunaB - colunaA);
+        for (d = linhaA; d < 1; d++){
+            for (m = colunaA; m < relacao; m++){
+                if (monitor[d][m] != DEFEITUOSO){
+                    monitor[d+1][m] = ACESO;
+                }
+                else{
+                    return retaInvalida;
+                }
+            }
+        }        
+    }
     return ok;
 }
 /* $RCSfile$ */

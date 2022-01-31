@@ -24,8 +24,8 @@ $Log$
 #define DEFEITUOSO                '.'
 
 
-typedef enum {ok = 0, linhaInvalida = 1, colunaInvalida = 2, falhaEspera = 3,
-                                falhaPercentual = 4, retaInvalida = 5} tipoErros;
+typedef enum {ok = 0, linhaInvalida = 1, colunaInvalida = 2, falhaEspera = 3, percentualForaRange = 4,
+                                monitorNulo = 6, retaInvalida = 5, falhaPercentual = 7} tipoErros;
 
 typedef enum {apagado = 0, aceso = 1, defeituoso = -1} tipoPixel;
 
@@ -37,7 +37,7 @@ MostrarMonitor (useconds_t tempoEspera, /* E */
 
 
 tipoErros
-GrerarDistribuicaoInicial (tipoPixel monitor [NUMERO_MAXIMO_LINHAS ][ NUMERO_MAXIMO_COLUNAS], /* E/S */
+GerarDistribuicaoInicial (tipoPixel monitor [NUMERO_MAXIMO_LINHAS ][ NUMERO_MAXIMO_COLUNAS], /* E/S */
                                      unsigned numeroMaximoLinhas /* E */,
                                      unsigned numeroMaximoColunas, /* E */
                                      float percentualDefeituosos, /* E */
