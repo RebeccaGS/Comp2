@@ -13,6 +13,9 @@ $Log$
 */
 
 #include <unistd.h> /* useconds_t */
+#ifdef __linux__
+#define _XOPEN_SOURCE  500
+#endif
 
 #ifndef   _AULA0701_
 #define   _AULA0701_    "@(#)aula0701.h $Revision$"
@@ -24,7 +27,7 @@ $Log$
 #define DEFEITUOSO                '.'
 
 
-typedef enum {ok = 0, linhaInvalida = 1, colunaInvalida = 2, falhaEspera = 3, percentualForaRange = 4,
+typedef enum {ok = 0, linhaInvalida = 1, colunaInvalida = 2, falhaEspera = 3, percentualDefeituososForaRange = 4,percentualApagadosForaRange=8,
                                 monitorNulo = 6, retaInvalida = 5, falhaPercentual = 7} tipoErros;
 
 typedef enum {apagado = 0, aceso = 1, defeituoso = -1} tipoPixel;

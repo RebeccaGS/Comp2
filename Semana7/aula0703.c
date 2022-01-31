@@ -27,6 +27,10 @@ $Date$
 $Log$
 */
 
+#ifdef __linux__
+#define _XOPEN_SOURCE  500
+#endif
+
 #include "aula0701.h"
 
 
@@ -44,6 +48,7 @@ $Log$
 #define BASE_INVALIDA                           2
 #define VALOR_MAXIMO_EXCEDIDO                   3
 #define CONTEM_CARACTERE_INVALIDO               4
+#define ERRO_CHAMADA_FUNCAO                     5
 
 #define EOS				      					'\0'
 
@@ -147,23 +152,28 @@ int main (int argc, char **argv) {
 
     /* enviar argumentos para montagem de matrizprodutos */
     tipoErros retorno = GerarDistribuicaoInicial(monitor,numeroMaximoLinhas, numeroMaximoColunas,percentualDefeituosos, percentualApagados);
-    
-    tipoErros retorno2 = MostrarMonitor(tempoEspera, monitor, numeroMaximoLinhas, numeroMaximoColunas);
-
-    tipoErros retorno3 = LimparMonitor(monitor,numeroMaximoLinhas, numeroMaximoColunas);
-
-    tipoErros retorno4 = MostrarMonitor(tempoEspera, monitor, numeroMaximoLinhas, numeroMaximoColunas);
-
-    /* conferir se o retorno ta ok */
     if (retorno != ok){
         printf ("Erro executando a funcao GerarDistribuicaoInicial. Erro numero %u.\n", retorno);
+        exit(ERRO_CHAMADA_FUNCAO);
     }
 
-    if (retorno2 != ok){
+    tipoErros retorno = MostrarMonitor(tempoEspera, monitor, numeroMaximoLinhas, numeroMaximoColunas);
+    if (retorno != ok){
         printf ("Erro executando a funcao MostrarMonitor. Erro numero %u.\n", retorno);
+        exit(ERRO_CHAMADA_FUNCAO);
     }
 
+    tipoErros retorno = LimparMonitor(monitor,numeroMaximoLinhas, numeroMaximoColunas);
+    if (retorno != ok){
+        printf ("Erro executando a funcao LimparMonitor. Erro numero %u.\n", retorno);
+        exit(ERRO_CHAMADA_FUNCAO);
+    }
 
+    tipoErros retorno = MostrarMonitor(tempoEspera, monitor, numeroMaximoLinhas, numeroMaximoColunas);
+    if (retorno != ok){
+        printf ("Erro executando a funcao MostrarMonitor. Erro numero %u.\n", retorno);
+        exit(ERRO_CHAMADA_FUNCAO);
+    }
     return OK;
 }
 

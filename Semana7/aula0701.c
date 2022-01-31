@@ -1,22 +1,21 @@
 
 // ANOTACOES:
-// COMO RESOLVER RETORNO? BOTAR ISSO EM GERAR DISTRIBUICAO MSM COM UM PRINT E UM EXIT ANTES DE PRINTAR?
 // ver tipoErros (separar falhas percentuais? falta alguma? implementei todas?)
 // SE ERRO COM USLEEP: Adicionar modulos
 //# define CLEAR_SCREEN puts("\x1b[H\x1b[2J")
 // testar outros modulos salvos em Pendencias - system(clear)
-// indef depuracao (?) [PERGUNTAR]
+// ifdef depuracao (?) [PERGUNTAR]
 
 // IR PRA MONITORIA COM:
 // 4 - 01: 01 implementada [CHECK] / testada [CHECK] / tipo erros [CHECK]
 // 5 - 01: 02 implementada [CHECK] / testada [CHECK] / tipo erros [CHECK] 
 // 7 - 01: 03 implementada [CHECK] / testada [CHECK] / tipo erros [CHECK]
-// 1 - 01: 04 implementada
-// 2 - 01: 05 implementada
-// 3 - 01: 06 implementada
-// 6 - 02: testado [CHECK] / erros implementados [CHECK] / Ternario implementado
+// 1 - 01: 04 criar logica [CHECK] / implementada
+// 2 - 01: 05 criar logica         / implementada
+// 3 - 01: 06 criar logica         / implementada
+// 6 - 02: testado [CHECK] / erros implementados [CHECK] / Ternario implementado [CHECK]
 // 9 - 03: testado [CHECK] / erros implementados [CHECK]
-// 8 - BSD e GNU parcialmente feitos
+// 8 - BSD [CHECK]         / GNU [CHECK]
 
 // PERGUNTAR NA MONITORIA:
 // Sobre retornos (percentual em teste tambem? sao os msms, nao devia conferir apenas 1 vez?)
@@ -36,6 +35,10 @@ $Author$
 $Date$
 $Log$
 */
+
+#ifdef __linux__
+#define _XOPEN_SOURCE  500
+#endif
 
 #include "aula0701.h"
 #include <stdlib.h>
@@ -57,15 +60,12 @@ tipoErros MostrarMonitor(useconds_t tempoEspera, /* E */
     unsigned short d;
     unsigned short m;
     int retornoEspera;
-    
-    /* limpa monitor */
-    //CLEAR_SCREEN;
 
     /* verificar se linhas e colunas excedidas */
-    if (numeroMaximoLinhas > NUMERO_MAXIMO_LINHAS){
+    if (numeroMaximoLinhas > NUMERO_MAXIMO_LINHAS || numeroMaximoLinhas == 0){
         return linhaInvalida;
     }
-    if (numeroMaximoColunas > NUMERO_MAXIMO_COLUNAS){
+    if (numeroMaximoColunas > NUMERO_MAXIMO_COLUNAS || numeroMaximoColunas == 0){
         return colunaInvalida;
     }
 
@@ -73,11 +73,8 @@ tipoErros MostrarMonitor(useconds_t tempoEspera, /* E */
         return monitorNulo;
     }
     
-    /* espera tempo / retorna 0 se sucesso e -1, se falha. */
-    retornoEspera = usleep(tempoEspera);
-    if (retornoEspera == -1){ 
-        return falhaEspera;
-    }
+    /* limpa monitor */
+    CLEAR_SCREEN;
     
     /* cobrir numero de linhas iniciais */
     for (d = 0; d < numeroMaximoColunas+4; d++)
@@ -89,7 +86,8 @@ tipoErros MostrarMonitor(useconds_t tempoEspera, /* E */
     for (d = 0; d < numeroMaximoLinhas; d++){
         printf("\n| ");
         for (m = 0; m < numeroMaximoColunas; m++){
-            monitor[d][m] == apagado ? printf("%c",APAGADO) : (monitor[d][m] == aceso ? printf("%c",ACESO) : printf("%c",DEFEITUOSO);
+            monitor[d][m] == apagado ? printf("%c",APAGADO) : (monitor[d][m] == aceso ? printf("%c",ACESO) : printf("%c",DEFEITUOSO));
+        }
         printf(" |\n");
     }
     
@@ -98,7 +96,13 @@ tipoErros MostrarMonitor(useconds_t tempoEspera, /* E */
         {         
             printf("-");
         }
-    printf("\n");    
+    printf("\n");   
+
+    /* espera tempo / retorna 0 se sucesso e -1, se falha. */
+    retornoEspera = usleep(tempoEspera);
+    if (retornoEspera == -1){ 
+        return falhaEspera;
+    } 
     return ok;
 }
 
@@ -121,10 +125,10 @@ GerarDistribuicaoInicial (tipoPixel monitor [NUMERO_MAXIMO_LINHAS][NUMERO_MAXIMO
     tipoPixel auxiliar;
 
     /* verificar tipoErros */
-    if (numeroMaximoLinhas > NUMERO_MAXIMO_LINHAS){
+    if (numeroMaximoLinhas > NUMERO_MAXIMO_LINHAS || numeroMaximoLinhas == 0){
         return linhaInvalida;
     }
-    if (numeroMaximoColunas > NUMERO_MAXIMO_COLUNAS){
+    if (numeroMaximoColunas > NUMERO_MAXIMO_COLUNAS || numeroMaximoColunas == 0){
         return colunaInvalida;
     }
 
@@ -133,11 +137,11 @@ GerarDistribuicaoInicial (tipoPixel monitor [NUMERO_MAXIMO_LINHAS][NUMERO_MAXIMO
     }
 
     if (percentualDefeituosos < 0 || percentualDefeituosos > 100){
-        return percentualForaRange;
+        return percentualDefeituososForaRange;
     }
 
     if (percentualApagados < 0 || percentualApagados > 100){
-        return percentualForaRange;
+        return percentualApagadosForaRange;
     }
     
     if (percentualDefeituosos+percentualApagados > 100){
@@ -196,10 +200,10 @@ LimparMonitor (tipoPixel monitor [NUMERO_MAXIMO_LINHAS][NUMERO_MAXIMO_COLUNAS], 
     unsigned short d, m;
     
     /* verificar tipoErros */
-    if (numeroMaximoLinhas > NUMERO_MAXIMO_LINHAS){
+    if (numeroMaximoLinhas > NUMERO_MAXIMO_LINHAS || numeroMaximoLinhas == 0){
         return linhaInvalida;
     }
-    if (numeroMaximoColunas > NUMERO_MAXIMO_COLUNAS){
+    if (numeroMaximoColunas > NUMERO_MAXIMO_COLUNAS || numeroMaximoColunas == 0){
         return colunaInvalida;
     }
 
@@ -234,51 +238,70 @@ DesenharReta (tipoPixel monitor [NUMERO_MAXIMO_LINHAS][NUMERO_MAXIMO_COLUNAS], /
                        unsigned linhaB, /* E */
                        unsigned colunaB /* E */){
     /* definir variaveis */
-    unsigned short linhas, colunas, relacao, d, m, i;
+    unsigned short modulolinhas;
+    unsigned short modulocolunas;
+    unsigned x,y;
+    float coefAngular;
+    float coefLinear;
 
-    /* conferir se caminho defeituoso*/
-
-    // CONFERIR DIRECAO!!!!!!!!!!!!!!
-    /* achar relacao */
-    if (linhaA > linhaB){
-        linhas = linhaA - linhaB;
+    /* calcular modulo linhas e colunas */
+    if (linhaA-linhaB < 0){
+        modulolinhas = -(linhaA-linhaB);
     }
     else{
-        linhas = linhaB - linhaA;
+        modulolinhas = linhaA-linhaB;
     }
 
-    if (colunaA > colunaB){
-        colunas = colunaA - colunaB;
+    if(colunaA-colunaB < 0){
+        modulocolunas = -(colunaA-colunaB);
     }
     else{
-        colunas = colunaB - colunaA;
-    }
-    
-    if (linhas > colunas){
-        relacao = linhas/colunas;
-    }
-    else{
-        relacao = colunas/linhas;
+        modulocolunas = colunaA-colunaB;
     }
 
-    /* acendendo a reta */
-    
-    
-    /* caso 1: pra baixo e pra direita */
-    if (linhaA < linhaB && colunaA < colunaB){
-        relacao = (linhaB - linhaA)/(colunaB - colunaA);
-        for (d = linhaA; d < 1; d++){
-            for (m = colunaA; m < relacao; m++){
-                if (monitor[d][m] != DEFEITUOSO){
-                    monitor[d+1][m] = ACESO;
+    /* caso 1 */
+    if (modulolinhas > modulocolunas)
+    {
+        coefAngular = (colunaB - colunaA)/(linhaB - linhaA);
+        coefLinear = colunaA - coefAngular*linhaA;
+        if (linhaA < linhaB){
+            for(x = linhaA; x < linhaB; x++){
+                y = coefAngular*x + coefLinear;
+                if(monitor[x][roundf(y)] == defeituoso){
+                    return pixelDefeituoso;
                 }
-                else{
-                    return retaInvalida;
-                }
+                monitor[x][roundf(y)] = aceso;
             }
-        }        
+        }
+        else{
+            for(x = linhaA; x > linhaB; x--){
+                y = coefAngular*x + coefLinear;
+                monitor[x][roundf(y)] = aceso;
+            }
+        }
     }
+    
+    /* caso 2 */
+    else
+    {
+        coefAngular = (linhaB - linhaA)/(colunaB - colunaA);
+        coefLinear = linhaA - coefAngular*colunaA;
+        if (colunaA < colunaB){
+            for(x = colunaA; x < colunaB; x++){
+                y = coefAngular*x + coefLinear;
+                monitor[roundf(x)][y] = aceso;
+            }
+        }
+        else{
+            for(x = colunaA; x > colunaB; x--){
+                y = coefAngular*x + coefLinear;
+                monitor[roundf(x)][y] = aceso;
+            }
+        }
+    }
+
     return ok;
+    
 }
 /* $RCSfile$ */
 
