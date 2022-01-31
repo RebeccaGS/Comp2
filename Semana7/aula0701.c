@@ -13,12 +13,12 @@ $Log$
 */
 
 // ANOTACOES:
-//
+//Da por == quando é letra? tem q vir com um ' '?
 // ver tipoErros (separar falhas percentuais? falta alguma? implementei todas?)
 // SE ERRO COM USLEEP: Adicionar modulos
-//# define CLEAR_SCREEN system ("clear")
+//# define CLEAR_SCREEN puts("\x1b[H\x1b[2J")
 // testar outros modulos salvos em Pendencias - system(clear)
-
+// indef depuracao (?)
 
 #include "aula0701.h"
 #include <stdlib.h>
@@ -28,7 +28,7 @@ $Log$
 #ifdef _WIN32
 # define CLEAR_SCREEN system ("cls")
 #else
-# define CLEAR_SCREEN puts("\x1b[H\x1b[2J")
+# define CLEAR_SCREEN system ("clear")
 #endif
 
 tipoErros MostrarMonitor(useconds_t tempoEspera, /* E */
@@ -42,7 +42,7 @@ tipoErros MostrarMonitor(useconds_t tempoEspera, /* E */
     int retornoEspera;
     
     /* limpa monitor */
-    CLEAR_SCREEN
+    CLEAR_SCREEN;
     
     /* espera tempo / retorna 0 se sucesso e -1, se falha. */
     retornoEspera = usleep(tempoEspera);
@@ -76,7 +76,7 @@ GerarDistribuicaoInicial (tipoPixel monitor [NUMERO_MAXIMO_LINHAS][NUMERO_MAXIMO
                                      float percentualApagados /* E */){
     
     /* definir variaveis */
-    unsigned short numeroElementosTotais
+    unsigned short numeroElementosTotais;
     unsigned short numeroElementosDefeituosos;
     unsigned short numeroElementosAcessos;
     unsigned short numeroElementosApagados;
@@ -122,15 +122,23 @@ GerarDistribuicaoInicial (tipoPixel monitor [NUMERO_MAXIMO_LINHAS][NUMERO_MAXIMO
 }
 
 
-/*
-Inclua, no arquivo "aula0701.h", a definição do protótipo da função LimparMonitor. Esta função deverá receber uma matriz de pixels (tipoPixel) correspondendo ao monitor e suas dimensões reais (numeroMaximoLinhas e numeroMaximoColunas). Se todos os argumentos forem válidos, a função deverá "apagar" todos os pixels do dispositivo (na matriz correspondente). Não deverão ser apagados os pixels marcados como defeituosos. A função deverá retornar ok (ZERO) ou o código de erro correspondente (todas as possíveis condições de erro detectáveis na função).
-*/
 
 tipoErros
-LimparMonitor (tipoPixel monitor [NUMERO_MAXIMO_LINHAS ][ NUMERO_MAXIMO_COLUNAS], /* E/S */
+LimparMonitor (tipoPixel monitor [NUMERO_MAXIMO_LINHAS][NUMERO_MAXIMO_COLUNAS], /* E/S */
                        unsigned numeroMaximoLinhas, /* E */
                        unsigned numeroMaximoColunas){
-
+    
+    /* ir elemento a elemento para conferir se eh valido e apagar apenas estes */
+    // pra transformar em 0 e apagar em mostrar matrizes OU transformar em ' ' direto?
+    // pq tipo, vai ficar 0s e '.'?
+    for (d = 0; d < numeroMaximoLinhas; d++){
+        for (m = 0; m < numeroMaximoColunas; m++){
+            if (monitor[d][m] != DEFEITUOSO){
+            monitor[d][m] == apagado;
+            }
+        }
+    }
+    return ok;
 }
 
 

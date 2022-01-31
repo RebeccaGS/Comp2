@@ -21,6 +21,7 @@ f) distribuição aleatória com as três possibilidades.
 */
 
 //CONFERIR ERROS E TIPO ERROS (VER EM AULA06)
+// PRINTAR USANDO TERNARIO
 
 #include "aula0701.h"
 #include <stdlib.h>
@@ -50,6 +51,8 @@ int main (int argc, char **argv) {
     numeroMaximoColunas = strtoul(argv[i++], &verificacao, 10);
     percentualDefeituosos = strtof (argv[i++], &pEnd);
     percentualApagados = strtof (argv[i++], &pEnd);
+    unsigned short d;
+    unsigned short m;
 
     /* enviar argumentos para montagem de matrizprodutos */
     tipoErros retorno = GerarDistribuicaoInicial(tipoPixel monitor [NUMERO_MAXIMO_LINHAS][NUMERO_MAXIMO_COLUNAS], /* E/S */
