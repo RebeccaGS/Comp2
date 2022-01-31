@@ -13,12 +13,21 @@ $Log$
 */
 
 // ANOTACOES:
-//Da por == quando é letra? tem q vir com um ' '?
 // ver tipoErros (separar falhas percentuais? falta alguma? implementei todas?)
 // SE ERRO COM USLEEP: Adicionar modulos
 //# define CLEAR_SCREEN puts("\x1b[H\x1b[2J")
 // testar outros modulos salvos em Pendencias - system(clear)
-// indef depuracao (?)
+// indef depuracao (?) [PERGUNTAR]
+
+// IR PRA MONITORIA COM:
+// 4 - 01: 01 implementada [CHECK] / testada [CHECK] / tipo erros 
+// 5 - 01: 02 implementada [CHECK] / testada [CHECK] / tipo erros 
+// 7 - 01: 03 implementada [CHECK] / testada         / tipo erros 
+// 1 - 01: 04 implementada
+// 2 - 01: 05 implementada
+// 3 - 01: 06 implementada
+// 6 - 02: com erros corrigidos feitos
+// 8 - BSD e GNU parcialmente feitos
 
 #include "aula0701.h"
 #include <stdlib.h>
@@ -153,7 +162,7 @@ LimparMonitor (tipoPixel monitor [NUMERO_MAXIMO_LINHAS][NUMERO_MAXIMO_COLUNAS], 
     for (d = 0; d < numeroMaximoLinhas; d++){
         for (m = 0; m < numeroMaximoColunas; m++){
             if (monitor[d][m] != DEFEITUOSO){
-            monitor[d][m] == apagado;
+                monitor[d][m] = apagado;
             }
         }
     }
@@ -168,7 +177,48 @@ DesenharReta (tipoPixel monitor [NUMERO_MAXIMO_LINHAS][NUMERO_MAXIMO_COLUNAS], /
                        unsigned colunaA, /* E */
                        unsigned linhaB, /* E */
                        unsigned colunaB /* E */){
+    /* definir variaveis */
+    unsigned short linhas, colunas, relacao, d, m;
+
+    /* conferir se caminho defeituoso*/
+
+    // CONFERIR DIRECAO!!!!!!!!!!!!!!
+    /* achar relacao */
+    if (linhaA > linhaB){
+        linhas = linhaA - linhaB;
+    }
+    else{
+        linhas = linhaB - linhaA;
+    }
+
+    if (colunaA > colunaB){
+        colunas = colunaA - colunaB;
+    }
+    else{
+        colunas = colunaB - colunaA;
+    }
+    
+    if (linhas > colunas){
+        relacao = linhas/colunas;
+    }
+    else{
+        relacao = colunas/linhas;
+    }
+
+    /* acendendo a reta */
+    for (d = linhaA; d < numeroMaximoLinhas; d++){
+        for (m = colunaA; m < numeroMaximoColunas; m++){
+            if (monitor[d][m] != DEFEITUOSO){
+                monitor[d][m] ;
+            }
+            else{
+                return retaInvalida;
+            }
+        }
+    }
     
 
+    return ok;
 }
 /* $RCSfile$ */
+
