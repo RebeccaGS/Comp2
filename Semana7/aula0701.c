@@ -42,7 +42,7 @@ tipoErros MostrarMonitor(useconds_t tempoEspera, /* E */
     int retornoEspera;
     
     /* limpa monitor */
-    CLEAR_SCREEN;
+    //CLEAR_SCREEN;
     
     /* espera tempo / retorna 0 se sucesso e -1, se falha. */
     retornoEspera = usleep(tempoEspera);
@@ -50,21 +50,35 @@ tipoErros MostrarMonitor(useconds_t tempoEspera, /* E */
         return falhaEspera;
     }
     
+    /* cobrir numero de linhas iniciais */
+    for (d = 0; d < numeroMaximoColunas+4; d++)
+        {         
+            printf("-");
+        }
+    
     /* reescreve matriz para 'o', ' ' e '.' ao inves de 1, 0 e -1*/
     for (d = 0; d < numeroMaximoLinhas; d++){
+        printf("\n| ");
         for (m = 0; m < numeroMaximoColunas; m++){
             if (monitor[d][m] == apagado){
-            monitor[d][m] == APAGADO;
+                printf("%c",APAGADO);
             }
-            elif (monitor[d][m] == aceso){
-                monitor[d][m] == ACESO;
+            else if (monitor[d][m] == aceso){
+                printf("%c",ACESO);
             }
-            elif (monitor[d][m] == defeituoso){
-                monitor[d][m] == DEFEITUOSO;
+            else if (monitor[d][m] == defeituoso){
+                printf("%c",DEFEITUOSO);
             }
         }
+        printf(" |\n");
     }
     
+    /* cobrir numero de colunas finais */
+    for (d = 0; d < numeroMaximoColunas+4; d++)
+        {         
+            printf("-");
+        }
+    printf("\n");    
     return ok;
 }
 
@@ -78,32 +92,33 @@ GerarDistribuicaoInicial (tipoPixel monitor [NUMERO_MAXIMO_LINHAS][NUMERO_MAXIMO
     /* definir variaveis */
     unsigned short numeroElementosTotais;
     unsigned short numeroElementosDefeituosos;
-    unsigned short numeroElementosAcessos;
+    unsigned short numeroElementosAcesos;
     unsigned short numeroElementosApagados;
     int linhaSorteada;
     int colunaSorteada;
     unsigned short d;
     unsigned short m;
+    tipoPixel auxiliar;
 
     /* decobrir quant de elementos */
     numeroElementosTotais = numeroMaximoColunas*numeroMaximoLinhas;
     numeroElementosDefeituosos = percentualDefeituosos*numeroElementosTotais/100;
     numeroElementosApagados = percentualApagados*numeroElementosTotais/100;
-    numeroElementosAcessos = numeroElementosTotais - numeroElementosDefeituosos - numeroElementosApagados;
+    numeroElementosAcesos = numeroElementosTotais - numeroElementosDefeituosos - numeroElementosApagados;
     
     /* adicionar valores a elementos da matriz original */
     for (d = 0; d < numeroMaximoLinhas; d++){
         for (m = 0; m < numeroMaximoColunas; m++){
             if (numeroElementosDefeituosos>0){
-                monitor[d][m] == defeituoso;
+                monitor[d][m] = defeituoso;
                 numeroElementosDefeituosos--;
             }
-            elif (numeroElementosAcessos>0){
-                monitor[d][m] == aceso;
-                numeroElementosAcessos--;
+            else if (numeroElementosAcesos>0){
+                monitor[d][m] = aceso;
+                numeroElementosAcesos--;
             }
-            elif (numeroElementosApagados>0){
-                monitor[d][m] == apagado;
+            else if (numeroElementosApagados>0){
+                monitor[d][m] = apagado;
                 numeroElementosApagados--;
             }
         }
@@ -112,9 +127,11 @@ GerarDistribuicaoInicial (tipoPixel monitor [NUMERO_MAXIMO_LINHAS][NUMERO_MAXIMO
     /* tornar aleatorio */
     for (d = 0; d < numeroMaximoLinhas; d++){
         for (m = 0; m < numeroMaximoColunas; m++){
-                linhaSorteada = d + rand() % (numeroMaximoLinhas - d + 1);
-                colunaSorteada = m + rand() % (numeroMaximoColunas - m + 1);
+                linhaSorteada = rand() % (numeroMaximoLinhas);
+                colunaSorteada = rand() % (numeroMaximoColunas);
+                auxiliar = monitor[d][m];
                 monitor[d][m] = monitor[linhaSorteada][colunaSorteada];
+                monitor[linhaSorteada][colunaSorteada] = auxiliar;
         }
     }    
 
@@ -127,6 +144,8 @@ tipoErros
 LimparMonitor (tipoPixel monitor [NUMERO_MAXIMO_LINHAS][NUMERO_MAXIMO_COLUNAS], /* E/S */
                        unsigned numeroMaximoLinhas, /* E */
                        unsigned numeroMaximoColunas){
+
+    unsigned short d, m;
     
     /* ir elemento a elemento para conferir se eh valido e apagar apenas estes */
     // pra transformar em 0 e apagar em mostrar matrizes OU transformar em ' ' direto?
@@ -141,5 +160,15 @@ LimparMonitor (tipoPixel monitor [NUMERO_MAXIMO_LINHAS][NUMERO_MAXIMO_COLUNAS], 
     return ok;
 }
 
+tipoErros
+DesenharReta (tipoPixel monitor [NUMERO_MAXIMO_LINHAS][NUMERO_MAXIMO_COLUNAS], /* E/S */
+                       unsigned numeroMaximoLinhas, /* E */
+                       unsigned numeroMaximoColunas, /* E */
+                       unsigned linhaA, /* E */
+                       unsigned colunaA, /* E */
+                       unsigned linhaB, /* E */
+                       unsigned colunaB /* E */){
+    
 
+}
 /* $RCSfile$ */

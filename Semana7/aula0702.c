@@ -23,7 +23,7 @@ f) distribuição aleatória com as três possibilidades.
 //CONFERIR ERROS E TIPO ERROS (VER EM AULA06)
 // PRINTAR USANDO TERNARIO
 
-#include "aula0701.h"
+#include "aula0701.c"
 #include <stdlib.h>
 #include <unistd.h> /* useconds_t */
 #include <stdio.h>
@@ -35,8 +35,6 @@ int main (int argc, char **argv) {
     /* definir variaveis usadas */
     useconds_t tempoEspera;
     tipoPixel monitor [NUMERO_MAXIMO_LINHAS][NUMERO_MAXIMO_COLUNAS];
-    unsigned numeroMaximoLinhas;
-    unsigned numeroMaximoColunas;
     unsigned numeroMaximoLinhas;
     unsigned numeroMaximoColunas;
     float percentualDefeituosos;
@@ -55,34 +53,9 @@ int main (int argc, char **argv) {
     unsigned short m;
 
     /* enviar argumentos para montagem de matrizprodutos */
-    tipoErros retorno = GerarDistribuicaoInicial(tipoPixel monitor [NUMERO_MAXIMO_LINHAS][NUMERO_MAXIMO_COLUNAS], /* E/S */
-                                     unsigned numeroMaximoLinhas,unsigned numeroMaximoColunas,
-                                     float percentualDefeituosos,float percentualApagados);
+    tipoErros retorno = GerarDistribuicaoInicial(monitor,numeroMaximoLinhas, numeroMaximoColunas,percentualDefeituosos, percentualApagados);
     
-    tipoErros retorno2 = MostrarMonitor(useconds_t tempoEspera,tipoPixel monitor [NUMERO_MAXIMO_LINHAS][NUMERO_MAXIMO_COLUNAS],
-                        unsigned numeroMaximoLinhas,unsigned numeroMaximoColunas);
-    
-    /* cobrir numero de linhas iniciais */
-    for (d = 0; d < numeroMaximoColunas+4; d++)
-        {         
-            printf("-");
-        }
-    
-    for (d = 0; d < numeroMaximoLinhas; d++){
-        printf("\n| ");
-        for (m = 0; m < numeroMaximoColunas; m++){
-            printf("%.5lf ",monitor[d][m]);
-        }
-        printf(" |\n");
-    }
-
-    /* cobrir numero de colunas finais */
-    for (d = 0; d < numeroMaximoColunas+4; d++)
-        {         
-            printf("-");
-        }
-    printf("\n");
-    
+    tipoErros retorno2 = MostrarMonitor(tempoEspera, monitor, numeroMaximoLinhas, numeroMaximoColunas);
 
     return OK;
 }

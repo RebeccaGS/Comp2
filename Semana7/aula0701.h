@@ -47,6 +47,16 @@ tipoErros
 LimparMonitor (tipoPixel monitor [NUMERO_MAXIMO_LINHAS ][ NUMERO_MAXIMO_COLUNAS], /* E/S */
                        unsigned numeroMaximoLinhas, /* E */
                        unsigned numeroMaximoColunas);
+
+tipoErros
+DesenharReta (tipoPixel monitor [NUMERO_MAXIMO_LINHAS ][ NUMERO_MAXIMO_COLUNAS], /* E/S */
+                       unsigned numeroMaximoLinhas, /* E */
+                       unsigned numeroMaximoColunas, /* E */
+                       unsigned linhaA, /* E */
+                       unsigned colunaA, /* E */
+                       unsigned linhaB, /* E */
+                       unsigned colunaB /* E */);
+                       
 #endif
 
 /* $RCSfile$ */
