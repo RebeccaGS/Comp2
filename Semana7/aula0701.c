@@ -22,6 +22,8 @@
 //
 //
 
+// .c nao .h
+
 /*
 Universidade Federal do Rio de Janeiro
 Escola Politecnica
@@ -44,6 +46,7 @@ $Log$
 #include <stdlib.h>
 #include <unistd.h> /* useconds_t */
 #include <stdio.h>
+#include <math.h>
 
 #ifdef _WIN32
 # define CLEAR_SCREEN system ("cls")
@@ -74,7 +77,7 @@ tipoErros MostrarMonitor(useconds_t tempoEspera, /* E */
     }
     
     /* limpa monitor */
-    CLEAR_SCREEN;
+    //CLEAR_SCREEN;
     
     /* cobrir numero de linhas iniciais */
     for (d = 0; d < numeroMaximoColunas+4; d++)
@@ -238,45 +241,56 @@ DesenharReta (tipoPixel monitor [NUMERO_MAXIMO_LINHAS][NUMERO_MAXIMO_COLUNAS], /
                        unsigned linhaB, /* E */
                        unsigned colunaB /* E */){
     /* definir variaveis */
-    unsigned short modulolinhas;
-    unsigned short modulocolunas;
+    unsigned modulolinhas;
+    unsigned modulocolunas;
     unsigned x,y;
     float coefAngular;
     float coefLinear;
-
+    linhaA--;
+    linhaB--;
+    colunaA--;
+    colunaB--;
+    
     /* calcular modulo linhas e colunas */
-    if (linhaA-linhaB < 0){
-        modulolinhas = -(linhaA-linhaB);
+    if (linhaA < linhaB){
+        modulolinhas = linhaB-linhaA;
     }
     else{
         modulolinhas = linhaA-linhaB;
     }
 
-    if(colunaA-colunaB < 0){
-        modulocolunas = -(colunaA-colunaB);
+    if(colunaA < colunaB){
+        modulocolunas = colunaB-colunaA;
     }
     else{
         modulocolunas = colunaA-colunaB;
     }
-
+    
     /* caso 1 */
     if (modulolinhas > modulocolunas)
     {
-        coefAngular = (colunaB - colunaA)/(linhaB - linhaA);
+        coefAngular = (modulocolunas)/(modulolinhas);
         coefLinear = colunaA - coefAngular*linhaA;
         if (linhaA < linhaB){
-            for(x = linhaA; x < linhaB; x++){
-                y = coefAngular*x + coefLinear;
-                if(monitor[x][roundf(y)] == defeituoso){
+            for(x = linhaA; x < linhaB+1; x++){
+                y = roundf(coefAngular*x + coefLinear);
+                if(monitor[x][y] == defeituoso){
                     return pixelDefeituoso;
                 }
-                monitor[x][roundf(y)] = aceso;
+                printf("\nmonitor antes aceso: %c | ",monitor[x][y]);
+                monitor[x][y] = aceso;
+                printf("monitor depois aceso: %c\n",monitor[x][y]);
             }
         }
         else{
-            for(x = linhaA; x > linhaB; x--){
-                y = coefAngular*x + coefLinear;
-                monitor[x][roundf(y)] = aceso;
+            for(x = linhaA; x > linhaB+1; x--){
+                y = roundf(coefAngular*x + coefLinear);
+                if(monitor[x][(y)] == defeituoso){
+                    return pixelDefeituoso;
+                }
+                printf("\nmonitor antes aceso: %c | ",monitor[x][y]);
+                monitor[x][y] = aceso;
+                printf("monitor depois aceso: %c\n",monitor[x][y]);
             }
         }
     }
@@ -284,18 +298,28 @@ DesenharReta (tipoPixel monitor [NUMERO_MAXIMO_LINHAS][NUMERO_MAXIMO_COLUNAS], /
     /* caso 2 */
     else
     {
-        coefAngular = (linhaB - linhaA)/(colunaB - colunaA);
+        coefAngular = (modulolinhas)/(modulocolunas);
         coefLinear = linhaA - coefAngular*colunaA;
         if (colunaA < colunaB){
-            for(x = colunaA; x < colunaB; x++){
-                y = coefAngular*x + coefLinear;
-                monitor[roundf(x)][y] = aceso;
+            for(y = colunaA; y < colunaB+1; y++){
+                x = roundf(coefAngular*y + coefLinear);
+                if(monitor[x][y] == defeituoso){
+                    return pixelDefeituoso;
+                }
+                printf("\nmonitor antes aceso: %c | ",monitor[x][y]);
+                monitor[x][y] = aceso;
+                printf("monitor depois aceso: %c\n",monitor[x][y]);
             }
         }
         else{
-            for(x = colunaA; x > colunaB; x--){
-                y = coefAngular*x + coefLinear;
-                monitor[roundf(x)][y] = aceso;
+            for(y = colunaA; y > colunaB+1; y--){
+                x = roundf(coefAngular*y + coefLinear);
+                if(monitor[x][y] == defeituoso){
+                    return pixelDefeituoso;
+                }
+                printf("\nmonitor antes aceso: %c | ",monitor[x][y]);
+                monitor[x][y] = aceso;
+                printf("monitor depois aceso: %c\n",monitor[x][y]);
             }
         }
     }

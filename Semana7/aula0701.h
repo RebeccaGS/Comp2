@@ -28,7 +28,7 @@ $Log$
 
 
 typedef enum {ok = 0, linhaInvalida = 1, colunaInvalida = 2, falhaEspera = 3, percentualDefeituososForaRange = 4,percentualApagadosForaRange=8,
-                                monitorNulo = 6, retaInvalida = 5, falhaPercentual = 7} tipoErros;
+                                monitorNulo = 6, retaInvalida = 5, falhaPercentual = 7, pixelDefeituoso = 8} tipoErros;
 
 typedef enum {apagado = 0, aceso = 1, defeituoso = -1} tipoPixel;
 

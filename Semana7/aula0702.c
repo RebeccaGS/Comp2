@@ -159,9 +159,9 @@ int main (int argc, char **argv) {
         exit(ERRO_CHAMADA_FUNCAO);
     }
 
-    tipoErros retorno2 = MostrarMonitor(tempoEspera, monitor, numeroMaximoLinhas, numeroMaximoColunas);
+    retorno = MostrarMonitor(tempoEspera, monitor, numeroMaximoLinhas, numeroMaximoColunas);
     /* conferir se o retorno ta ok */
-    if (retorno2 != ok){
+    if (retorno != ok){
         printf ("Erro executando a funcao MostrarMonitor. Erro numero %u.\n", retorno);
         exit(ERRO_CHAMADA_FUNCAO);
     }

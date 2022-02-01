@@ -157,19 +157,19 @@ int main (int argc, char **argv) {
         exit(ERRO_CHAMADA_FUNCAO);
     }
 
-    tipoErros retorno = MostrarMonitor(tempoEspera, monitor, numeroMaximoLinhas, numeroMaximoColunas);
+    retorno = MostrarMonitor(tempoEspera, monitor, numeroMaximoLinhas, numeroMaximoColunas);
     if (retorno != ok){
         printf ("Erro executando a funcao MostrarMonitor. Erro numero %u.\n", retorno);
         exit(ERRO_CHAMADA_FUNCAO);
     }
 
-    tipoErros retorno = LimparMonitor(monitor,numeroMaximoLinhas, numeroMaximoColunas);
+    retorno = LimparMonitor(monitor,numeroMaximoLinhas, numeroMaximoColunas);
     if (retorno != ok){
         printf ("Erro executando a funcao LimparMonitor. Erro numero %u.\n", retorno);
         exit(ERRO_CHAMADA_FUNCAO);
     }
 
-    tipoErros retorno = MostrarMonitor(tempoEspera, monitor, numeroMaximoLinhas, numeroMaximoColunas);
+    retorno = MostrarMonitor(tempoEspera, monitor, numeroMaximoLinhas, numeroMaximoColunas);
     if (retorno != ok){
         printf ("Erro executando a funcao MostrarMonitor. Erro numero %u.\n", retorno);
         exit(ERRO_CHAMADA_FUNCAO);
