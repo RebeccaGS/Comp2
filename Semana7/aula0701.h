@@ -29,7 +29,7 @@ $Log$
 
 typedef enum {ok = 0, linhaInvalida = 1, colunaInvalida = 2, falhaEspera = 3, percentualDefeituososForaRange = 4,percentualApagadosForaRange=5,
                                 monitorNulo = 6, retaInvalida = 7, falhaPercentual = 8, pixelDefeituoso = 9, linhaAForaRange = 10,
-                                colunaAForaRange = 11,linhaBForaRange = 12, colunaBForaRange = 13} tipoErros;
+                                colunaAForaRange = 11,linhaBForaRange = 12, colunaBForaRange = 13, linhasNulas = 14, colunasNulas = 15} tipoErros;
 
 typedef enum {apagado = 0, aceso = 1, defeituoso = -1} tipoPixel;
 
@@ -80,3 +80,4 @@ PreencherPoligono (useconds_t tempoEspera, /* E */
 #endif
 
 /* $RCSfile$ */
+

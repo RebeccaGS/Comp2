@@ -17,7 +17,7 @@ $Log$
 #endif
 
 
-#include "aula0701.c"
+#include "aula0701.h"
 #include <stdlib.h>
 #include <unistd.h> /* useconds_t */
 #include <stdio.h>
@@ -108,7 +108,7 @@ int main (int argc, char **argv) {
 
     percentualDefeituosos = strtof (argv[i++], &pEnd);
     if (errno == ERANGE){
-  		printf ("Valor fornecido para percentual de defeituosos ultrapassa o valor maximo permitido para unsigned short (%d)\n",FLT_MAX);
+  		printf ("Valor fornecido para percentual de defeituosos ultrapassa o valor maximo permitido para unsigned short (%f)\n",FLT_MAX);
         exit (VALOR_MAXIMO_EXCEDIDO);
   	}
     
@@ -120,7 +120,7 @@ int main (int argc, char **argv) {
     
     percentualApagados = strtof (argv[i++], &pEnd);
     if (errno == ERANGE){
-  		printf ("Valor fornecido para percentual de defeituosos ultrapassa o valor maximo permitido para unsigned short (%d)\n",FLT_MAX);
+  		printf ("Valor fornecido para percentual de defeituosos ultrapassa o valor maximo permitido para unsigned short (%f)\n",FLT_MAX);
         exit (VALOR_MAXIMO_EXCEDIDO);
   	}
     
@@ -196,40 +196,34 @@ int main (int argc, char **argv) {
 
     /* enviar argumentos para montagem de matrizprodutos */
     tipoErros retorno = GerarDistribuicaoInicial(monitor,numeroMaximoLinhas, numeroMaximoColunas,percentualDefeituosos, percentualApagados);
-    printf("1\n");
     if (retorno != ok){
         printf ("Erro executando a funcao GerarDistribuicaoInicial. Erro numero %u.\n", retorno);
         exit(ERRO_CHAMADA_FUNCAO);
     }
 
     retorno = MostrarMonitor(tempoEspera, monitor, numeroMaximoLinhas, numeroMaximoColunas);
-    printf("2\n");
     if (retorno != ok){
         printf ("Erro executando a funcao MostrarMonitor. Erro numero %u.\n", retorno);
         exit(ERRO_CHAMADA_FUNCAO);
     }
 
     retorno = LimparMonitor(monitor,numeroMaximoLinhas, numeroMaximoColunas);
-    printf("3\n");
     if (retorno != ok){
         printf ("Erro executando a funcao LimparMonitor. Erro numero %u.\n", retorno);
         exit(ERRO_CHAMADA_FUNCAO);
     }
 
     retorno = DesenharReta (monitor,numeroMaximoLinhas,numeroMaximoColunas,linhaA,colunaA,linhaB,colunaB);
-    printf("4\n");
     if (retorno != ok){
         printf ("Erro executando a funcao MostrarMonitor. Erro numero %u.\n", retorno);
         exit(ERRO_CHAMADA_FUNCAO);
     }
 
     retorno = MostrarMonitor(tempoEspera, monitor, numeroMaximoLinhas, numeroMaximoColunas);
-    printf("5\n");
     if (retorno != ok){
         printf ("Erro executando a funcao MostrarMonitor. Erro numero %u.\n", retorno);
         exit(ERRO_CHAMADA_FUNCAO);
     }
-    printf("6\n");
 
     return OK;
 }

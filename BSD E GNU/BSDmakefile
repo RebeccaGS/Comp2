@@ -317,23 +317,23 @@ aula0606: $(AULA0606OBJS)
 
  
 aula0702: $(AULA0702OBJS) $(LIBMONITOR) 
-	$(LD) $(LFLAGS) -o $@ $(AULA0702OBJS) -L. -libmonitor.a
+	$(LD) $(LFLAGS) -o $@ $(AULA0702OBJS) -L. -lmonitor
 	cp $@ $@-$(OS)-$(CC)-$(DIALETO)   
 
 aula0703: $(AULA0703OBJS) $(LIBMONITOR) 
-	$(LD) $(LFLAGS) -o $@ $(AULA0703OBJS) -L. -libmonitor.a
+	$(LD) $(LFLAGS) -o $@ $(AULA0703OBJS) -L. -lmonitor
 	cp $@ $@-$(OS)-$(CC)-$(DIALETO)   
 
 aula0704: $(AULA0704OBJS) $(LIBMONITOR) 
-	$(LD) $(LFLAGS) -o $@ $(AULA0704OBJS) -L. -libmonitor.a
+	$(LD) $(LFLAGS) -o $@ $(AULA0704OBJS) -L. -lmonitor
 	cp $@ $@-$(OS)-$(CC)-$(DIALETO)   
 
 aula0705: $(AULA0705OBJS) $(LIBMONITOR) 
-	$(LD) $(LFLAGS) -o $@ $(AULA0705OBJS) -L. -libmonitor.a
+	$(LD) $(LFLAGS) -o $@ $(AULA0705OBJS) -L. -lmonitor
 	cp $@ $@-$(OS)-$(CC)-$(DIALETO)   
  
 aula0706: $(AULA0706OBJS) $(LIBMONITOR) 
-	$(LD) $(LFLAGS) -o $@ $(AULA0706OBJS) -L. -libmonitor.a
+	$(LD) $(LFLAGS) -o $@ $(AULA0706OBJS) -L. -lmonitor
 	cp $@ $@-$(OS)-$(CC)-$(DIALETO) 
             
  
