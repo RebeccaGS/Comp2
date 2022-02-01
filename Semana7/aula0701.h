@@ -27,8 +27,9 @@ $Log$
 #define DEFEITUOSO                '.'
 
 
-typedef enum {ok = 0, linhaInvalida = 1, colunaInvalida = 2, falhaEspera = 3, percentualDefeituososForaRange = 4,percentualApagadosForaRange=8,
-                                monitorNulo = 6, retaInvalida = 5, falhaPercentual = 7, pixelDefeituoso = 8} tipoErros;
+typedef enum {ok = 0, linhaInvalida = 1, colunaInvalida = 2, falhaEspera = 3, percentualDefeituososForaRange = 4,percentualApagadosForaRange=5,
+                                monitorNulo = 6, retaInvalida = 7, falhaPercentual = 8, pixelDefeituoso = 9, linhaAForaRange = 10,
+                                colunaAForaRange = 11,linhaBForaRange = 12, colunaBForaRange = 13} tipoErros;
 
 typedef enum {apagado = 0, aceso = 1, defeituoso = -1} tipoPixel;
 
@@ -59,6 +60,22 @@ DesenharReta (tipoPixel monitor [NUMERO_MAXIMO_LINHAS ][ NUMERO_MAXIMO_COLUNAS],
                        unsigned colunaA, /* E */
                        unsigned linhaB, /* E */
                        unsigned colunaB /* E */);
+
+tipoErros
+DesenharPoligono (tipoPixel monitor [NUMERO_MAXIMO_LINHAS ][ NUMERO_MAXIMO_COLUNAS], /* E/S */
+                             unsigned numeroMaximoLinhas, /* E */
+                             unsigned numeroMaximoColunas, /* E */
+                             unsigned numeroVertices, /* E */
+                             unsigned linhasVertices [NUMERO_MAXIMO_LINHAS], /* E */
+                             unsigned colunasVertices [NUMERO_MAXIMO_COLUNAS] /* E */);
+
+tipoErros
+PreencherPoligono (useconds_t tempoEspera, /* E */
+                             tipoPixel monitor [NUMERO_MAXIMO_LINHAS ][ NUMERO_MAXIMO_COLUNAS], /* E/S */
+                             unsigned numeroMaximoLinhas, /* E */
+                             unsigned numeroMaximoColunas, /* E */
+                             unsigned linha, /* E */
+                             unsigned coluna /* E */ );
                        
 #endif
 

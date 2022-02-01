@@ -10,12 +10,17 @@
 // 4 - 01: 01 implementada [CHECK] / testada [CHECK] / tipo erros [CHECK]
 // 5 - 01: 02 implementada [CHECK] / testada [CHECK] / tipo erros [CHECK] 
 // 7 - 01: 03 implementada [CHECK] / testada [CHECK] / tipo erros [CHECK]
-// 1 - 01: 04 criar logica [CHECK] / implementada
-// 2 - 01: 05 criar logica         / implementada
-// 3 - 01: 06 criar logica         / implementada
 // 6 - 02: testado [CHECK] / erros implementados [CHECK] / Ternario implementado [CHECK]
-// 9 - 03: testado [CHECK] / erros implementados [CHECK]
-// 8 - BSD [CHECK]         / GNU [CHECK]
+// 8 - BSD [CHECK]         / GNU [CHECK] / testado
+
+// 01: 04 criar logica [CHECK] / implementada [CHECK] / funcional         / tipo erros
+// 01: 05 criar logica [CHECK] / implementada [CHECK] / funcional         / tipo erros
+// 01: 06 criar logica [CHECK] / implementada [CHECK] / funcional         / tipo erros
+// 03: testado [CHECK] / erros implementados [CHECK]
+// 04: testado [CHECK] / erros implementados [CHECK] / funcional
+// 05: testado         / erros implementados         / funcional
+// 06: testado         / erros implementados         / funcional
+
 
 // PERGUNTAR NA MONITORIA:
 // Sobre retornos (percentual em teste tambem? sao os msms, nao devia conferir apenas 1 vez?)
@@ -251,6 +256,37 @@ DesenharReta (tipoPixel monitor [NUMERO_MAXIMO_LINHAS][NUMERO_MAXIMO_COLUNAS], /
     colunaA--;
     colunaB--;
     
+    printf("\n\nlinhaA: %d, colunaA %d\n\n",linhaA,colunaA);
+    printf("\n\nlinhaB: %d, colunaB %d\n\n",linhaB,colunaB);
+
+    /* verificar tipoErros */
+    if (numeroMaximoLinhas > NUMERO_MAXIMO_LINHAS || numeroMaximoLinhas == 0){
+        return linhaInvalida;
+    }
+    if (numeroMaximoColunas > NUMERO_MAXIMO_COLUNAS || numeroMaximoColunas == 0){
+        return colunaInvalida;
+    }
+
+    if (monitor == NULL){
+        return monitorNulo;
+    }
+
+    if (linhaA < 0 || linhaA > numeroMaximoLinhas){
+        return linhaAForaRange;
+    }
+
+    if (colunaA < 0 || colunaA > numeroMaximoColunas){
+        return colunaAForaRange;
+    }
+
+    if (linhaB < 0 || linhaB > numeroMaximoLinhas){
+        return linhaBForaRange;
+    }
+
+    if (colunaB < 0 || colunaB > numeroMaximoColunas){
+        return colunaBForaRange;
+    }
+
     /* calcular modulo linhas e colunas */
     if (linhaA < linhaB){
         modulolinhas = linhaB-linhaA;
@@ -274,23 +310,19 @@ DesenharReta (tipoPixel monitor [NUMERO_MAXIMO_LINHAS][NUMERO_MAXIMO_COLUNAS], /
         if (linhaA < linhaB){
             for(x = linhaA; x < linhaB+1; x++){
                 y = roundf(coefAngular*x + coefLinear);
-                if(monitor[x][y] == defeituoso){
+                if(monitor[x-1][y-1] == defeituoso){
                     return pixelDefeituoso;
                 }
-                printf("\nmonitor antes aceso: %c | ",monitor[x][y]);
                 monitor[x][y] = aceso;
-                printf("monitor depois aceso: %c\n",monitor[x][y]);
             }
         }
         else{
             for(x = linhaA; x > linhaB+1; x--){
                 y = roundf(coefAngular*x + coefLinear);
-                if(monitor[x][(y)] == defeituoso){
+                if(monitor[x-1][(y-1)] == defeituoso){
                     return pixelDefeituoso;
                 }
-                printf("\nmonitor antes aceso: %c | ",monitor[x][y]);
                 monitor[x][y] = aceso;
-                printf("monitor depois aceso: %c\n",monitor[x][y]);
             }
         }
     }
@@ -298,17 +330,17 @@ DesenharReta (tipoPixel monitor [NUMERO_MAXIMO_LINHAS][NUMERO_MAXIMO_COLUNAS], /
     /* caso 2 */
     else
     {
-        coefAngular = (modulolinhas)/(modulocolunas);
-        coefLinear = linhaA - coefAngular*colunaA;
+        coefAngular = (float)modulolinhas/(float)modulocolunas;
+        printf("linhaA: %d, colunaA %d, (float)linhaA: %f, coefAngular: %f, (float)colunaA: %f",linhaA,colunaA,(float)linhaA,coefAngular,(float)colunaA);
+        coefLinear = (float)linhaA - coefAngular*(float)colunaA;
+        printf("\ncoefAngular: %f \ncoeflinear: %f\n",coefAngular,coefLinear);
         if (colunaA < colunaB){
             for(y = colunaA; y < colunaB+1; y++){
                 x = roundf(coefAngular*y + coefLinear);
                 if(monitor[x][y] == defeituoso){
                     return pixelDefeituoso;
                 }
-                printf("\nmonitor antes aceso: %c | ",monitor[x][y]);
                 monitor[x][y] = aceso;
-                printf("monitor depois aceso: %c\n",monitor[x][y]);
             }
         }
         else{
@@ -317,15 +349,73 @@ DesenharReta (tipoPixel monitor [NUMERO_MAXIMO_LINHAS][NUMERO_MAXIMO_COLUNAS], /
                 if(monitor[x][y] == defeituoso){
                     return pixelDefeituoso;
                 }
-                printf("\nmonitor antes aceso: %c | ",monitor[x][y]);
                 monitor[x][y] = aceso;
-                printf("monitor depois aceso: %c\n",monitor[x][y]);
             }
         }
     }
 
-    return ok;
-    
+    return ok;    
 }
+
+
+/* -------------------------------------------------------------------------
+----------------------------------------------------------------------------
+---------------------------------------------------------------------------- */
+
+tipoErros
+DesenharPoligono (tipoPixel monitor [NUMERO_MAXIMO_LINHAS ][ NUMERO_MAXIMO_COLUNAS], /* E/S */
+                             unsigned numeroMaximoLinhas, /* E */
+                             unsigned numeroMaximoColunas, /* E */
+                             unsigned numeroVertices, /* E */
+                             unsigned linhasVertices [NUMERO_MAXIMO_LINHAS], /* E */
+                             unsigned colunasVertices [NUMERO_MAXIMO_COLUNAS] /* E */){
+    unsigned short i;
+    //conferir se indices estao corretos
+    //tipoERROS
+    for (i = 0; i<numeroVertices; i++){
+        DesenharReta (monitor,numeroMaximoLinhas,numeroMaximoColunas,linhasVertices[i],colunasVertices[i],linhasVertices[i+1],colunasVertices[i+1]);
+    }
+
+    DesenharReta (monitor,numeroMaximoLinhas,numeroMaximoColunas,linhasVertices[0],colunasVertices[0],linhasVertices[numeroVertices],colunasVertices[numeroVertices]);
+
+    return ok;    
+}
+
+
+
+tipoErros
+PreencherPoligono (useconds_t tempoEspera, /* E */
+                             tipoPixel monitor [NUMERO_MAXIMO_LINHAS ][ NUMERO_MAXIMO_COLUNAS], /* E/S */
+                             unsigned numeroMaximoLinhas, /* E */
+                             unsigned numeroMaximoColunas, /* E */
+                             unsigned linha, /* E */
+                             unsigned coluna /* E */ ){
+    //tipoERROS
+    if (monitor[linha][coluna] == aceso){
+        pass();
+    }
+    else{
+        monitor[linha][coluna] = aceso;
+        /* esquerda, direita, abaixo e acima do pixel em questão - nesta ordem */
+        if (monitor[linha][coluna-1] != aceso){
+            monitor[linha][coluna-1] = aceso;
+            PreencherPoligono (tempoEspera,monitor,numeroMaximoLinhas,numeroMaximoColunas,linha,coluna-1);
+        }
+        if (monitor[linha][coluna+1] != aceso){
+            monitor[linha][coluna+1] = aceso;
+            PreencherPoligono (tempoEspera,monitor,numeroMaximoLinhas,numeroMaximoColunas,linha,coluna+1);
+        }
+        if (monitor[linha+1][coluna] != aceso){
+            monitor[linha+1][coluna] = aceso;
+            PreencherPoligono (tempoEspera,monitor,numeroMaximoLinhas,numeroMaximoColunas,linha+1,coluna);
+        }
+        if (monitor[linha-1][coluna] != aceso){
+            monitor[linha-1][coluna] = aceso;
+            PreencherPoligono (tempoEspera,monitor,numeroMaximoLinhas,numeroMaximoColunas,linha-1,coluna);
+        }
+    }
+    return ok;
+}
+
 /* $RCSfile$ */
 
