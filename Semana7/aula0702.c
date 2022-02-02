@@ -1,24 +1,3 @@
-/*
-
-Crie o arquivo "aula0702.c" contendo o o programa de testes para as funções GerarDistribuicaoInicial e MostrarMonitor.
-O programa deverá receber,  através dos argumentos de linha de comando, o tempo de congelamento da exibição (em us),
-as dimensões reais do monitor (número de linhas e número de colunas), , o percentual de pixels com defeito e o
-percentual de pixels apagados. A partir destes percentuais, a função deverá executar a função GerarDistribuicaoInicial
-visando preencher a matriz com os dados correspondentes. A seguir deverá executar a função MostrarMonitor.
-
-O programa deverá permitir que vários testes sejam realizados, incluindo:
-
-a) todos os pixels apagados (sem pixels defeituosos).
-b) todos os pixels apagados (com pixels defeituosos).
-c) todos os pixels acesos (sem pixels defeituosos).
-d) todos os pixels acesos (com pixels defeituosos).
-e) todos os pixels com defeito.
-f) distribuição aleatória com as três possibilidades.
-
-./aula0702 
-./aula0702 5 100 200 2.5 70
-
-*/
 
 /*
 Universidade Federal do Rio de Janeiro
@@ -27,23 +6,25 @@ Departamento de Eletronica e de Computacao
 EEL270 - Computacao II - Turma 2021/2
 Prof. Marcelo Luiz Drumond Lanza
 Autor: REBECCA GOMES SIMAO
-Descricao: testes para MostrarMonitor e GeerarDistribuicaoInicial
+Descricao: testes para MostrarMonitor e GerarDistribuicaoInicial
 
-$Author$
-$Date$
-$Log$
+$Author: rebecca.simao $
+$Date: 2022/02/01 06:21:50 $
+$Log: aula0702.c,v $
+Revision 1.1  2022/02/01 06:21:50  rebecca.simao
+Initial revision
+
 */
 
 #ifdef __linux__
 #define _XOPEN_SOURCE  500
 #endif
 
-#include "aula0701.c"
+#include "aula0701.h"
 #include <stdlib.h>
 #include <unistd.h> /* useconds_t */
 #include <stdio.h>
 #include <limits.h>
-//#include <string.h>
 #include <errno.h>
 #include <float.h>
 
@@ -66,11 +47,10 @@ int main (int argc, char **argv) {
     float percentualDefeituosos;
     float percentualApagados;
     unsigned short i = 1; /* indice dos for */
-    char* pEnd;
     char *verificacao;
 
     /* se possui os 5 args */
-    if (argc < 6){
+    if (argc != 6){
         printf("%s", "<tempo-congelamento>  <numero-linhas> <numero-colunas> <percentual-defeituosos> <percentual-apagados>\n");
         exit (NUMERO_ARGUMENTOS_INVALIDO);
     }
@@ -127,9 +107,9 @@ int main (int argc, char **argv) {
     }
 
 
-    percentualDefeituosos = strtof (argv[i++], &pEnd);
+    percentualDefeituosos = strtof (argv[i++], &verificacao);
     if (errno == ERANGE){
-  		printf ("Valor fornecido para percentual de defeituosos ultrapassa o valor maximo permitido para unsigned short (%d)\n",FLT_MAX);
+  		printf ("Valor fornecido para percentual de defeituosos ultrapassa o valor maximo permitido para unsigned short (%f)\n",FLT_MAX);
         exit (VALOR_MAXIMO_EXCEDIDO);
   	}
     
@@ -139,9 +119,9 @@ int main (int argc, char **argv) {
         exit (CONTEM_CARACTERE_INVALIDO);
     }
     
-    percentualApagados = strtof (argv[i++], &pEnd);
+    percentualApagados = strtof (argv[i++], &verificacao);
     if (errno == ERANGE){
-  		printf ("Valor fornecido para percentual de defeituosos ultrapassa o valor maximo permitido para unsigned short (%d)\n",FLT_MAX);
+  	  	printf ("Valor fornecido para percentual de defeituosos ultrapassa o valor maximo permitido para unsigned short (%f)\n",FLT_MAX);
         exit (VALOR_MAXIMO_EXCEDIDO);
   	}
     
@@ -169,4 +149,5 @@ int main (int argc, char **argv) {
     return OK;
 }
 
-/* $RCSfile$ */
+/* $RCSfile: aula0702.c,v $ */
+

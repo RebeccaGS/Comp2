@@ -1,17 +1,3 @@
-/*
-Inclua, no arquivo "aula0701.h", a definição do protótipo da função LimparMonitor. Esta função deverá receber uma
-matriz de pixels (tipoPixel) correspondendo ao monitor e suas dimensões reais (numeroMaximoLinhas e numeroMaximoColunas). Se todos os argumentos forem válidos, a função deverá "apagar" todos os pixels do dispositivo (na matriz
-correspondente). Não deverão ser apagados os pixels marcados como defeituosos. A função deverá retornar ok (ZERO) ou
-o código de erro correspondente (todas as possíveis condições de erro detectáveis na função).
-
-Crie o arquivo "aula0703.c" contendo o o programa de testes para a função LimparMonitor. O programa deverá receber,  
-através dos argumentos de linha de comando, o tempo de congelamento da exibição, as dimensões reais do monitor 
-(número de linhas e número de colunas, o percentual de pixels com defeito e o percentual de pixels apagados. 
-A partir destes percentuais, o programa deverá executar a função GerarDistribuicaoInicial visando preencher a 
-matriz com os dados correspondentes. A seguir deverá executar as funções MostrarMonitor, LimparMonitor e 
-MostrarMonitor novamente.
-
-*/
 
 /*
 Universidade Federal do Rio de Janeiro
@@ -20,11 +6,14 @@ Departamento de Eletronica e de Computacao
 EEL270 - Computacao II - Turma 2021/2
 Prof. Marcelo Luiz Drumond Lanza
 Autor: REBECCA GOMES SIMAO
-Descricao: arquivo .h da aula 07
+Descricao: testes para limpar monitor.
 
-$Author$
-$Date$
-$Log$
+$Author: rebecca.simao $
+$Date: 2022/02/01 06:22:28 $
+$Log: aula0703.c,v $
+Revision 1.1  2022/02/01 06:22:28  rebecca.simao
+Initial revision
+
 */
 
 #ifdef __linux__
@@ -33,13 +22,10 @@ $Log$
 
 #include "aula0701.h"
 
-
-#include "aula0701.c"
 #include <stdlib.h>
 #include <unistd.h> /* useconds_t */
 #include <stdio.h>
 #include <limits.h>
-//#include <string.h>
 #include <errno.h>
 #include <float.h>
 
@@ -62,11 +48,10 @@ int main (int argc, char **argv) {
     float percentualDefeituosos;
     float percentualApagados;
     unsigned short i = 1; /* indice dos for */
-    char* pEnd;
     char *verificacao;
 
     /* se possui os 5 args */
-    if (argc < 6){
+    if (argc != 6){
         printf("%s", "<tempo-congelamento>  <numero-linhas> <numero-colunas> <percentual-defeituosos> <percentual-apagados>\n");
         exit (NUMERO_ARGUMENTOS_INVALIDO);
     }
@@ -123,9 +108,9 @@ int main (int argc, char **argv) {
     }
 
 
-    percentualDefeituosos = strtof (argv[i++], &pEnd);
+    percentualDefeituosos = strtof (argv[i++], &verificacao);
     if (errno == ERANGE){
-  		printf ("Valor fornecido para percentual de defeituosos ultrapassa o valor maximo permitido para unsigned short (%d)\n",FLT_MAX);
+  		printf ("Valor fornecido para percentual de defeituosos ultrapassa o valor maximo permitido para unsigned short (%f)\n",FLT_MAX);
         exit (VALOR_MAXIMO_EXCEDIDO);
   	}
     
@@ -135,9 +120,9 @@ int main (int argc, char **argv) {
         exit (CONTEM_CARACTERE_INVALIDO);
     }
     
-    percentualApagados = strtof (argv[i++], &pEnd);
+    percentualApagados = strtof (argv[i++], &verificacao);
     if (errno == ERANGE){
-  		printf ("Valor fornecido para percentual de defeituosos ultrapassa o valor maximo permitido para unsigned short (%d)\n",FLT_MAX);
+  		printf ("Valor fornecido para percentual de defeituosos ultrapassa o valor maximo permitido para unsigned short (%f)\n",FLT_MAX);
         exit (VALOR_MAXIMO_EXCEDIDO);
   	}
     
@@ -146,9 +131,6 @@ int main (int argc, char **argv) {
         printf ("Caractere invalido: \'%c\'\n", *verificacao);
         exit (CONTEM_CARACTERE_INVALIDO);
     }
-
-    unsigned short d;
-    unsigned short m;
 
     /* enviar argumentos para montagem de matrizprodutos */
     tipoErros retorno = GerarDistribuicaoInicial(monitor,numeroMaximoLinhas, numeroMaximoColunas,percentualDefeituosos, percentualApagados);
@@ -178,4 +160,5 @@ int main (int argc, char **argv) {
 }
 
 
-/* $RCSfile$ */
+/* $RCSfile: aula0703.c,v $ */
+

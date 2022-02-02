@@ -5,7 +5,7 @@ Departamento de Eletronica e de Computacao
 EEL270 - Computacao II - Turma 2021/2
 Prof. Marcelo Luiz Drumond Lanza
 Autor: REBECCA GOMES SIMAO
-Descricao: testes para MostrarMonitor e GeerarDistribuicaoInicial
+Descricao: testes para printar reta
 
 $Author$
 $Date$
@@ -22,7 +22,6 @@ $Log$
 #include <unistd.h> /* useconds_t */
 #include <stdio.h>
 #include <limits.h>
-//#include <string.h>
 #include <errno.h>
 #include <float.h>
 
@@ -45,12 +44,11 @@ int main (int argc, char **argv) {
     float percentualDefeituosos;
     float percentualApagados;
     unsigned short i = 1; /* indice dos for */
-    char* pEnd;
     char *verificacao;
     unsigned linhaA, colunaA, linhaB, colunaB;
 
     /* se possui os 9 args */
-    if (argc < 10){
+    if (argc != 10){
         printf("%s", "<tempo-congelamento> <numero-linhas> <numero-colunas> <percentual-defeituosos> <percentual-apagados> <linha-ponto-1> <coluna-ponto-1> <linha-ponto-2> <coluna-ponto-2>\n");
         exit (NUMERO_ARGUMENTOS_INVALIDO);
     }
@@ -106,7 +104,7 @@ int main (int argc, char **argv) {
         exit (CONTEM_CARACTERE_INVALIDO);
     }
 
-    percentualDefeituosos = strtof (argv[i++], &pEnd);
+    percentualDefeituosos = strtof (argv[i++], &verificacao);
     if (errno == ERANGE){
   		printf ("Valor fornecido para percentual de defeituosos ultrapassa o valor maximo permitido para unsigned short (%f)\n",FLT_MAX);
         exit (VALOR_MAXIMO_EXCEDIDO);
@@ -118,7 +116,7 @@ int main (int argc, char **argv) {
         exit (CONTEM_CARACTERE_INVALIDO);
     }
     
-    percentualApagados = strtof (argv[i++], &pEnd);
+    percentualApagados = strtof (argv[i++], &verificacao);
     if (errno == ERANGE){
   		printf ("Valor fornecido para percentual de defeituosos ultrapassa o valor maximo permitido para unsigned short (%f)\n",FLT_MAX);
         exit (VALOR_MAXIMO_EXCEDIDO);

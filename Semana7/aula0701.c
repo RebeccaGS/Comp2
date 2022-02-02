@@ -1,27 +1,3 @@
-
-// ANOTACOES:
-// fazer todos os testes possiveis no moba
-// verificar logica das de baixo
-// tipo erros duma das 3 ali
-
-// GERAL -------------------------------------------------------------------------------
-// 4 - 01: 01 implementada [CHECK] / testada [CHECK] / tipo erros [CHECK]
-// 5 - 01: 02 implementada [CHECK] / testada [CHECK] / tipo erros [CHECK] 
-// 7 - 01: 03 implementada [CHECK] / testada [CHECK] / tipo erros [CHECK]
-// 6 - 02: testado [CHECK] / erros implementados [CHECK] / Ternario implementado [CHECK]
-//     03: testado [CHECK] / erros implementados [CHECK]
-// 8 - BSD [CHECK]         / GNU [CHECK] / testado
-
-// 01: 04 criar logica [CHECK] / implementada [CHECK] / funcional         / tipo erros
-// 01: 05 criar logica [CHECK] / implementada [CHECK] / funcional         / tipo erros
-// 01: 06 criar logica [CHECK] / implementada [CHECK] / funcional         / tipo erros
-// 04: testado [CHECK]  / erros implementados [CHECK] / funcional
-// 05: testado [CHECK]  / erros implementados [CHECK] / funcional
-// 06: testado [CHECK]  / erros implementados [CHECK] / funcional
-
-
-// .c nao .h
-
 /*
 Universidade Federal do Rio de Janeiro
 Escola Politecnica
@@ -78,7 +54,7 @@ tipoErros MostrarMonitor(useconds_t tempoEspera, /* E */
     }
     
     /* limpa monitor */
-    //CLEAR_SCREEN;
+    CLEAR_SCREEN;
     
     /* cobrir numero de linhas iniciais */
     for (d = 0; d < numeroMaximoColunas+4; d++)
@@ -245,9 +221,7 @@ DesenharReta (tipoPixel monitor [NUMERO_MAXIMO_LINHAS][NUMERO_MAXIMO_COLUNAS], /
     unsigned x,y;
     float coefAngular;
     float coefLinear;
-    
-    printf("linhaA: %d, linhaB: %d, colunaA: %d, colunaB: %d", linhaA, linhaB,colunaA,colunaB);
-    usleep(1000000);
+
     
     /* verificar tipoErros */
     if (numeroMaximoLinhas > NUMERO_MAXIMO_LINHAS || numeroMaximoLinhas == 0){
@@ -301,7 +275,7 @@ DesenharReta (tipoPixel monitor [NUMERO_MAXIMO_LINHAS][NUMERO_MAXIMO_COLUNAS], /
     if (modulolinhas > modulocolunas)
     {
         if (linhaA < linhaB){
-            coefAngular = (float)(colunaB-colunaA)/(float)(linhaB-linhaA);
+            coefAngular = ((float)(colunaB)-(float)(colunaA))/((float)(linhaB)-(float)(linhaA));
             coefLinear = colunaA - coefAngular*linhaA;
             for(x = linhaA; x <= linhaB; x++){
                 y = roundf(coefAngular*x + coefLinear);
@@ -312,7 +286,7 @@ DesenharReta (tipoPixel monitor [NUMERO_MAXIMO_LINHAS][NUMERO_MAXIMO_COLUNAS], /
             }
         }
         else{
-            coefAngular = (float)(colunaA-colunaB)/(float)(linhaA-linhaB);
+            coefAngular = ((float)(colunaA)-(float)(colunaB))/((float)(linhaA)-(float)(linhaB));
             coefLinear = colunaA - coefAngular*linhaA;
             for(x = linhaB; x <= linhaA; x++){
                 y = roundf(coefAngular*x + coefLinear);
@@ -328,7 +302,7 @@ DesenharReta (tipoPixel monitor [NUMERO_MAXIMO_LINHAS][NUMERO_MAXIMO_COLUNAS], /
     else
     {
         if (colunaA < colunaB){
-            coefAngular = (float)(linhaB-linhaA)/(float)(colunaB-colunaA);
+            coefAngular = ((float)(linhaB)-(float)(linhaA))/((float)(colunaB)-(float)(colunaA));
             coefLinear = (float)linhaA - coefAngular*(float)colunaA;
             for(y = colunaA; y <= colunaB; y++){
                 x = roundf(coefAngular*y + coefLinear);
@@ -340,7 +314,7 @@ DesenharReta (tipoPixel monitor [NUMERO_MAXIMO_LINHAS][NUMERO_MAXIMO_COLUNAS], /
         }
         else{
             for(y = colunaB; y <= colunaA; y++){
-                coefAngular = (float)(linhaA-linhaB)/(float)(colunaA-colunaB);
+                coefAngular = ((float)(linhaA)-(float)(linhaB))/((float)(colunaA)-(float)(colunaB));
                 coefLinear = (float)linhaA - coefAngular*(float)colunaA;
                 x = roundf(coefAngular*y + coefLinear);
                 if(monitor[x][y] == defeituoso){
@@ -392,18 +366,16 @@ DesenharPoligono (tipoPixel monitor [NUMERO_MAXIMO_LINHAS ][ NUMERO_MAXIMO_COLUN
     /* execucao da func usando func desenharReta e vertices */
 
     for (i = 0; i<numeroVertices-1; i++){
-        printf("i: %u, numeroVertices: %u\n",i,numeroVertices);
         retorno = DesenharReta (monitor,numeroMaximoLinhas,numeroMaximoColunas,linhasVertices[i],colunasVertices[i],linhasVertices[i+1],colunasVertices[i+1]);
-        printf("i: %u, numeroVertices: %u\n",i,numeroVertices);
         usleep(1000000);
         if (retorno != ok){
-            printf ("Erro executando a funcao MostrarMonitor. Erro numero %u.\n", retorno);
+            printf ("Erro executando a funcao DesenharReta. Erro numero %u.\n", retorno);
         }
     }
 
     retorno = DesenharReta (monitor,numeroMaximoLinhas,numeroMaximoColunas,linhasVertices[0],colunasVertices[0],linhasVertices[numeroVertices-1],colunasVertices[numeroVertices-1]);
     if (retorno != ok){
-            printf ("Erro executando a funcao MostrarMonitor. Erro numero %u.\n", retorno);
+            printf ("Erro executando a funcao DesenharReta. Erro numero %u.\n", retorno);
     }
     
     return ok;    
@@ -439,53 +411,38 @@ PreencherPoligono (useconds_t tempoEspera, /* E */
         return colunaAForaRange;
     }
     
+    
     /* conferir se aceso */
     if (monitor[linha][coluna] == aceso){
         return ok;
     }
-    else{
-        if(monitor[linha][coluna] == defeituoso){
-                return pixelDefeituoso;
-        }
-        monitor[linha][coluna] = aceso;
-        MostrarMonitor(tempoEspera, monitor, numeroMaximoLinhas, numeroMaximoColunas);
-        /* esquerda, direita, abaixo e acima do pixel em questão - nesta ordem */
-        if (monitor[linha][coluna-1] != aceso){
-            if(monitor[linha][coluna-1] == defeituoso){
-                return pixelDefeituoso;
-            }
-            monitor[linha][coluna-1] = aceso;
-            PreencherPoligono (tempoEspera,monitor,numeroMaximoLinhas,numeroMaximoColunas,linha,coluna-1);
-            MostrarMonitor(tempoEspera, monitor, numeroMaximoLinhas, numeroMaximoColunas);
-        }
-        if (monitor[linha][coluna+1] != aceso){
-            if(monitor[linha][coluna+1] == defeituoso){
-                return pixelDefeituoso;
-            }
-            monitor[linha][coluna+1] = aceso;
-            PreencherPoligono (tempoEspera,monitor,numeroMaximoLinhas,numeroMaximoColunas,linha,coluna+1);
-            MostrarMonitor(tempoEspera, monitor, numeroMaximoLinhas, numeroMaximoColunas);
-        }
-        if (monitor[linha+1][coluna] != aceso){
-            if(monitor[linha+1][coluna] == defeituoso){
-                return pixelDefeituoso;
-            }
-            monitor[linha+1][coluna] = aceso;
-            PreencherPoligono (tempoEspera,monitor,numeroMaximoLinhas,numeroMaximoColunas,linha+1,coluna);
-            MostrarMonitor(tempoEspera, monitor, numeroMaximoLinhas, numeroMaximoColunas);
-        }
-        if (monitor[linha-1][coluna] != aceso){
-            if(monitor[linha-1][coluna] == defeituoso){
-                return pixelDefeituoso;
-            }
-            monitor[linha-1][coluna] = aceso;
-            PreencherPoligono (tempoEspera,monitor,numeroMaximoLinhas,numeroMaximoColunas,linha-1,coluna);
-            MostrarMonitor(tempoEspera, monitor, numeroMaximoLinhas, numeroMaximoColunas);
-        }
+    
+    /*se defeituoso, sai, caso nao, acende*/
+    if(monitor[linha][coluna] == defeituoso){
+        return pixelDefeituoso;
     }
+    
+    monitor[linha][coluna] = aceso;
+    MostrarMonitor(tempoEspera, monitor, numeroMaximoLinhas, numeroMaximoColunas);
+    
+    /* esquerda, direita, abaixo e acima do pixel em questão - nesta ordem */
+    if (PreencherPoligono (tempoEspera,monitor,numeroMaximoLinhas,numeroMaximoColunas,linha,coluna-1) == pixelDefeituoso){
+        return pixelDefeituoso;
+    }
+    if (PreencherPoligono (tempoEspera,monitor,numeroMaximoLinhas,numeroMaximoColunas,linha,coluna+1) == pixelDefeituoso){
+        return pixelDefeituoso;
+    }
+    if (PreencherPoligono (tempoEspera,monitor,numeroMaximoLinhas,numeroMaximoColunas,linha+1,coluna) == pixelDefeituoso){
+        return pixelDefeituoso;
+    }
+    if (PreencherPoligono (tempoEspera,monitor,numeroMaximoLinhas,numeroMaximoColunas,linha-1,coluna) == pixelDefeituoso){
+        return pixelDefeituoso;
+    }
+    
     return ok;
 }
 
 /* $RCSfile: aula0701.c,v $ */
 
 
+s

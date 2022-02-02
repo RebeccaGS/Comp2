@@ -7,8 +7,11 @@
 #Descricao: arquivo BSDmakefile
 
 #$Author: rebecca.simao $
-#$Date: 2022/01/25 09:42:07 $
+#$Date: 2022/02/01 06:26:24 $
 #$Log: BSDmakefile,v $
+#Revision 1.14  2022/02/01 06:26:24  rebecca.simao
+#com aula07 incluso.
+#
 #Revision 1.13  2022/01/25 09:42:07  rebecca.simao
 #add aula0602.c    
 #
@@ -81,6 +84,7 @@ DEBUG = -DDEPURACAO
 
 CFLAGS = -Wall $(STANDARD) $(DEBUG)
 LFLAGS = -Wall
+
 
 AULA0101OBJS = aula0101.o
 AULA0102OBJS = aula0102.o
@@ -317,23 +321,23 @@ aula0606: $(AULA0606OBJS)
 
  
 aula0702: $(AULA0702OBJS) $(LIBMONITOR) 
-	$(LD) $(LFLAGS) -o $@ $(AULA0702OBJS) -L. -lmonitor
+	$(LD) $(LFLAGS) -o $@ $(AULA0702OBJS) -L. -lmonitor -lm  
 	cp $@ $@-$(OS)-$(CC)-$(DIALETO)   
 
 aula0703: $(AULA0703OBJS) $(LIBMONITOR) 
-	$(LD) $(LFLAGS) -o $@ $(AULA0703OBJS) -L. -lmonitor
+	$(LD) $(LFLAGS) -o $@ $(AULA0703OBJS) -L. -lmonitor -lm  
 	cp $@ $@-$(OS)-$(CC)-$(DIALETO)   
 
 aula0704: $(AULA0704OBJS) $(LIBMONITOR) 
-	$(LD) $(LFLAGS) -o $@ $(AULA0704OBJS) -L. -lmonitor
+	$(LD) $(LFLAGS) -o $@ $(AULA0704OBJS) -L. -lmonitor -lm  
 	cp $@ $@-$(OS)-$(CC)-$(DIALETO)   
 
 aula0705: $(AULA0705OBJS) $(LIBMONITOR) 
-	$(LD) $(LFLAGS) -o $@ $(AULA0705OBJS) -L. -lmonitor
+	$(LD) $(LFLAGS) -o $@ $(AULA0705OBJS) -L. -lmonitor -lm  
 	cp $@ $@-$(OS)-$(CC)-$(DIALETO)   
  
 aula0706: $(AULA0706OBJS) $(LIBMONITOR) 
-	$(LD) $(LFLAGS) -o $@ $(AULA0706OBJS) -L. -lmonitor
+	$(LD) $(LFLAGS) -o $@ $(AULA0706OBJS) -L. -lmonitor -lm  
 	cp $@ $@-$(OS)-$(CC)-$(DIALETO) 
             
  
@@ -355,6 +359,7 @@ libmatematica.a: $(LIBMATEMATICAOBJS)
 libmonitor.a: $(LIBMONITOROBJS)
 	ar -r -c $@ $(LIBMONITOROBJS) 
     
+  
 
 .PHONY: clean clean-all clean-objs clean-bsd clean-linux clean-gcc clean-clang clean-ansi clean-c89 clean-c90 clean-c99 clean-c11
 

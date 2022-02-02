@@ -20,7 +20,7 @@ Initial revision
 #endif
 
 
-#include "aula0701.c"
+#include "aula0701.h"
 #include <stdlib.h>
 #include <unistd.h> /* useconds_t */
 #include <stdio.h>
@@ -47,9 +47,7 @@ int main (int argc, char **argv) {
     float percentualDefeituosos;
     float percentualApagados;
     unsigned short i = 1, a; /* indice dos for */
-    char* pEnd;
     char *verificacao;
-    unsigned linhaA, colunaA, linhaB, colunaB;
     unsigned numeroVertices, linhasVertices [NUMERO_MAXIMO_LINHAS], colunasVertices [NUMERO_MAXIMO_COLUNAS];
 
 
@@ -111,7 +109,7 @@ int main (int argc, char **argv) {
         exit (CONTEM_CARACTERE_INVALIDO);
     }
 
-    percentualDefeituosos = strtof (argv[i++], &pEnd);
+    percentualDefeituosos = strtof (argv[i++], &verificacao);
     if (errno == ERANGE){
   		printf ("Valor fornecido para percentual de defeituosos ultrapassa o valor maximo permitido para unsigned short (%f)\n",FLT_MAX);
         exit (VALOR_MAXIMO_EXCEDIDO);
@@ -123,7 +121,7 @@ int main (int argc, char **argv) {
         exit (CONTEM_CARACTERE_INVALIDO);
     }
     
-    percentualApagados = strtof (argv[i++], &pEnd);
+    percentualApagados = strtof (argv[i++], &verificacao);
     if (errno == ERANGE){
   		printf ("Valor fornecido para percentual de defeituosos ultrapassa o valor maximo permitido para unsigned short (%f)\n",FLT_MAX);
         exit (VALOR_MAXIMO_EXCEDIDO);
@@ -184,7 +182,7 @@ int main (int argc, char **argv) {
     
     
     /* se possui os args */
-    if (argc < 7 + 2*numeroVertices){
+    if (argc != 7 + 2*numeroVertices){
         printf("%s", "Erro numero de argumentos: <tempo-congelamento> <numero-linhas> <numero-colunas> <percentual-defeituosos> <percentual-apagados> <numero-vertices> <linha-vertice-1>                    <coluna-vertice-1><linha-vertice-N><coluna-vertice-N>\n");
         exit (NUMERO_ARGUMENTOS_INVALIDO);
     }

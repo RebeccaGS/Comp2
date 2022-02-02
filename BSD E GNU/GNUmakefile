@@ -7,8 +7,14 @@
 #Descricao: arquivo GNUmakefile
 
 #$Author: rebecca.simao $
-#$Date: 2022/01/10 23:11:13 $
+#$Date: 2022/01/18 07:06:54 $
 #$Log: GNUmakefile,v $
+#Revision 1.14  2022/01/18 07:06:54  rebecca.simao
+#*** empty log message ***
+#
+#Revision 1.13  2022/01/18 06:54:08  rebecca.simao
+#aula0502a e b add e atualizados
+#
 #Revision 1.11  2022/01/10 23:11:13  rebecca.simao
 #versao final
 #aula04
@@ -96,6 +102,7 @@ endif
 CFLAGS = -Wall $(STANDARD) $(DEBUG)
 
 LFLAGS = -Wall
+
 
 AULA0101OBJS = aula0101.o
 AULA0102OBJS = aula0102.o
@@ -332,23 +339,23 @@ aula0606: $(AULA0606OBJS)
 
  
 aula0702: $(AULA0702OBJS) $(LIBMONITOR) 
-	$(LD) $(LFLAGS) -o $@ $(AULA0702OBJS) -L. -libmonitor.a
+	$(LD) $(LFLAGS) -o $@ $(AULA0702OBJS) -L. -lmonitor -lm  
 	cp $@ $@-$(OS)-$(CC)-$(DIALETO)   
 
 aula0703: $(AULA0703OBJS) $(LIBMONITOR) 
-	$(LD) $(LFLAGS) -o $@ $(AULA0703OBJS) -L. -libmonitor.a
+	$(LD) $(LFLAGS) -o $@ $(AULA0703OBJS) -L. -lmonitor -lm  
 	cp $@ $@-$(OS)-$(CC)-$(DIALETO)   
 
 aula0704: $(AULA0704OBJS) $(LIBMONITOR) 
-	$(LD) $(LFLAGS) -o $@ $(AULA0704OBJS) -L. -libmonitor.a
+	$(LD) $(LFLAGS) -o $@ $(AULA0704OBJS) -L. -lmonitor -lm  
 	cp $@ $@-$(OS)-$(CC)-$(DIALETO)   
 
 aula0705: $(AULA0705OBJS) $(LIBMONITOR) 
-	$(LD) $(LFLAGS) -o $@ $(AULA0705OBJS) -L. -libmonitor.a
+	$(LD) $(LFLAGS) -o $@ $(AULA0705OBJS) -L. -lmonitor -lm  
 	cp $@ $@-$(OS)-$(CC)-$(DIALETO)   
  
 aula0706: $(AULA0706OBJS) $(LIBMONITOR) 
-	$(LD) $(LFLAGS) -o $@ $(AULA0706OBJS) -L. -libmonitor.a
+	$(LD) $(LFLAGS) -o $@ $(AULA0706OBJS) -L. -lmonitor -lm  
 	cp $@ $@-$(OS)-$(CC)-$(DIALETO) 
             
  
@@ -370,7 +377,7 @@ libmatematica.a: $(LIBMATEMATICAOBJS)
 libmonitor.a: $(LIBMONITOROBJS)
 	ar -r -c $@ $(LIBMONITOROBJS) 
     
-
+  
 .PHONY: clean clean-all clean-objs clean-bsd clean-linux clean-gcc clean-clang clean-ansi clean-c89 clean-c90 clean-c99 clean-c11
 
 clean:

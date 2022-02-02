@@ -3,13 +3,52 @@ fazer:
 
 
 ------------------------------------------------------------------------------------------------------
-------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------
+    // ANOTACOES:
+// fazer todos os testes possiveis no moba
+// verificar logica das de baixo
+// tipo erros duma das 3 ali
+//
+
+//
+//
+//
+
+// GERAL -------------------------------------------------------------------------------
+// 4 - 01: 01 implementada [CHECK] / testada [CHECK] / tipo erros [CHECK]
+// 5 - 01: 02 implementada [CHECK] / testada [CHECK] / tipo erros [CHECK] 
+// 7 - 01: 03 implementada [CHECK] / testada [CHECK] / tipo erros [CHECK]
+// 6 - 02: testado [CHECK] / erros implementados [CHECK] / Ternario implementado [CHECK]
+//     03: testado [CHECK] / erros implementados [CHECK]
+// 8 - BSD [CHECK]         / GNU [CHECK] / testado
+
+// 01: 04 criar logica [CHECK] / implementada [CHECK] / funcional         / tipo erros
+// 01: 05 criar logica [CHECK] / implementada [CHECK] / funcional         / tipo erros
+// 01: 06 criar logica [CHECK] / implementada [CHECK] / funcional         / tipo erros
+// 04: testado [CHECK]  / erros implementados [CHECK] / funcional
+// 05: testado [CHECK]  / erros implementados [CHECK] / funcional
+// 06: testado [CHECK]  / erros implementados [CHECK] / funcional
+
+
+// .c nao .h
+
+    ./aula0703 5 20 20 0 0
+    ./aula0703 5 20 20 30 0
+    ./aula0703 5 20 20 0 42
+    ./aula0703 5 20 20 100 0
+    ./aula0703 5 20 20 0 100
+    ./aula0703 5 20 20 30 42
+    ./aula0703 5 20 20 100 100
+    
+    5000 20 20 30 42
     testes:
     02 - tempo | linhas | colunas | defeituosos | apagados
     03 - tempo | linhas | colunas | defeituosos | apagados
     04 - tempo | linhas | colunas | defeituosos | apagados | linhaP1 | colunaP1 | linhaP2 | colunaP2
     05 - tempo | linhas | colunas | defeituosos | apagados | vertices | linhaVertice1 | colunaVertice1 | ...
     06 - tempo | linhas | colunas | defeituosos | apagados | linhaP1 | colunaP1 | vertices | linhaVertice1 | colunaVertice1 | ...
+
+    // QUANDO RECEBE LETRAS: AVISAR DIGITO INVALIDO
 
     testes:
     02 - 5000 5 5 2.5 70
@@ -26,11 +65,13 @@ fazer:
     e) todos os pixels com defeito.
     f) distribuição aleatória com as três possibilidades.
 
+    // TODOS apagados com defeituosos? seria 100 apagados e defeituosos?
+
     teste de erros:
     a) mais de 100 no percentual
     b) menos de 0 no percentual
-    c) com letra
-    d) mais argumentos
+(!!)c) com letra 
+(!!)d) mais argumentos
     e) menos argumentos
     f) mais de 800 em colunas ou linhas
 
@@ -53,6 +94,7 @@ fazer:
 
 ------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------
+
 GNU E BSD:
 
 make -DGCC - compila/linkedita usando o gcc e o dialeto ANSI (somente FreeBSD).
@@ -70,15 +112,15 @@ make -DGCC -DC90
 make cc=GCC - compila/linkedita usando o gcc e o dialeto ANSI (somente CentOS).
 make cc=CLANG - compila/linkedita usando o clang e o dialeto ANSI (somente CentOS).
 make cc=CLANG dialeto=C99 - compila/linkedita usando o clang e o dialeto C99 (somente CentOS).
-make cc=GCC dialeto=C90 aula0404a 
+make cc=GCC dialeto=C90
 
-make cc=GCC dialeto=C11 aula0404a
-make cc=GCC dialeto=C11 aula0404a 
-make cc=GCC dialeto=C99 aula0404a 
-make cc=CLANG dialeto=C90 aula0404a 
-make cc=CLANG dialeto=C11 aula0404a 
-make cc=CLANG dialeto=C89 aula0404a 
-make cc=CLANG dialeto=C99 aula0404a
+make cc=GCC dialeto=C11 
+make cc=GCC dialeto=C11
+make cc=GCC dialeto=C99
+make cc=CLANG dialeto=C90 -----------------------
+make cc=CLANG dialeto=C11 
+make cc=CLANG dialeto=C89 -----------------------
+make cc=CLANG dialeto=C99
 
 C90, C89, C99 ou C11.
 

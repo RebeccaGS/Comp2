@@ -7,9 +7,12 @@ Prof. Marcelo Luiz Drumond Lanza
 Autor: REBECCA GOMES SIMAO
 Descricao: arquivo .h da aula 07
 
-$Author$
-$Date$
-$Log$
+$Author: rebecca.simao $
+$Date: 2022/02/01 06:21:34 $
+$Log: aula0701.h,v $
+Revision 1.1  2022/02/01 06:21:34  rebecca.simao
+Initial revision
+
 */
 
 #include <unistd.h> /* useconds_t */
@@ -18,7 +21,7 @@ $Log$
 #endif
 
 #ifndef   _AULA0701_
-#define   _AULA0701_    "@(#)aula0701.h $Revision$"
+#define   _AULA0701_    "@(#)aula0701.h $Revision: 1.1 $"
 
 #define NUMERO_MAXIMO_LINHAS      250
 #define NUMERO_MAXIMO_COLUNAS     800
@@ -79,5 +82,5 @@ PreencherPoligono (useconds_t tempoEspera, /* E */
                        
 #endif
 
-/* $RCSfile$ */
+/* $RCSfile: aula0701.h,v $ */
 

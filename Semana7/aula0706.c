@@ -5,11 +5,14 @@ Departamento de Eletronica e de Computacao
 EEL270 - Computacao II - Turma 2021/2
 Prof. Marcelo Luiz Drumond Lanza
 Autor: REBECCA GOMES SIMAO
-Descricao: testes para MostrarMonitor e GeerarDistribuicaoInicial
+Descricao: testes para preencher poligono
 
-$Author$
-$Date$
-$Log$
+$Author: rebecca.simao $
+$Date: 2022/02/01 06:24:59 $
+$Log: aula0706.c,v $
+Revision 1.1  2022/02/01 06:24:59  rebecca.simao
+Initial revision
+
 */
 
 #ifdef __linux__
@@ -17,12 +20,11 @@ $Log$
 #endif
 
 
-#include "aula0701.c"
+#include "aula0701.h"
 #include <stdlib.h>
 #include <unistd.h> /* useconds_t */
 #include <stdio.h>
 #include <limits.h>
-//#include <string.h>
 #include <errno.h>
 #include <float.h>
 
@@ -45,15 +47,14 @@ int main (int argc, char **argv) {
     float percentualDefeituosos;
     float percentualApagados;
     unsigned short i = 1, a; /* indice dos for */
-    char* pEnd;
     char *verificacao;
-    unsigned linhaA, colunaA, linhaB, colunaB, linha, coluna;
+    unsigned linha, coluna;
     unsigned numeroVertices, linhasVertices [NUMERO_MAXIMO_LINHAS], colunasVertices [NUMERO_MAXIMO_COLUNAS];
 
 
     /* se possui os iniciais args */
-    if (argc < 10){
-        printf("%s", "<tempo-congelamento> <numero-linhas> <numero-colunas> <percentual-defeituosos> <percentual-apagados> <linha-ponto> <coluna-ponto> <numero-vertices> <linha-vertice-1> <coluna-vertice-1> <linha-vertice-2> <coluna-vertice-2> . . . <linha-vertice-N> <coluna-vertice-N>\n");
+    if (argc < 11){
+        printf("%s", "<tempo-congelamento> <numero-linhas> <numero-colunas> <percentual-defeituosos> <percentual-apagados> <linha-ponto> <coluna-ponto> <numero                    -vertices> <linha-vertice-1> <coluna-vertice-1> <linha-vertice-2> <coluna-vertice-2> . . . <linha-vertice-N> <coluna-vertice-N>\n");
         exit (NUMERO_ARGUMENTOS_INVALIDO);
     }
 
@@ -108,9 +109,9 @@ int main (int argc, char **argv) {
         exit (CONTEM_CARACTERE_INVALIDO);
     }
 
-    percentualDefeituosos = strtof (argv[i++], &pEnd);
+    percentualDefeituosos = strtof (argv[i++], &verificacao);
     if (errno == ERANGE){
-  		printf ("Valor fornecido para percentual de defeituosos ultrapassa o valor maximo permitido para unsigned short (%d)\n",FLT_MAX);
+  	  	printf ("Valor fornecido para percentual de defeituosos ultrapassa o valor maximo permitido para unsigned short (%f)\n",FLT_MAX);
         exit (VALOR_MAXIMO_EXCEDIDO);
   	}
     
@@ -120,9 +121,9 @@ int main (int argc, char **argv) {
         exit (CONTEM_CARACTERE_INVALIDO);
     }
     
-    percentualApagados = strtof (argv[i++], &pEnd);
+    percentualApagados = strtof (argv[i++], &verificacao);
     if (errno == ERANGE){
-  		printf ("Valor fornecido para percentual de defeituosos ultrapassa o valor maximo permitido para unsigned short (%d)\n",FLT_MAX);
+  		printf ("Valor fornecido para percentual de defeituosos ultrapassa o valor maximo permitido para unsigned short (%f)\n",FLT_MAX);
         exit (VALOR_MAXIMO_EXCEDIDO);
   	}
     
@@ -195,10 +196,7 @@ int main (int argc, char **argv) {
             printf ("Quantidade de linhas dos vertices contem caractere invalido.\n");
             printf ("Caractere invalido: \'%c\'\n", *verificacao);
             exit (CONTEM_CARACTERE_INVALIDO); 
-        }    
-    }
-    
-    for(a = 0; a < numeroVertices; a++){
+        }
         colunasVertices[a] = strtoul(argv[i++], &verificacao, 10);
         if (errno == EINVAL){
             printf ("Quantidade de colunas dos vertices invalidas.\n");
@@ -212,12 +210,13 @@ int main (int argc, char **argv) {
             printf ("Quantidade de linhas dos colunas contem caractere invalido.\n");
             printf ("Caractere invalido: \'%c\'\n", *verificacao);
             exit (CONTEM_CARACTERE_INVALIDO); 
-        } 
+        }     
     }
     
+    
     /* se possui os args */
-    if (argc < 10 + 2*numeroVertices){
-        printf("%s", "<tempo-congelamento> <numero-linhas> <numero-colunas> <percentual-defeituosos> <percentual-apagados> <numero-vertices> <linha-vertice-1> <coluna-vertice-1><linha-vertice-N><coluna-vertice-N>\n");
+    if (argc != 9 + 2*numeroVertices){
+        printf("%s", "<tempo-congelamento> <numero-linhas> <numero-colunas> <percentual-defeituosos> <percentual-apagados> <numero-vertices> <linha-vertice-1>                       <coluna-vertice-1><linha-vertice-N><coluna-vertice-N>\n");
         exit (NUMERO_ARGUMENTOS_INVALIDO);
     }
 
@@ -242,7 +241,7 @@ int main (int argc, char **argv) {
     
     retorno = PreencherPoligono (tempoEspera,monitor,numeroMaximoLinhas,numeroMaximoColunas,linha,coluna);
     if (retorno != ok){
-        printf ("Erro executando a funcao MostrarMonitor. Erro numero %u.\n", retorno);
+        printf ("Erro executando a funcao PreencherPoligono. Erro numero %u.\n", retorno);
         exit(ERRO_CHAMADA_FUNCAO);
     }                
 
@@ -255,4 +254,5 @@ int main (int argc, char **argv) {
     return OK;
 }
 
-/* $RCSfile$ */
+/* $RCSfile: aula0706.c,v $ */
+
