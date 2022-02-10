@@ -20,7 +20,8 @@ Initial revision
 #define _XOPEN_SOURCE  500
 #endif
 
-#include "aula0701.h"
+
+#include "aula0701.c"
 #include <stdlib.h>
 #include <unistd.h> /* useconds_t */
 #include <stdio.h>
@@ -37,7 +38,7 @@ Initial revision
 
 #define EOS				      					'\0'
 
-int main (int argc, char **argv) {
+int main (int argc, char *argv[]) {
 
     /* definir variaveis usadas */
     useconds_t tempoEspera;
@@ -105,32 +106,33 @@ int main (int argc, char **argv) {
         printf ("Caractere invalido: \'%c\'\n", *verificacao);
         exit (CONTEM_CARACTERE_INVALIDO);
     }
-
-
-    percentualDefeituosos = strtof (argv[i++], &verificacao);
+        
+    if(sscanf(argv[i], "%f", &percentualDefeituosos) == 0){
+        printf ("Percentual de defeituosos contem caractere invalido.\n");
+        printf ("Input invalido: \'%s\'\n", argv[i]);
+        exit (CONTEM_CARACTERE_INVALIDO);
+    }
+    i++;
+    
     if (errno == ERANGE){
   		printf ("Valor fornecido para percentual de defeituosos ultrapassa o valor maximo permitido para unsigned short (%f)\n",FLT_MAX);
         exit (VALOR_MAXIMO_EXCEDIDO);
   	}
     
-    if (*verificacao != EOS){
-        printf ("Percentual de defeituosos contem caractere invalido.\n");
-        printf ("Caractere invalido: \'%c\'\n", *verificacao);
+
+    if(sscanf(argv[i], "%f", &percentualApagados) == 0){
+        printf ("Percentual de apagados contem caractere invalido.\n");
+        printf ("Input invalido: \'%s\'\n", argv[i]);
         exit (CONTEM_CARACTERE_INVALIDO);
     }
+    i++;
     
-    percentualApagados = strtof (argv[i++], &verificacao);
     if (errno == ERANGE){
-  	  	printf ("Valor fornecido para percentual de defeituosos ultrapassa o valor maximo permitido para unsigned short (%f)\n",FLT_MAX);
+  	  	printf ("Valor fornecido para percentual de apagados ultrapassa o valor maximo permitido para unsigned short (%f)\n",FLT_MAX);
         exit (VALOR_MAXIMO_EXCEDIDO);
   	}
     
-    if (*verificacao != EOS){
-        printf ("Percentual de defeituosos contem caractere invalido.\n");
-        printf ("Caractere invalido: \'%c\'\n", *verificacao);
-        exit (CONTEM_CARACTERE_INVALIDO);
-    }
-
+    
     /* enviar argumentos para montagem de matrizprodutos */
     tipoErros retorno = GerarDistribuicaoInicial(monitor,numeroMaximoLinhas, numeroMaximoColunas,percentualDefeituosos, percentualApagados);
     /* conferir se o retorno ta ok */

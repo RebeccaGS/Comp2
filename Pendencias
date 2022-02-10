@@ -15,47 +15,22 @@ fazer:
 //
 
 // GERAL -------------------------------------------------------------------------------
-// 4 - 01: 01 implementada [CHECK] / testada [CHECK] / tipo erros [CHECK]
-// 5 - 01: 02 implementada [CHECK] / testada [CHECK] / tipo erros [CHECK] 
-// 7 - 01: 03 implementada [CHECK] / testada [CHECK] / tipo erros [CHECK]
-// 6 - 02: testado [CHECK] / erros implementados [CHECK] / Ternario implementado [CHECK]
-//     03: testado [CHECK] / erros implementados [CHECK]
-// 8 - BSD [CHECK]         / GNU [CHECK] / testado
-
-// 01: 04 criar logica [CHECK] / implementada [CHECK] / funcional         / tipo erros
-// 01: 05 criar logica [CHECK] / implementada [CHECK] / funcional         / tipo erros
-// 01: 06 criar logica [CHECK] / implementada [CHECK] / funcional         / tipo erros
-// 04: testado [CHECK]  / erros implementados [CHECK] / funcional
-// 05: testado [CHECK]  / erros implementados [CHECK] / funcional
-// 06: testado [CHECK]  / erros implementados [CHECK] / funcional
-
+// 01: implementada [] / testada [] / tipo erros []
+// 02: testado [] / erros implementados []
+// BSD []         / GNU []        / testado [] 
 
 // .c nao .h
 
-    ./aula0703 5 20 20 0 0
-    ./aula0703 5 20 20 30 0
-    ./aula0703 5 20 20 0 42
-    ./aula0703 5 20 20 100 0
-    ./aula0703 5 20 20 0 100
-    ./aula0703 5 20 20 30 42
-    ./aula0703 5 20 20 100 100
-    
-    5000 20 20 30 42
-    testes:
-    02 - tempo | linhas | colunas | defeituosos | apagados
-    03 - tempo | linhas | colunas | defeituosos | apagados
-    04 - tempo | linhas | colunas | defeituosos | apagados | linhaP1 | colunaP1 | linhaP2 | colunaP2
-    05 - tempo | linhas | colunas | defeituosos | apagados | vertices | linhaVertice1 | colunaVertice1 | ...
-    06 - tempo | linhas | colunas | defeituosos | apagados | linhaP1 | colunaP1 | vertices | linhaVertice1 | colunaVertice1 | ...
+
 
     // QUANDO RECEBE LETRAS: AVISAR DIGITO INVALIDO
 
     testes:
-    02 - 5000 5 5 2.5 70
-    03 - 5000 5 5 15 20
-    04 - 5000 5 5 10 70 30 5 10 70
-    05 - 5000 5 5 10 80 3 5 70 30 105 30 35 
-    06 - 5000 5 5 10 80 50 50 3 5 70 30 105 30 35
+    02
+    03
+    04
+    05
+    06
 
     testar com:
     a) todos os pixels apagados (sem pixels defeituosos).
@@ -100,14 +75,14 @@ GNU E BSD:
 make -DGCC - compila/linkedita usando o gcc e o dialeto ANSI (somente FreeBSD).
 make -DCLANG - compila/linkedita usando o clang e o dialeto ANSI (somente FreeBSD).
 
-make -DCLANG -DC89
-make -DCLANG -DC11
-make -DCLANG -DC99
-make -DCLANG -DC90
+make -DCLANG -DC89 aula07
+make -DCLANG -DC11 
+make -DCLANG -DC99 
+make -DCLANG -DC90 
 make -DGCC -DC89 
-make -DGCC -DC11
-make -DGCC -DC99
-make -DGCC -DC90
+make -DGCC -DC11 
+make -DGCC -DC99 
+make -DGCC -DC90 
 
 make cc=GCC - compila/linkedita usando o gcc e o dialeto ANSI (somente CentOS).
 make cc=CLANG - compila/linkedita usando o clang e o dialeto ANSI (somente CentOS).
@@ -115,7 +90,7 @@ make cc=CLANG dialeto=C99 - compila/linkedita usando o clang e o dialeto C99 (so
 make cc=GCC dialeto=C90
 
 make cc=GCC dialeto=C11 
-make cc=GCC dialeto=C11
+make cc=GCC dialeto=C89
 make cc=GCC dialeto=C99
 make cc=CLANG dialeto=C90 -----------------------
 make cc=CLANG dialeto=C11 

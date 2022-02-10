@@ -8,8 +8,11 @@ Autor: REBECCA GOMES SIMAO
 Descricao: arquivo .c da aula 07
 
 $Author: rebecca.simao $
-$Date: 2022/02/01 06:20:59 $
+$Date: 2022/02/02 04:05:07 $
 $Log: aula0701.c,v $
+Revision 1.2  2022/02/02 04:05:07  rebecca.simao
+versao finalizada
+
 Revision 1.1  2022/02/01 06:20:59  rebecca.simao
 Initial revision
 
@@ -23,7 +26,6 @@ Initial revision
 #include <stdlib.h>
 #include <unistd.h> /* useconds_t */
 #include <stdio.h>
-#include <math.h>
 
 #ifdef _WIN32
 # define CLEAR_SCREEN system ("cls")
@@ -115,7 +117,7 @@ GerarDistribuicaoInicial (tipoPixel monitor [NUMERO_MAXIMO_LINHAS][NUMERO_MAXIMO
     if (monitor == NULL){
         return monitorNulo;
     }
-
+    
     if (percentualDefeituosos < 0 || percentualDefeituosos > 100){
         return percentualDefeituososForaRange;
     }
@@ -278,7 +280,7 @@ DesenharReta (tipoPixel monitor [NUMERO_MAXIMO_LINHAS][NUMERO_MAXIMO_COLUNAS], /
             coefAngular = ((float)(colunaB)-(float)(colunaA))/((float)(linhaB)-(float)(linhaA));
             coefLinear = colunaA - coefAngular*linhaA;
             for(x = linhaA; x <= linhaB; x++){
-                y = roundf(coefAngular*x + coefLinear);
+                y = roundfloat(coefAngular*x + coefLinear);
                 if(monitor[x][y] == defeituoso){
                     return pixelDefeituoso;
                 }
@@ -289,7 +291,7 @@ DesenharReta (tipoPixel monitor [NUMERO_MAXIMO_LINHAS][NUMERO_MAXIMO_COLUNAS], /
             coefAngular = ((float)(colunaA)-(float)(colunaB))/((float)(linhaA)-(float)(linhaB));
             coefLinear = colunaA - coefAngular*linhaA;
             for(x = linhaB; x <= linhaA; x++){
-                y = roundf(coefAngular*x + coefLinear);
+                y = roundfloat(coefAngular*x + coefLinear);
                 if(monitor[x][y] == defeituoso){
                     return pixelDefeituoso;
                 }
@@ -305,7 +307,7 @@ DesenharReta (tipoPixel monitor [NUMERO_MAXIMO_LINHAS][NUMERO_MAXIMO_COLUNAS], /
             coefAngular = ((float)(linhaB)-(float)(linhaA))/((float)(colunaB)-(float)(colunaA));
             coefLinear = (float)linhaA - coefAngular*(float)colunaA;
             for(y = colunaA; y <= colunaB; y++){
-                x = roundf(coefAngular*y + coefLinear);
+                x = roundfloat(coefAngular*y + coefLinear);
                 if(monitor[x][y] == defeituoso){
                     return pixelDefeituoso;
                 }
@@ -316,7 +318,7 @@ DesenharReta (tipoPixel monitor [NUMERO_MAXIMO_LINHAS][NUMERO_MAXIMO_COLUNAS], /
             for(y = colunaB; y <= colunaA; y++){
                 coefAngular = ((float)(linhaA)-(float)(linhaB))/((float)(colunaA)-(float)(colunaB));
                 coefLinear = (float)linhaA - coefAngular*(float)colunaA;
-                x = roundf(coefAngular*y + coefLinear);
+                x = roundfloat(coefAngular*y + coefLinear);
                 if(monitor[x][y] == defeituoso){
                     return pixelDefeituoso;
                 }
@@ -442,7 +444,13 @@ PreencherPoligono (useconds_t tempoEspera, /* E */
     return ok;
 }
 
+int roundfloat(float numero){  
+    int intProx = (int) numero;
+    if(numero - intProx < intProx + 1 - numero)
+      return intProx;
+    else
+      return intProx + 1;
+}
 /* $RCSfile: aula0701.c,v $ */
 
 
-s
