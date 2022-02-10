@@ -17,10 +17,11 @@ typedef unsigned char byte;
 
 typedef enum {ok = 0} tipoErros;
 
-
 tipoErros
 CodificarBase16 (byte *, unsigned long long, char *);
 
+tipoErros
+DecodificarBase16 (char *, byte * , unsigned long long *);
 
 #endif
 

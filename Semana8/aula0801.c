@@ -27,27 +27,36 @@ tipoErros
 CodificarBase16 (byte *bytes/* numero de bytes a codificar */, unsigned long long numerosBytes /* os bytes */, char *base16/* convertido */){
     unsigned short indice;
     unsigned short resto;
-
+    base16="";
     //for (indice = numerosBytes; indice > 0; indice--){
     for (indice = 0; indice < numerosBytes; indice++){
         byte dividendo = bytes[indice];
         while (dividendo/16 != 0){
             resto = dividendo%16;
             if (resto < 9){
-                strcat(base16[indice], resto); /* adiciona resto em resultado*/
+                strcat(*base16, resto + '0'); /* adiciona resto em resultado*/
             }
             else{
-                char *restoAlterado = converteLetra(resto);
-                strcat(base16[indice], restoAlterado); /* adiciona resto em resultado*/
+                char restoAlterado = converteLetra(resto);
+                strcat(*base16, restoAlterado); /* adiciona resto em resultado*/
             }
             dividendo = dividendo/16;
         }
-        strrev(base16[indice]); /* inverter ordem dos restos que chegam */
+        //strrev(base16[indice]); /* inverter ordem dos restos que chegam */
     }
     return ok;
 }
 
+/* ----------------------------------------------------------------------------- */
+/* recebe conjunto de bytes em base 16 e devolve conjunto na base10 com numero de elementos decodificados*/
+tipoErros
+DecodificarBase16 (char *base16, byte *base10 , unsigned long long *numerosBytes){
 
+    return ok;
+}
+
+
+/* ----------------------------------------------------------------------------- */
 char converteLetra(unsigned short resto){ //tem *?
     if (resto == 10){
         return 'A';
@@ -71,8 +80,6 @@ char converteLetra(unsigned short resto){ //tem *?
 
 
 
-
-// nao: resultado = [resultado] + bytes[indice]/16;
 
 
 /* $RCSfile$ */

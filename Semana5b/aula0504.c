@@ -61,7 +61,7 @@ GerarDigitosVerificadoresRg(char *entrada , char *saida)
         }
     }
     /* passa ultimo digito pra saida*/
-    *saida = (11 - somaDosProdutos % 11) + '0';
+    *saida = (11 - somaDosProdutos % 11) + '0'; 
     return ok;
 }
 
