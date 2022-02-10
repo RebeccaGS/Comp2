@@ -12,7 +12,8 @@ $Log$ */
 
 //  - Algoritmos de Codificação Base16, Base32 e Base64.
 #include "aula0801.h"
-
+#include <string.h>
+#include <stdio.h>
 
 // int *LISTA = (int *) malloc(sizeof(int));
 //  if(!LISTA){
@@ -27,18 +28,21 @@ CodificarBase16 (byte *bytes/* numero de bytes a codificar */, unsigned long lon
     unsigned short indice;
     unsigned short resto;
 
-    for (indice = numerosBytes; indice > 0; indice--){
-        while (bytes[indice]/16 != 0){
-            resto = bytes[indice]%16;
+    //for (indice = numerosBytes; indice > 0; indice--){
+    for (indice = 0; indice < numerosBytes; indice++){
+        byte dividendo = bytes[indice];
+        while (dividendo/16 != 0){
+            resto = dividendo%16;
             if (resto < 9){
-                base16 = resto;  /* adiciona resto em resultado*/
+                strcat(base16[indice], resto); /* adiciona resto em resultado*/
             }
             else{
                 char *restoAlterado = converteLetra(resto);
-                base16 = restoAlterado; /* adiciona resto em resultado*/
-                // FALTA INVERTER: ta chegando 02B10E ; devia tar 201BE0 - como inverter?
+                strcat(base16[indice], restoAlterado); /* adiciona resto em resultado*/
             }
+            dividendo = dividendo/16;
         }
+        strrev(base16[indice]); /* inverter ordem dos restos que chegam */
     }
     return ok;
 }

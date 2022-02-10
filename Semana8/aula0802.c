@@ -19,7 +19,7 @@ $Log$ */
 // Exemplo:
 // ./aula0802 10 32 171 224 80 24 41 113 120 255 0
 
-
+// PRIORIDADE: fazer codigo 01.c e 02.c rodarem com tipo erros e tratamento de erros
 
 
 // mudar pra .h
