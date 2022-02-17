@@ -12,6 +12,8 @@ $Log$ */
 
 
 
+
+
 // Crie o arquivo "aula0802.c" contendo o código fonte de um programa de testes para a função da
 // CodificarBase16. Este programa deverá receber, através dos argumentos de linha de comando, o
 // número de bytes a codificar, seguido pelos bytes em notação decimal (valores entre 0 e 255). O
@@ -19,8 +21,11 @@ $Log$ */
 // Exemplo:
 // ./aula0802 10 32 171 224 80 24 41 113 120 255 0
 
-// PRIORIDADE: fazer codigo 01.c e 02.c rodarem com tipo erros e tratamento de erros
 
+
+
+// ANOTACOES
+// Num bytes invalido: ver se numero de elementos apos o numero de bytes = numero de bytes
 
 // mudar pra .h
 #include "aula0801.c"
@@ -42,41 +47,42 @@ $Log$ */
 int main (int argc, char *argv[]) {
 
     /* definir variaveis usadas */
-    byte *bytes;
-    unsigned long long numerosBytes;
-    char *base16;
+    byte *conjuntoDeBytes;
+    unsigned long long numeroDeBytes;
+    char *saida;
+
     char *verificacao;
     unsigned short i = 1, n;
 
-    /* se possui os 5 args */
-    if (argc != 3){
-        printf("%s", "<numeros de Bytes>  <Bytes listados>\n");
+    /* se possui ao menos 3 args: arquivo; numero de bytes = 1; o byte a ser convertido */
+    if (argc < 3){
+        printf("%s", "Favor, colocar: <numeros de Bytes>  <Bytes listados>\n");
         exit (NUMERO_ARGUMENTOS_INVALIDO);
     }
 
 
     /* pegar argumentos a serem usados */
-    numerosBytes = strtoul(argv[i++], &verificacao, 10);
+    numeroDeBytes = strtoul(argv[i++], &verificacao, 10);
     if (errno == EINVAL){
-  		printf ("numerosBytes invalido.\n");
+  		printf ("numero de bytes invalido.\n");
         exit (BASE_INVALIDA);
     }
 
     if (errno == ERANGE){
-  		printf ("Valor fornecido para numerosBytes ultrapassa o valor maximo permitido para unsigned short (%d)\n",UINT_MAX);
+  		printf ("Valor fornecido para numero de bytes ultrapassa o valor maximo permitido para unsigned short (%d)\n",UINT_MAX);
         exit (VALOR_MAXIMO_EXCEDIDO);
   	}
     
     if (*verificacao != EOS){
-        printf ("numerosBytes contem caractere invalido.\n");
+        printf ("numero de bytes contem caractere invalido.\n");
         printf ("Caractere invalido: \'%c\'\n", *verificacao);
         exit (CONTEM_CARACTERE_INVALIDO);
     }
 
 
     /* pegar bytes listados */
-    for (n = 0; n < numerosBytes; n++){
-            bytes[n] = strtod(argv[i], &verificacao);
+    for (n = 0; n < numeroDeBytes; n++){
+            conjuntoDeBytes[n] = strtod(argv[i], &verificacao);
             i++;
     }
 
@@ -88,23 +94,23 @@ int main (int argc, char *argv[]) {
     
     if (*verificacao != EOS)
     {
-        printf ("Argumento fornecido como elemento da matriz 2 contem caractere invalido.\n");
+        printf ("Argumento fornecido contem caractere invalido.\n");
         printf ("Primeiro caractere invalido: \'%c\'\n", *verificacao);
         exit (CONTEM_CARACTERE_INVALIDO);
     }
 
-    /* enviar argumentos para montagem de matrizprodutos */
-    tipoErros retorno = CodificarBase16(bytes,numerosBytes,base16);
-
+    /* enviar argumentos para conversao */
+    tipoErros retorno = CodificarBase16(conjuntoDeBytes,numeroDeBytes,saida);
+    printf("%u",retorno);
 
     /* conferir se o retorno ta ok */
     if (retorno != ok)
         printf ("Erro executando a funcao. Erro numero %u.\n", retorno);
 
     else{
-        /* printar matriz na tela */
-        for (n = 0; n < numerosBytes; n++){
-            printf("%u", bytes[n]);
+        /* printar bytes na tela na tela */
+        for (n = 0; n < numeroDeBytes; n++){
+            printf("%u", conjuntoDeBytes[n]);
         }
     }
     

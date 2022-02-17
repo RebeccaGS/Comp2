@@ -15,7 +15,7 @@ $Log$ */
 
 typedef unsigned char byte;
 
-typedef enum {ok = 0} tipoErros;
+typedef enum {ok = 0, numBytesInvalido = 1, conjuntoDeBytesVazio = 2} tipoErros;
 
 tipoErros
 CodificarBase16 (byte *, unsigned long long, char *);

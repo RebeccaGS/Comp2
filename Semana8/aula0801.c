@@ -4,82 +4,48 @@ Departamento de Eletronica e de Computacao
 EEL270 - Computacao II - Turma 2021/2
 Prof. Marcelo Luiz Drumond Lanza
 Autor: Rebecca Gomes Simao
-Descricao: converte base 10 em 16.
+Descricao: algoritmos de conversao de bytes: 16; 32; 64.
 
 $Author$
 $Date$
 $Log$ */
 
-//  - Algoritmos de Codificação Base16, Base32 e Base64.
+// ANOTACOES:
+// tipoErros pra fora da range 0-255?
+
 #include "aula0801.h"
 #include <string.h>
 #include <stdio.h>
 
-// int *LISTA = (int *) malloc(sizeof(int));
-//  if(!LISTA){
-//   printf("Sem memoria disponivel!\n");
-//   exit(1);
+tipoErros CodificarBase16(byte *conjuntoDeBytes, unsigned long long numeroDeBytes, char *saida)
+{
+    /* definindo variaveis*/
+    char *tabelaBase16 = "0123456789ABCDEF";
+    unsigned long long i, indiceSaida;
+    byte *auxiliar;
 
-// FALTA:
-// INVERTER: ta chegando 02B10E ; devia tar 201BE0 - como inverter?
+    /* tipoErros*/
+    if (numeroDeBytes == 0)
+        return numBytesInvalido;
 
-tipoErros
-CodificarBase16 (byte *bytes/* numero de bytes a codificar */, unsigned long long numerosBytes /* os bytes */, char *base16/* convertido */){
-    unsigned short indice;
-    unsigned short resto;
-    base16="";
-    //for (indice = numerosBytes; indice > 0; indice--){
-    for (indice = 0; indice < numerosBytes; indice++){
-        byte dividendo = bytes[indice];
-        while (dividendo/16 != 0){
-            resto = dividendo%16;
-            if (resto < 9){
-                strcat(*base16, resto + '0'); /* adiciona resto em resultado*/
-            }
-            else{
-                char restoAlterado = converteLetra(resto);
-                strcat(*base16, restoAlterado); /* adiciona resto em resultado*/
-            }
-            dividendo = dividendo/16;
-        }
-        //strrev(base16[indice]); /* inverter ordem dos restos que chegam */
+    if (conjuntoDeBytes == NULL)
+        return conjuntoDeBytesVazio;
+
+    /* percorrer de 1 em 1 nos elementos na base 16 */
+    indiceSaida = 0;
+    for (i = 0; i < numeroDeBytes; i++)
+    {
+        /* pra caso 1, onde ha necessidade de transicionar a pos em 4 antes de &00001111 */
+        auxiliar[0] = (conjuntoDeBytes[i] >> 4) & 0x0F;
+        saida[indiceSaida] = tabelaBase16[auxiliar[0]];
+        indiceSaida++;
+        /* pra caso 2, onde pos ja esta correta, necessitando apenas de &00001111 */
+        auxiliar[1] = conjuntoDeBytes[i] & 0x0F;
+        saida[indiceSaida] = tabelaBase16[auxiliar[1]];
+        indiceSaida++;
     }
-    return ok;
-}
-
-/* ----------------------------------------------------------------------------- */
-/* recebe conjunto de bytes em base 16 e devolve conjunto na base10 com numero de elementos decodificados*/
-tipoErros
-DecodificarBase16 (char *base16, byte *base10 , unsigned long long *numerosBytes){
 
     return ok;
 }
-
-
-/* ----------------------------------------------------------------------------- */
-char converteLetra(unsigned short resto){ //tem *?
-    if (resto == 10){
-        return 'A';
-    }
-    else if (resto == 11){
-        return 'B';
-    }
-    else if (resto == 12){
-        return 'C';
-    }
-    else if (resto == 13){
-        return 'D';
-    }
-    else if (resto == 14){
-        return 'E';
-    }
-    else{
-        return 'F';
-    }
-}
-
-
-
-
 
 /* $RCSfile$ */
