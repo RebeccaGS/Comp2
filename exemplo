@@ -1,3 +1,479 @@
+
+tipoErros CodificarBase32 (byte *conjuntoDeBytes, unsigned long long numeroDeBytes, tipoAlfabetoBase32 alfabeto, char *saida){
+    
+    /* definindo variaveis*/
+    char *tabelaBase32;
+    char *tabelaBase32Estendido;
+    unsigned long long indice, indiceSaida, indiceNumeroDeBytes;
+    unsigned quantidadeGruposDeCinco;
+    unsigned grupoMenosDeCinco;
+    unsigned grupoAtual;
+    byte grupoTemporarioDeCinco[5];
+    byte grupoTemporarioDeOito[8];
+
+    tabelaBase32 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567=";
+    tabelaBase32Estendido = "0123456789ABCDEFGHIJKLMNOPQRSTUV=";
+
+    if (numeroDeBytes == 0)
+        return numeroDeBytesInvalido;
+
+    quantidadeGruposDeCinco = numeroDeBytes / 5;
+    grupoMenosDeCinco = numeroDeBytes % 5;
+
+    indice = 0;
+    indiceSaida = 0;
+    indiceNumeroDeBytes = 0;
+    if (alfabeto == 0)
+    {
+        for (grupoAtual = 1; grupoAtual <= quantidadeGruposDeCinco; grupoAtual++)
+        {
+            grupoTemporarioDeCinco[indice] = conjuntoDeBytes[indiceNumeroDeBytes];
+            indice++;
+            indiceNumeroDeBytes++;
+            grupoTemporarioDeCinco[indice] = conjuntoDeBytes[indiceNumeroDeBytes];
+            indice++;
+            indiceNumeroDeBytes++;
+            grupoTemporarioDeCinco[indice] = conjuntoDeBytes[indiceNumeroDeBytes];
+            indice++;
+            indiceNumeroDeBytes++;
+            grupoTemporarioDeCinco[indice] = conjuntoDeBytes[indiceNumeroDeBytes];
+            indice++;
+            indiceNumeroDeBytes++;
+            grupoTemporarioDeCinco[indice] = conjuntoDeBytes[indiceNumeroDeBytes];
+            indice++;
+            indiceNumeroDeBytes++;
+            grupoTemporarioDeOito[0] = (grupoTemporarioDeCinco[0] >> 3) & 0x1F;
+            saida[indiceSaida] = tabelaBase32[grupoTemporarioDeOito[0]];
+            indiceSaida++;
+            grupoTemporarioDeOito[1] = ((grupoTemporarioDeCinco[0] << 2) & 0x1C) | ((grupoTemporarioDeCinco[1] >> 6) & 0x03);
+            saida[indiceSaida] = tabelaBase32[grupoTemporarioDeOito[1]];
+            indiceSaida++;
+            grupoTemporarioDeOito[2] = (grupoTemporarioDeCinco[1] >> 1) & 0x1F;
+            saida[indiceSaida] = tabelaBase32[grupoTemporarioDeOito[2]];
+            indiceSaida++;
+            grupoTemporarioDeOito[3] = ((grupoTemporarioDeCinco[1] << 4) & 0x10) | ((grupoTemporarioDeCinco[2] >> 4) & 0x0F);
+            saida[indiceSaida] = tabelaBase32[grupoTemporarioDeOito[3]];
+            indiceSaida++;
+            grupoTemporarioDeOito[4] = ((grupoTemporarioDeCinco[2] << 1) & 0x1E) | ((grupoTemporarioDeCinco[3] >> 7) & 0x01);
+            saida[indiceSaida] = tabelaBase32[grupoTemporarioDeOito[4]];
+            indiceSaida++;
+            grupoTemporarioDeOito[5] = (grupoTemporarioDeCinco[3] >> 2) & 0x1F;
+            saida[indiceSaida] = tabelaBase32[grupoTemporarioDeOito[5]];
+            indiceSaida++;
+            grupoTemporarioDeOito[6] = ((grupoTemporarioDeCinco[3] << 3) & 0x18) | ((grupoTemporarioDeCinco[4] >> 5) & 0x07);
+            saida[indiceSaida] = tabelaBase32[grupoTemporarioDeOito[6]];
+            indiceSaida++;
+            grupoTemporarioDeOito[7] = grupoTemporarioDeCinco[4] & 0x1F;
+            saida[indiceSaida] = tabelaBase32[grupoTemporarioDeOito[7]];
+            indiceSaida++;
+            indice = 0;
+        }
+
+        if (grupoMenosDeCinco == 4)
+        {
+            grupoTemporarioDeCinco[indice] = conjuntoDeBytes[indiceNumeroDeBytes];
+            indice++;
+            indiceNumeroDeBytes++;
+            grupoTemporarioDeCinco[indice] = conjuntoDeBytes[indiceNumeroDeBytes];
+            indice++;
+            indiceNumeroDeBytes++;
+            grupoTemporarioDeCinco[indice] = conjuntoDeBytes[indiceNumeroDeBytes];
+            indice++;
+            indiceNumeroDeBytes++;
+            grupoTemporarioDeCinco[indice] = conjuntoDeBytes[indiceNumeroDeBytes];
+            indice++;
+            indiceNumeroDeBytes++;
+            grupoTemporarioDeCinco[indice] = 0b00000000;
+            indice++;
+            grupoTemporarioDeOito[0] = (grupoTemporarioDeCinco[0] >> 3) & 0x1F;
+            saida[indiceSaida] = tabelaBase32[grupoTemporarioDeOito[0]];
+            indiceSaida++;
+            grupoTemporarioDeOito[1] = ((grupoTemporarioDeCinco[0] << 2) & 0x1C) | ((grupoTemporarioDeCinco[1] >> 6) & 0x03);
+            saida[indiceSaida] = tabelaBase32[grupoTemporarioDeOito[1]];
+            indiceSaida++;
+            grupoTemporarioDeOito[2] = (grupoTemporarioDeCinco[1] >> 1) & 0x1F;
+            saida[indiceSaida] = tabelaBase32[grupoTemporarioDeOito[2]];
+            indiceSaida++;
+            grupoTemporarioDeOito[3] = ((grupoTemporarioDeCinco[1] << 4) & 0x10) | ((grupoTemporarioDeCinco[2] >> 4) & 0x0F);
+            saida[indiceSaida] = tabelaBase32[grupoTemporarioDeOito[3]];
+            indiceSaida++;
+            grupoTemporarioDeOito[4] = ((grupoTemporarioDeCinco[2] << 1) & 0x1E) | ((grupoTemporarioDeCinco[3] >> 7) & 0x01);
+            saida[indiceSaida] = tabelaBase32[grupoTemporarioDeOito[4]];
+            indiceSaida++;
+            grupoTemporarioDeOito[5] = (grupoTemporarioDeCinco[3] >> 2) & 0x1F;
+            saida[indiceSaida] = tabelaBase32[grupoTemporarioDeOito[5]];
+            indiceSaida++;
+            grupoTemporarioDeOito[6] = ((grupoTemporarioDeCinco[3] << 3) & 0x18) | ((grupoTemporarioDeCinco[4] >> 5) & 0x07);
+            saida[indiceSaida] = tabelaBase32[grupoTemporarioDeOito[6]];
+            indiceSaida++;
+            saida[indiceSaida] = tabelaBase32[32];
+            indiceSaida++;
+            indice = 0;
+        }
+
+        else if (grupoMenosDeCinco == 3)
+        {
+            grupoTemporarioDeCinco[indice] = conjuntoDeBytes[indiceNumeroDeBytes];
+            indice++;
+            indiceNumeroDeBytes++;
+            grupoTemporarioDeCinco[indice] = conjuntoDeBytes[indiceNumeroDeBytes];
+            indice++;
+            indiceNumeroDeBytes++;
+            grupoTemporarioDeCinco[indice] = conjuntoDeBytes[indiceNumeroDeBytes];
+            indice++;
+            indiceNumeroDeBytes++;
+            grupoTemporarioDeCinco[indice] = 0b00000000;
+            indice++;
+            grupoTemporarioDeCinco[indice] = 0b00000000;
+            indice++;
+            grupoTemporarioDeOito[0] = (grupoTemporarioDeCinco[0] >> 3) & 0x1F;
+            saida[indiceSaida] = tabelaBase32[grupoTemporarioDeOito[0]];
+            indiceSaida++;
+            grupoTemporarioDeOito[1] = ((grupoTemporarioDeCinco[0] << 2) & 0x1C) | ((grupoTemporarioDeCinco[1] >> 6) & 0x03);
+            saida[indiceSaida] = tabelaBase32[grupoTemporarioDeOito[1]];
+            indiceSaida++;
+            grupoTemporarioDeOito[2] = (grupoTemporarioDeCinco[1] >> 1) & 0x1F;
+            saida[indiceSaida] = tabelaBase32[grupoTemporarioDeOito[2]];
+            indiceSaida++;
+            grupoTemporarioDeOito[3] = ((grupoTemporarioDeCinco[1] << 4) & 0x10) | ((grupoTemporarioDeCinco[2] >> 4) & 0x0F);
+            saida[indiceSaida] = tabelaBase32[grupoTemporarioDeOito[3]];
+            indiceSaida++;
+            grupoTemporarioDeOito[4] = ((grupoTemporarioDeCinco[2] << 1) & 0x1E) | ((grupoTemporarioDeCinco[3] >> 7) & 0x01);
+            saida[indiceSaida] = tabelaBase32[grupoTemporarioDeOito[4]];
+            indiceSaida++;
+            saida[indiceSaida] = tabelaBase32[32];
+            indiceSaida++;
+            saida[indiceSaida] = tabelaBase32[32];
+            indiceSaida++;
+            saida[indiceSaida] = tabelaBase32[32];
+            indiceSaida++;
+            indice = 0;
+        }
+
+        else if (grupoMenosDeCinco == 2)
+        {
+            grupoTemporarioDeCinco[indice] = conjuntoDeBytes[indiceNumeroDeBytes];
+            indice++;
+            indiceNumeroDeBytes++;
+            grupoTemporarioDeCinco[indice] = conjuntoDeBytes[indiceNumeroDeBytes];
+            indice++;
+            indiceNumeroDeBytes++;
+            grupoTemporarioDeCinco[indice] = 0b00000000;
+            indice++;
+            grupoTemporarioDeCinco[indice] = 0b00000000;
+            indice++;
+            grupoTemporarioDeCinco[indice] = 0b00000000;
+            indice++;
+            grupoTemporarioDeOito[0] = (grupoTemporarioDeCinco[0] >> 3) & 0x1F;
+            saida[indiceSaida] = tabelaBase32[grupoTemporarioDeOito[0]];
+            indiceSaida++;
+            grupoTemporarioDeOito[1] = ((grupoTemporarioDeCinco[0] << 2) & 0x1C) | ((grupoTemporarioDeCinco[1] >> 6) & 0x03);
+            saida[indiceSaida] = tabelaBase32[grupoTemporarioDeOito[1]];
+            indiceSaida++;
+            grupoTemporarioDeOito[2] = (grupoTemporarioDeCinco[1] >> 1) & 0x1F;
+            saida[indiceSaida] = tabelaBase32[grupoTemporarioDeOito[2]];
+            indiceSaida++;
+            grupoTemporarioDeOito[3] = ((grupoTemporarioDeCinco[1] << 4) & 0x10) | ((grupoTemporarioDeCinco[2] >> 4) & 0x0F);
+            saida[indiceSaida] = tabelaBase32[grupoTemporarioDeOito[3]];
+            indiceSaida++;
+            saida[indiceSaida] = tabelaBase32[32];
+            indiceSaida++;
+            saida[indiceSaida] = tabelaBase32[32];
+            indiceSaida++;
+            saida[indiceSaida] = tabelaBase32[32];
+            indiceSaida++;
+            saida[indiceSaida] = tabelaBase32[32];
+            indiceSaida++;
+            indice = 0;
+        }
+
+        else if (grupoMenosDeCinco == 1)
+        {
+            grupoTemporarioDeCinco[indice] = conjuntoDeBytes[indiceNumeroDeBytes];
+            indice++;
+            indiceNumeroDeBytes++;
+            grupoTemporarioDeCinco[indice] = 0b00000000;
+            indice++;
+            grupoTemporarioDeCinco[indice] = 0b00000000;
+            indice++;
+            grupoTemporarioDeCinco[indice] = 0b00000000;
+            indice++;
+            grupoTemporarioDeCinco[indice] = 0b00000000;
+            indice++;
+            grupoTemporarioDeOito[0] = (grupoTemporarioDeCinco[0] >> 3) & 0x1F;
+            saida[indiceSaida] = tabelaBase32[grupoTemporarioDeOito[0]];
+            indiceSaida++;
+            grupoTemporarioDeOito[1] = ((grupoTemporarioDeCinco[0] << 2) & 0x1C) | ((grupoTemporarioDeCinco[1] >> 6) & 0x03);
+            saida[indiceSaida] = tabelaBase32[grupoTemporarioDeOito[1]];
+            indiceSaida++;
+            saida[indiceSaida] = tabelaBase32[32];
+            indiceSaida++;
+            saida[indiceSaida] = tabelaBase32[32];
+            indiceSaida++;
+            saida[indiceSaida] = tabelaBase32[32];
+            indiceSaida++;
+            saida[indiceSaida] = tabelaBase32[32];
+            indiceSaida++;
+            saida[indiceSaida] = tabelaBase32[32];
+            indiceSaida++;
+            saida[indiceSaida] = tabelaBase32[32];
+            indiceSaida++;
+            indice = 0;
+        }
+    }
+
+    else
+    {
+        for (grupoAtual = 1; grupoAtual <= quantidadeGruposDeCinco; grupoAtual++)
+        {
+            grupoTemporarioDeCinco[indice] = conjuntoDeBytes[indiceNumeroDeBytes];
+            indice++;
+            indiceNumeroDeBytes++;
+            grupoTemporarioDeCinco[indice] = conjuntoDeBytes[indiceNumeroDeBytes];
+            indice++;
+            indiceNumeroDeBytes++;
+            grupoTemporarioDeCinco[indice] = conjuntoDeBytes[indiceNumeroDeBytes];
+            indice++;
+            indiceNumeroDeBytes++;
+            grupoTemporarioDeCinco[indice] = conjuntoDeBytes[indiceNumeroDeBytes];
+            indice++;
+            indiceNumeroDeBytes++;
+            grupoTemporarioDeCinco[indice] = conjuntoDeBytes[indiceNumeroDeBytes];
+            indice++;
+            indiceNumeroDeBytes++;
+            grupoTemporarioDeOito[0] = (grupoTemporarioDeCinco[0] >> 3) & 0x1F;
+            saida[indiceSaida] = tabelaBase32Estendido[grupoTemporarioDeOito[0]];
+            indiceSaida++;
+            grupoTemporarioDeOito[1] = ((grupoTemporarioDeCinco[0] << 2) & 0x1C) | ((grupoTemporarioDeCinco[1] >> 6) & 0x03);
+            saida[indiceSaida] = tabelaBase32Estendido[grupoTemporarioDeOito[1]];
+            indiceSaida++;
+            grupoTemporarioDeOito[2] = (grupoTemporarioDeCinco[1] >> 1) & 0x1F;
+            saida[indiceSaida] = tabelaBase32Estendido[grupoTemporarioDeOito[2]];
+            indiceSaida++;
+            grupoTemporarioDeOito[3] = ((grupoTemporarioDeCinco[1] << 4) & 0x10) | ((grupoTemporarioDeCinco[2] >> 4) & 0x0F);
+            saida[indiceSaida] = tabelaBase32Estendido[grupoTemporarioDeOito[3]];
+            indiceSaida++;
+            grupoTemporarioDeOito[4] = ((grupoTemporarioDeCinco[2] << 1) & 0x1E) | ((grupoTemporarioDeCinco[3] >> 7) & 0x01);
+            saida[indiceSaida] = tabelaBase32Estendido[grupoTemporarioDeOito[4]];
+            indiceSaida++;
+            grupoTemporarioDeOito[5] = (grupoTemporarioDeCinco[3] >> 2) & 0x1F;
+            saida[indiceSaida] = tabelaBase32Estendido[grupoTemporarioDeOito[5]];
+            indiceSaida++;
+            grupoTemporarioDeOito[6] = ((grupoTemporarioDeCinco[3] << 3) & 0x18) | ((grupoTemporarioDeCinco[4] >> 5) & 0x07);
+            saida[indiceSaida] = tabelaBase32Estendido[grupoTemporarioDeOito[6]];
+            indiceSaida++;
+            grupoTemporarioDeOito[7] = grupoTemporarioDeCinco[4] & 0x1F;
+            saida[indiceSaida] = tabelaBase32Estendido[grupoTemporarioDeOito[7]];
+            indiceSaida++;
+            indice = 0;
+        }
+
+        if (grupoMenosDeCinco == 4)
+        {
+            grupoTemporarioDeCinco[indice] = conjuntoDeBytes[indiceNumeroDeBytes];
+            indice++;
+            indiceNumeroDeBytes++;
+            grupoTemporarioDeCinco[indice] = conjuntoDeBytes[indiceNumeroDeBytes];
+            indice++;
+            indiceNumeroDeBytes++;
+            grupoTemporarioDeCinco[indice] = conjuntoDeBytes[indiceNumeroDeBytes];
+            indice++;
+            indiceNumeroDeBytes++;
+            grupoTemporarioDeCinco[indice] = conjuntoDeBytes[indiceNumeroDeBytes];
+            indice++;
+            indiceNumeroDeBytes++;
+            grupoTemporarioDeCinco[indice] = 0b00000000;
+            indice++;
+            grupoTemporarioDeOito[0] = (grupoTemporarioDeCinco[0] >> 3) & 0x1F;
+            saida[indiceSaida] = tabelaBase32Estendido[grupoTemporarioDeOito[0]];
+            indiceSaida++;
+            grupoTemporarioDeOito[1] = ((grupoTemporarioDeCinco[0] << 2) & 0x1C) | ((grupoTemporarioDeCinco[1] >> 6) & 0x03);
+            saida[indiceSaida] = tabelaBase32Estendido[grupoTemporarioDeOito[1]];
+            indiceSaida++;
+            grupoTemporarioDeOito[2] = (grupoTemporarioDeCinco[1] >> 1) & 0x1F;
+            saida[indiceSaida] = tabelaBase32Estendido[grupoTemporarioDeOito[2]];
+            indiceSaida++;
+            grupoTemporarioDeOito[3] = ((grupoTemporarioDeCinco[1] << 4) & 0x10) | ((grupoTemporarioDeCinco[2] >> 4) & 0x0F);
+            saida[indiceSaida] = tabelaBase32Estendido[grupoTemporarioDeOito[3]];
+            indiceSaida++;
+            grupoTemporarioDeOito[4] = ((grupoTemporarioDeCinco[2] << 1) & 0x1E) | ((grupoTemporarioDeCinco[3] >> 7) & 0x01);
+            saida[indiceSaida] = tabelaBase32Estendido[grupoTemporarioDeOito[4]];
+            indiceSaida++;
+            grupoTemporarioDeOito[5] = (grupoTemporarioDeCinco[3] >> 2) & 0x1F;
+            saida[indiceSaida] = tabelaBase32Estendido[grupoTemporarioDeOito[5]];
+            indiceSaida++;
+            grupoTemporarioDeOito[6] = ((grupoTemporarioDeCinco[3] << 3) & 0x18) | ((grupoTemporarioDeCinco[4] >> 5) & 0x07);
+            saida[indiceSaida] = tabelaBase32Estendido[grupoTemporarioDeOito[6]];
+            indiceSaida++;
+            saida[indiceSaida] = tabelaBase32Estendido[32];
+            indiceSaida++;
+            indice = 0;
+        }
+
+        else if (grupoMenosDeCinco == 3)
+        {
+            grupoTemporarioDeCinco[indice] = conjuntoDeBytes[indiceNumeroDeBytes];
+            indice++;
+            indiceNumeroDeBytes++;
+            grupoTemporarioDeCinco[indice] = conjuntoDeBytes[indiceNumeroDeBytes];
+            indice++;
+            indiceNumeroDeBytes++;
+            grupoTemporarioDeCinco[indice] = conjuntoDeBytes[indiceNumeroDeBytes];
+            indice++;
+            indiceNumeroDeBytes++;
+            grupoTemporarioDeCinco[indice] = 0b00000000;
+            indice++;
+            grupoTemporarioDeCinco[indice] = 0b00000000;
+            indice++;
+            grupoTemporarioDeOito[0] = (grupoTemporarioDeCinco[0] >> 3) & 0x1F;
+            saida[indiceSaida] = tabelaBase32Estendido[grupoTemporarioDeOito[0]];
+            indiceSaida++;
+            grupoTemporarioDeOito[1] = ((grupoTemporarioDeCinco[0] << 2) & 0x1C) | ((grupoTemporarioDeCinco[1] >> 6) & 0x03);
+            saida[indiceSaida] = tabelaBase32Estendido[grupoTemporarioDeOito[1]];
+            indiceSaida++;
+            grupoTemporarioDeOito[2] = (grupoTemporarioDeCinco[1] >> 1) & 0x1F;
+            saida[indiceSaida] = tabelaBase32Estendido[grupoTemporarioDeOito[2]];
+            indiceSaida++;
+            grupoTemporarioDeOito[3] = ((grupoTemporarioDeCinco[1] << 4) & 0x10) | ((grupoTemporarioDeCinco[2] >> 4) & 0x0F);
+            saida[indiceSaida] = tabelaBase32Estendido[grupoTemporarioDeOito[3]];
+            indiceSaida++;
+            grupoTemporarioDeOito[4] = ((grupoTemporarioDeCinco[2] << 1) & 0x1E) | ((grupoTemporarioDeCinco[3] >> 7) & 0x01);
+            saida[indiceSaida] = tabelaBase32Estendido[grupoTemporarioDeOito[4]];
+            indiceSaida++;
+            saida[indiceSaida] = tabelaBase32Estendido[32];
+            indiceSaida++;
+            saida[indiceSaida] = tabelaBase32Estendido[32];
+            indiceSaida++;
+            saida[indiceSaida] = tabelaBase32Estendido[32];
+            indiceSaida++;
+            indice = 0;
+        }
+
+        else if (grupoMenosDeCinco == 2)
+        {
+            grupoTemporarioDeCinco[indice] = conjuntoDeBytes[indiceNumeroDeBytes];
+            indice++;
+            indiceNumeroDeBytes++;
+            grupoTemporarioDeCinco[indice] = conjuntoDeBytes[indiceNumeroDeBytes];
+            indice++;
+            indiceNumeroDeBytes++;
+            grupoTemporarioDeCinco[indice] = 0b00000000;
+            indice++;
+            grupoTemporarioDeCinco[indice] = 0b00000000;
+            indice++;
+            grupoTemporarioDeCinco[indice] = 0b00000000;
+            indice++;
+            grupoTemporarioDeOito[0] = (grupoTemporarioDeCinco[0] >> 3) & 0x1F;
+            saida[indiceSaida] = tabelaBase32Estendido[grupoTemporarioDeOito[0]];
+            indiceSaida++;
+            grupoTemporarioDeOito[1] = ((grupoTemporarioDeCinco[0] << 2) & 0x1C) | ((grupoTemporarioDeCinco[1] >> 6) & 0x03);
+            saida[indiceSaida] = tabelaBase32Estendido[grupoTemporarioDeOito[1]];
+            indiceSaida++;
+            grupoTemporarioDeOito[2] = (grupoTemporarioDeCinco[1] >> 1) & 0x1F;
+            saida[indiceSaida] = tabelaBase32Estendido[grupoTemporarioDeOito[2]];
+            indiceSaida++;
+            grupoTemporarioDeOito[3] = ((grupoTemporarioDeCinco[1] << 4) & 0x10) | ((grupoTemporarioDeCinco[2] >> 4) & 0x0F);
+            saida[indiceSaida] = tabelaBase32Estendido[grupoTemporarioDeOito[3]];
+            indiceSaida++;
+            saida[indiceSaida] = tabelaBase32Estendido[32];
+            indiceSaida++;
+            saida[indiceSaida] = tabelaBase32Estendido[32];
+            indiceSaida++;
+            saida[indiceSaida] = tabelaBase32Estendido[32];
+            indiceSaida++;
+            saida[indiceSaida] = tabelaBase32Estendido[32];
+            indiceSaida++;
+            indice = 0;
+        }
+
+        else if (grupoMenosDeCinco == 1)
+        {
+            grupoTemporarioDeCinco[indice] = conjuntoDeBytes[indiceNumeroDeBytes];
+            indice++;
+            indiceNumeroDeBytes++;
+            grupoTemporarioDeCinco[indice] = 0b00000000;
+            indice++;
+            grupoTemporarioDeCinco[indice] = 0b00000000;
+            indice++;
+            grupoTemporarioDeCinco[indice] = 0b00000000;
+            indice++;
+            grupoTemporarioDeCinco[indice] = 0b00000000;
+            indice++;
+            grupoTemporarioDeOito[0] = (grupoTemporarioDeCinco[0] >> 3) & 0x1F;
+            saida[indiceSaida] = tabelaBase32Estendido[grupoTemporarioDeOito[0]];
+            indiceSaida++;
+            grupoTemporarioDeOito[1] = ((grupoTemporarioDeCinco[0] << 2) & 0x1C) | ((grupoTemporarioDeCinco[1] >> 6) & 0x03);
+            saida[indiceSaida] = tabelaBase32Estendido[grupoTemporarioDeOito[1]];
+            indiceSaida++;
+            saida[indiceSaida] = tabelaBase32Estendido[32];
+            indiceSaida++;
+            saida[indiceSaida] = tabelaBase32Estendido[32];
+            indiceSaida++;
+            saida[indiceSaida] = tabelaBase32Estendido[32];
+            indiceSaida++;
+            saida[indiceSaida] = tabelaBase32Estendido[32];
+            indiceSaida++;
+            saida[indiceSaida] = tabelaBase32Estendido[32];
+            indiceSaida++;
+            saida[indiceSaida] = tabelaBase32Estendido[32];
+            indiceSaida++;
+            indice = 0;
+        }
+    }
+
+    return ok;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* Universidade Federal do Rio de Janeiro
 Escola Politecnica
 Departamento de Eletronica e de Computacao

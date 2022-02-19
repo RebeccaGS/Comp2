@@ -4,16 +4,12 @@ Departamento de Eletronica e de Computacao
 EEL270 - Computacao II - Turma 2021/2
 Prof. Marcelo Luiz Drumond Lanza
 Autor: Rebecca Gomes Simao
-Descricao: func teste para converter base 10 em 16.
+Descricao: Funcao teste para desconverter na base 16
 
 $Author$
 $Date$
 $Log$ */
 
-
-
-// ANOTACOES
-// Num bytes invalido: ver se numero de elementos apos o numero de bytes = numero de bytes
 
 // mudar pra .h
 #include "aula0801.c"

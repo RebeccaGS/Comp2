@@ -4,16 +4,12 @@ Departamento de Eletronica e de Computacao
 EEL270 - Computacao II - Turma 2021/2
 Prof. Marcelo Luiz Drumond Lanza
 Autor: Rebecca Gomes Simao
-Descricao: func teste para converter base 10 em 16.
+Descricao: func teste para converter base 16 em 64.
 
 $Author$
 $Date$
 $Log$ */
 
-
-
-// ANOTACOES
-// Num bytes invalido: ver se numero de elementos apos o numero de bytes = numero de bytes
 
 // mudar pra .h
 #include "aula0801.c"
@@ -38,18 +34,36 @@ int main (int argc, char *argv[]) {
     byte *conjuntoDeBytes;
     unsigned long long numeroDeBytes;
     char *saida;
+    tipoAlfabetoBase32 alfabeto;
 
     char *verificacao;
     unsigned short i = 1, n;
 
-    /* se possui ao menos 3 args: arquivo; numero de bytes = 1; o byte a ser convertido */
-    if (argc < 3){
-        printf("%s", "Favor, colocar: <numeros de Bytes>  <Bytes listados>\n");
+    /* se possui ao menos 4 args: arquivo; numero de bytes = 1; o byte a ser convertido */
+    if (argc < 4){
+        printf("%s", "Favor, colocar: <alfabeto> <numeros de Bytes>  <Bytes listados>\n");
         exit (NUMERO_ARGUMENTOS_INVALIDO);
     }
 
-
+    
     /* pegar argumentos a serem usados */
+    alfabeto = strtoul(argv[i++], &verificacao, 10);
+    if (errno == EINVAL){
+  		printf ("alfabeto invalido.\n");
+        exit (BASE_INVALIDA);
+    }
+
+    if (errno == ERANGE){
+  		printf ("Valor fornecido para alfabeto ultrapassa o valor maximo permitido para unsigned short (%d)\n",UINT_MAX);
+        exit (VALOR_MAXIMO_EXCEDIDO);
+  	}
+    
+    if (*verificacao != EOS){
+        printf ("alfabeto contem caractere invalido.\n");
+        printf ("Caractere invalido: \'%c\'\n", *verificacao);
+        exit (CONTEM_CARACTERE_INVALIDO);
+    }
+
     numeroDeBytes = strtoul(argv[i++], &verificacao, 10);
     if (errno == EINVAL){
   		printf ("numero de bytes invalido.\n");
@@ -88,8 +102,7 @@ int main (int argc, char *argv[]) {
     }
 
     /* enviar argumentos para conversao */
-    tipoErros retorno = CodificarBase16(conjuntoDeBytes,numeroDeBytes,saida);
-    printf("%u",retorno);
+    tipoErros retorno = CodificarBase32 (conjuntoDeBytes, numeroDeBytes, alfabeto, saida);
 
     /* conferir se o retorno ta ok */
     if (retorno != ok)

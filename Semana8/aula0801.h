@@ -15,7 +15,11 @@ $Log$ */
 
 typedef unsigned char byte;
 
-typedef enum {ok = 0, numBytesInvalido = 1, conjuntoDeBytesVazio = 2} tipoErros;
+typedef enum {ok = 0, numBytesInvalido = 1, bytesPassadosVazio = 2, foraDaRange = 3, numeroDeBytesInvalido = 4,
+                            caracterInvalido = 5, finalLinhaInvalido = 6} tipoErros;
+typedef enum {basico = 0, estendido = 1} tipoAlfabetoBase32;
+typedef enum {desabilitado = 0, habilitado = 1} tipoFinalLinha;
+
 
 tipoErros
 CodificarBase16 (byte *, unsigned long long, char *);
@@ -23,6 +27,17 @@ CodificarBase16 (byte *, unsigned long long, char *);
 tipoErros
 DecodificarBase16 (char *, byte * , unsigned long long *);
 
-#endif
+tipoErros
+CodificarBase32 (byte *, unsigned long long , tipoAlfabetoBase32, char *);
 
+tipoErros
+DecodificarBase32 (char *, tipoAlfabetoBase32, byte *, unsigned long long *);
+
+tipoErros
+CodificarBase64 (byte *, unsigned long long, tipoFinalLinha, char *);
+
+tipoErros
+DecodificarBase64 (char *, tipoFinalLinha , byte *, unsigned long long *);
+
+#endif
 /* $RCSfile$ */
