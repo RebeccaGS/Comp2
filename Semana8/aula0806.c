@@ -25,6 +25,7 @@ $Log$ */
 #define VALOR_MAXIMO_EXCEDIDO                   3
 #define CONTEM_CARACTERE_INVALIDO               4
 #define ERRO_CHAMADA_FUNCAO                     5
+#define NULO                                    6
 
 #define EOS				      					'\0'
 
@@ -34,32 +35,32 @@ int main (int argc, char *argv[]) {
     byte *conjuntoDeBytes;
     unsigned long long numeroDeBytes;
     char *saida;
-    tipoAlfabetoBase32 alfabeto;
+    tipoFinalLinha finalLinha;
 
     char *verificacao;
     unsigned short i = 1, n;
 
     /* se possui ao menos 4 args: arquivo; numero de bytes = 1; o byte a ser convertido */
     if (argc < 4){
-        printf("%s", "Favor, colocar: <alfabeto> <numeros de Bytes>  <Bytes listados>\n");
+        printf("%s", "Favor, colocar: <finalDelinha> <numeros de Bytes>  <Bytes listados>\n");
         exit (NUMERO_ARGUMENTOS_INVALIDO);
     }
 
     
     /* pegar argumentos a serem usados */
-    alfabeto = strtoul(argv[i++], &verificacao, 10);
+    finalLinha = strtoul(argv[i++], &verificacao, 10);
     if (errno == EINVAL){
-  		printf ("alfabeto invalido.\n");
+  		printf ("finalLinha invalido.\n");
         exit (BASE_INVALIDA);
     }
 
     if (errno == ERANGE){
-  		printf ("Valor fornecido para alfabeto ultrapassa o valor maximo permitido para unsigned short (%d)\n",UINT_MAX);
+  		printf ("Valor fornecido para finalLinha ultrapassa o valor maximo permitido para unsigned short (%d)\n",UINT_MAX);
         exit (VALOR_MAXIMO_EXCEDIDO);
   	}
     
     if (*verificacao != EOS){
-        printf ("alfabeto contem caractere invalido.\n");
+        printf ("finalLinha contem caractere invalido.\n");
         printf ("Caractere invalido: \'%c\'\n", *verificacao);
         exit (CONTEM_CARACTERE_INVALIDO);
     }
@@ -81,28 +82,29 @@ int main (int argc, char *argv[]) {
         exit (CONTEM_CARACTERE_INVALIDO);
     }
 
-
+    conjuntoDeBytes = malloc (numeroDeBytes * sizeof (byte));
+    
+    if (conjuntoDeBytes == NULL){
+        exit (NULO);
+    }
+  
+    saida = malloc ((2*numeroDeBytes+1) * sizeof (char));
+    
+    if (saida == NULL){
+        free(conjuntoDeBytes);
+        exit (NULO);
+    }
+    
     /* pegar bytes listados */
     for (n = 0; n < numeroDeBytes; n++){
-            conjuntoDeBytes[n] = strtod(argv[i], &verificacao);
-            i++;
+        conjuntoDeBytes[n] = argv[i];
+        conjuntoDeBytes[n] = argv[i+1];
+        i = i+2;
     }
 
-    if (errno == ERANGE)
-  	{
-  	    printf ("Valor fornecido ultrapassa o valor maximo permitido para unsigned char (%u)\n",CHAR_MAX);
-        exit (VALOR_MAXIMO_EXCEDIDO);
-  	}
-    
-    if (*verificacao != EOS)
-    {
-        printf ("Argumento fornecido contem caractere invalido.\n");
-        printf ("Primeiro caractere invalido: \'%c\'\n", *verificacao);
-        exit (CONTEM_CARACTERE_INVALIDO);
-    }
 
     /* enviar argumentos para conversao */
-    tipoErros retorno = CodificarBase32 (conjuntoDeBytes, numeroDeBytes, alfabeto, saida);
+    tipoErros retorno = CodificarBase64 (conjuntoDeBytes, numeroDeBytes, finalLinha, saida);
 
     /* conferir se o retorno ta ok */
     if (retorno != ok)
@@ -110,10 +112,10 @@ int main (int argc, char *argv[]) {
 
     else{
         /* printar bytes na tela na tela */
-        for (n = 0; n < numeroDeBytes; n++){
-            printf("%u", saida[n]);
-        }
+        printf("%s\n", saida);
     }
     
+    free(conjuntoDeBytes);
+    free(saida);
     return OK;
 }

@@ -4,19 +4,17 @@ Departamento de Eletronica e de Computacao
 EEL270 - Computacao II - Turma 2021/2
 Prof. Marcelo Luiz Drumond Lanza
 Autor: Rebecca Gomes Simao
-Descricao: func teste para converter base 10 em 16.
+Descricao: converte base 10 em 16.
 
-$Author$
-$Date$
-$Log$ */
+$Author: rebecca.simao $
+$Date: 2022/02/17 10:57:09 $
+$Log: aula0802.c,v $
+Revision 1.1  2022/02/17 10:57:09  rebecca.simao
+Initial revision
+ */
 
 
-
-// ANOTACOES
-// Num bytes invalido: ver se numero de elementos apos o numero de bytes = numero de bytes
-
-// mudar pra .h
-#include "aula0801.c"
+#include "aula0801.h"
 #include <errno.h>
 #include <limits.h>
 #include <stdio.h>
@@ -29,7 +27,8 @@ $Log$ */
 #define VALOR_MAXIMO_EXCEDIDO                   3
 #define CONTEM_CARACTERE_INVALIDO               4
 #define ERRO_CHAMADA_FUNCAO                     5
-
+#define NULO                                    6
+#define FORA_RANGE                              7
 #define EOS				      					'\0'
 
 int main (int argc, char *argv[]) {
@@ -66,22 +65,43 @@ int main (int argc, char *argv[]) {
         printf ("Caractere invalido: \'%c\'\n", *verificacao);
         exit (CONTEM_CARACTERE_INVALIDO);
     }
-
-
+  
+    conjuntoDeBytes = malloc (numeroDeBytes * sizeof (byte));
+    
+    if (conjuntoDeBytes == NULL){
+        exit (NULO);
+    }
+  
+    saida = malloc ((2*numeroDeBytes+1) * sizeof (char));
+    
+    if (saida == NULL){
+        free(conjuntoDeBytes);
+        exit (NULO);
+    }
+    
+    
     /* pegar bytes listados */
     for (n = 0; n < numeroDeBytes; n++){
-            conjuntoDeBytes[n] = strtod(argv[i], &verificacao);
-            i++;
+        if (argv[i] > 255 || argv[i] < 0){
+            printf("apenas numeros entre 0-255");
+            exit (FORA_RANGE);
+        }
+        conjuntoDeBytes[n] = strtod(argv[i], &verificacao);
+        i++;
     }
 
     if (errno == ERANGE)
   	{
+        free(conjuntoDeBytes);
+        free(saida);
   	    printf ("Valor fornecido ultrapassa o valor maximo permitido para unsigned char (%u)\n",CHAR_MAX);
         exit (VALOR_MAXIMO_EXCEDIDO);
   	}
     
     if (*verificacao != EOS)
     {
+        free(conjuntoDeBytes);
+        free(saida);
         printf ("Argumento fornecido contem caractere invalido.\n");
         printf ("Primeiro caractere invalido: \'%c\'\n", *verificacao);
         exit (CONTEM_CARACTERE_INVALIDO);
@@ -97,10 +117,10 @@ int main (int argc, char *argv[]) {
 
     else{
         /* printar bytes na tela na tela */
-        for (n = 0; n < numeroDeBytes; n++){
-            printf("%u", saida[n]);
-        }
+        printf("%s\n", saida);
     }
     
+    free(conjuntoDeBytes);
+    free(saida);
     return OK;
 }

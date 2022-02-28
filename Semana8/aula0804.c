@@ -25,6 +25,7 @@ $Log$ */
 #define VALOR_MAXIMO_EXCEDIDO                   3
 #define CONTEM_CARACTERE_INVALIDO               4
 #define ERRO_CHAMADA_FUNCAO                     5
+#define NULO                                    6
 
 #define EOS				      					'\0'
 
@@ -81,25 +82,26 @@ int main (int argc, char *argv[]) {
         exit (CONTEM_CARACTERE_INVALIDO);
     }
 
-
+    conjuntoDeBytes = malloc (numeroDeBytes * sizeof (byte));
+    
+    if (conjuntoDeBytes == NULL){
+        exit (NULO);
+    }
+  
+    saida = malloc ((2*numeroDeBytes+1) * sizeof (char));
+    
+    if (saida == NULL){
+        free(conjuntoDeBytes);
+        exit (NULO);
+    }
+    
     /* pegar bytes listados */
     for (n = 0; n < numeroDeBytes; n++){
-            conjuntoDeBytes[n] = strtod(argv[i], &verificacao);
-            i++;
+            conjuntoDeBytes[n] = argv[i];
+            conjuntoDeBytes[n] = argv[i+1];
+            i = i+2;
     }
 
-    if (errno == ERANGE)
-  	{
-  	    printf ("Valor fornecido ultrapassa o valor maximo permitido para unsigned char (%u)\n",CHAR_MAX);
-        exit (VALOR_MAXIMO_EXCEDIDO);
-  	}
-    
-    if (*verificacao != EOS)
-    {
-        printf ("Argumento fornecido contem caractere invalido.\n");
-        printf ("Primeiro caractere invalido: \'%c\'\n", *verificacao);
-        exit (CONTEM_CARACTERE_INVALIDO);
-    }
 
     /* enviar argumentos para conversao */
     tipoErros retorno = CodificarBase32 (conjuntoDeBytes, numeroDeBytes, alfabeto, saida);
@@ -110,10 +112,10 @@ int main (int argc, char *argv[]) {
 
     else{
         /* printar bytes na tela na tela */
-        for (n = 0; n < numeroDeBytes; n++){
-            printf("%u", saida[n]);
-        }
+        printf("%s\n", saida);
     }
     
+    free(conjuntoDeBytes);
+    free(saida);
     return OK;
 }

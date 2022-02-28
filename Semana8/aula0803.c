@@ -18,74 +18,55 @@ $Log$ */
 #include <stdio.h>
 #include <stdlib.h>
 
+// TUDO errado
 
 #define OK										0
 #define NUMERO_ARGUMENTOS_INVALIDO              1
-#define BASE_INVALIDA                           2
-#define VALOR_MAXIMO_EXCEDIDO                   3
-#define CONTEM_CARACTERE_INVALIDO               4
-#define ERRO_CHAMADA_FUNCAO                     5
+#define NULO                                    2
 
 #define EOS				      					'\0'
 
 int main (int argc, char *argv[]) {
 
     /* definir variaveis usadas */
-    byte *conjuntoDeBytes;
-    unsigned long long numeroDeBytes;
-    char *saida;
-
+    char *base16;
+    byte *base10;
+    unsigned long long *numeroEmBase10 = 0;
+    
     char *verificacao;
-    unsigned short i = 1, n;
+    unsigned short i = 0;
 
-    /* se possui ao menos 3 args: arquivo; numero de bytes = 1; o byte a ser convertido */
-    if (argc < 3){
-        printf("%s", "Favor, colocar: <numeros de Bytes>  <Bytes listados>\n");
+    /* se possui ao menos 2 args */
+    if (argc < 2){
+        printf("%s", "Favor, colocar: <Bytes>\n");
         exit (NUMERO_ARGUMENTOS_INVALIDO);
     }
 
-
-    /* pegar argumentos a serem usados */
-    numeroDeBytes = strtoul(argv[i++], &verificacao, 10);
-    if (errno == EINVAL){
-  		printf ("numero de bytes invalido.\n");
-        exit (BASE_INVALIDA);
+    /* pegar bytes */
+    base16 = argv[1];
+    int len = strlen(base16);
+    if (len %2 != 0){
+        len = len + 2;
+        base16 = malloc (len * sizeof (char));
+        for (int j = 1; j < len; j++){            
+            base16[j] = argv[1][j-1];
+        }
+        base16[0] = '0';
+        base16[len] = EOS;
     }
 
-    if (errno == ERANGE){
-  		printf ("Valor fornecido para numero de bytes ultrapassa o valor maximo permitido para unsigned short (%d)\n",UINT_MAX);
-        exit (VALOR_MAXIMO_EXCEDIDO);
-  	}
+    if (base16 == NULL){
+        exit (NULO);
+    }
+  
+    //numeroEmBase10 = strlen(base16)/2;
+    printf("a:%s\n",base16);
+    printf("--------------");
+
+    //base10 = malloc (numeroEmBase10 * sizeof (byte));
     
-    if (*verificacao != EOS){
-        printf ("numero de bytes contem caractere invalido.\n");
-        printf ("Caractere invalido: \'%c\'\n", *verificacao);
-        exit (CONTEM_CARACTERE_INVALIDO);
-    }
-
-
-    /* pegar bytes listados */
-    for (n = 0; n < numeroDeBytes; n++){
-            conjuntoDeBytes[n] = strtod(argv[i], &verificacao);
-            i++;
-    }
-
-    if (errno == ERANGE)
-  	{
-  	    printf ("Valor fornecido ultrapassa o valor maximo permitido para unsigned char (%u)\n",CHAR_MAX);
-        exit (VALOR_MAXIMO_EXCEDIDO);
-  	}
-    
-    if (*verificacao != EOS)
-    {
-        printf ("Argumento fornecido contem caractere invalido.\n");
-        printf ("Primeiro caractere invalido: \'%c\'\n", *verificacao);
-        exit (CONTEM_CARACTERE_INVALIDO);
-    }
-
     /* enviar argumentos para conversao */
-    tipoErros retorno = CodificarBase16(conjuntoDeBytes,numeroDeBytes,saida);
-    printf("%u",retorno);
+    tipoErros retorno = DecodificarBase16(base16,base10,numeroEmBase10);
 
     /* conferir se o retorno ta ok */
     if (retorno != ok)
@@ -93,10 +74,11 @@ int main (int argc, char *argv[]) {
 
     else{
         /* printar bytes na tela na tela */
-        for (n = 0; n < numeroDeBytes; n++){
-            printf("%u", saida[n]);
-        }
+        printf("%s\n", base10);
     }
     
+    free(base10);
+    free(base16);
+
     return OK;
 }

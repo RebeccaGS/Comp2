@@ -19,6 +19,7 @@
 		"aula0701.h": "c",
 		"errno.h": "c",
 		"unistd.h": "c",
-		"exemplo": "c"
+		"exemplo": "c",
+		"aula0801.h": "c"
 	}
 }
