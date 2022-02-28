@@ -4,7 +4,7 @@ Departamento de Eletronica e de Computacao
 EEL270 - Computacao II - Turma 2021/2
 Prof. Marcelo Luiz Drumond Lanza
 Autor: Rebecca Gomes Simao
-Descricao: Funcao teste para desconverter na base 64
+Descricao: Funcao teste para desconverter na base 32 -> 16
 
 $Author$
 $Date$
@@ -13,93 +13,108 @@ $Log$ */
 
 // mudar pra .h
 #include "aula0801.c"
-#include <errno.h>
-#include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
-
+#include <errno.h>
+#include <limits.h>
 
 #define OK										0
 #define NUMERO_ARGUMENTOS_INVALIDO              1
+#define NULO                                    2
 #define BASE_INVALIDA                           2
 #define VALOR_MAXIMO_EXCEDIDO                   3
 #define CONTEM_CARACTERE_INVALIDO               4
-#define ERRO_CHAMADA_FUNCAO                     5
-#define NULO                                    6
 
 #define EOS				      					'\0'
 
 int main (int argc, char *argv[]) {
 
     /* definir variaveis usadas */
-    char *codificacaoBase64;
-    tipoAlfabetoBase32 finalLinha;
-    byte *saida;
-    unsigned long long numeroDeBytes;
-
+    char *base64;
+    tipoFinalLinha finalDeLinha;
+    byte *base16;
+    unsigned long long numeroEmBase16 = 0;
+    
     char *verificacao;
-    unsigned short i = 1, n;
+    unsigned short i = 0, n = 0;
 
-    /* se possui ao menos 3 args: arquivo; numero de bytes = 1; o byte a ser convertido */
+    /* se possui ao menos 2 args */
     if (argc < 3){
-        printf("%s", "Favor, colocar: <alfabeto a ser utilizado>  <Bytes>\n");
+        printf("%s", "Favor, colocar: <finalDeLinha> <Bytes>\n");
         exit (NUMERO_ARGUMENTOS_INVALIDO);
     }
 
-    /* pegar argumentos a serem usados */
-    finalLinha = strtoul(argv[i++], &verificacao, 10);
+    /* Pegar alfabeto */
+    finalDeLinha = strtoul(argv[i++], &verificacao, 10);
     if (errno == EINVAL){
-  		printf ("finalLinha invalido.\n");
+  		printf ("finalDeLinha invalido.\n");
         exit (BASE_INVALIDA);
     }
 
     if (errno == ERANGE){
-  		printf ("Valor fornecido para finalLinha ultrapassa o valor maximo permitido para unsigned short (%d)\n",UINT_MAX);
+  		printf ("Valor fornecido para finalDeLinha ultrapassa o valor maximo permitido para unsigned short (%d)\n",UINT_MAX);
         exit (VALOR_MAXIMO_EXCEDIDO);
   	}
     
     if (*verificacao != EOS){
-        printf ("finalLinha contem caractere invalido.\n");
+        printf ("finalDeLinha contem caractere invalido.\n");
         printf ("Caractere invalido: \'%c\'\n", *verificacao);
         exit (CONTEM_CARACTERE_INVALIDO);
     }
 
-    codificacaoBase64 = malloc (numeroDeBytes * sizeof (byte));
-    
-    if (codificacaoBase64 == NULL){
-        exit (NULO);
-    }
-  
-    saida = malloc ((2*numeroDeBytes+1) * sizeof (char));
-    
-    if (saida == NULL){
-        free(codificacaoBase64);
-        exit (NULO);
-    }
-
-    /* pegar bytes listados */
-    for (n = 0; n < numeroDeBytes; n++){
-            codificacaoBase64[n] = argv[i];
-            codificacaoBase64[n] = argv[i+1];
-            i = i + 2;
+    /* pegar bytes */
+    base64 = argv[2];
+    int len = strlen(base64);
+    if (len %2 != 0){
+        len = len + 2;
+        base64 = malloc (len * sizeof (char));
+        for (i = 1; i < len; i++){            
+            base64[i] = argv[2][i-1];
+        }
+        base64[0] = '0';
+        base64[len] = EOS;
     }
 
-    numeroDeBytes = i+1;
+    if (base64 == NULL){        
+        exit (NULO);
+        free(base64);
+    }
+
+    /* (len - 1) pois 1 eh EOS */
+    numeroEmBase16 = (len-1)/2;
+
+    /* len pois base16 tb possui final de string */
+    base16 = malloc ((len) * sizeof (byte));
+
+    if (base16 == NULL){
+        exit (NULO);
+        free(base64);
+        free(base16);
+    }
 
     /* enviar argumentos para conversao */
-    tipoErros retorno = DecodificarBase64 (codificacaoBase64, finalLinha, saida, numeroDeBytes);
+    tipoErros retorno = Decodificarbase64 (base64, finalDeLinha, base16, &numeroEmBase16);
 
-    
     /* conferir se o retorno ta ok */
     if (retorno != ok)
         printf ("Erro executando a funcao. Erro numero %u.\n", retorno);
 
     else{
         /* printar bytes na tela na tela */
-        printf("%s\n", saida);
+        for (i = 0; i < numeroEmBase16; i++){
+            /* resposta deve conter 2 digitos */
+            if (base16[i] < 100){
+                printf("(%c%c)16 = (0%d)10\n", base64[n],base64[n+1], base16[i]);    
+            }
+            else {
+                printf("(%c%c)16 = (%d)10\n", base64[n],base64[n+1], base16[i]);
+            }
+            n = n+2;
+        }
     }
     
-    free(codificacaoBase64);
-    free(saida);
+    free(base64);
+    free(base16);
+
     return OK;
 }

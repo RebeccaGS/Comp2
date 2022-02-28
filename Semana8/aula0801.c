@@ -80,6 +80,7 @@ tipoErros DecodificarBase16 (char *base16, byte *base10, unsigned long long *num
         }
         base10[n++] = auxiliar1 << 4 | auxiliar2;
     }
+    // adicionar '\0'
     return ok;
 }
 
@@ -211,8 +212,76 @@ tipoErros CodificarBase32 (byte *conjuntoDeBytes, unsigned long long numeroDeByt
 /* -------------------------------------------------  
 ------------------------------------------------- */
 
-tipoErros DecodificarBase32 (char *codificacaoBase32, tipoAlfabetoBase32 alfabeto, byte *saida, unsigned long long *numeroDeBytes);
+tipoErros DecodificarBase32 (char *base32, tipoAlfabetoBase32 alfabeto, byte *base16, unsigned long long *numeroEmBase16){
+    
+    /* definindo variaveis */
+    char *guiaBase32Simples = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567=";
+    char *guiaBase32Estendido = "0123456789ABCDEFGHIJKLMNOPQRSTUV=";
+    char *guiaBase32;
 
+    short auxiliar1 = -1,auxiliar2 = -1,auxiliar3 = -1,auxiliar4 = -1, auxiliar5 = -1,auxiliar6 = -1,auxiliar7 = -1,auxiliar8 = -1;
+    unsigned short i, a, n = 0;
+
+    /* tipoErros*/
+    if (numeroEmBase16 == 0)
+        return numeroDeBytesInvalido;
+
+    if (base32 == NULL)
+        return bytesPassadosVazio;
+
+    if (alfabeto != 1 || alfabeto != 0)
+        return finalLinhaInvalido;
+    
+    /* definindo alfabeto a ser usado */
+    if (alfabeto == 1){
+        guiaBase32 = guiaBase32Estendido;
+    }
+    else{
+        guiaBase32 = guiaBase32Simples;
+    }
+
+    /* procurar de 8 em 8 */
+    for (i = 0; base32[i] != '\0'; i = i + 8){
+        for (a = 0; a < 64; a++){
+            if (base32[i] == guiaBase32[a]){
+                auxiliar1 = a; /* a = posicao na tabela */
+            }
+            if (base32[i+1] == guiaBase32[a]){
+                auxiliar2 = a; 
+            }
+            if (base32[i+2] == guiaBase32[a]){
+                auxiliar3 = a;
+            }
+            if (base32[i+3] == guiaBase32[a]){
+                auxiliar4 = a;
+            }
+            if (base32[i+3] == guiaBase32[a]){
+                auxiliar5 = a;
+            }
+            if (base32[i+3] == guiaBase32[a]){
+                auxiliar6 = a;
+            }
+            if (base32[i+3] == guiaBase32[a]){
+                auxiliar7 = a;
+            }
+            if (base32[i+3] == guiaBase32[a]){
+                auxiliar8 = a;
+            }
+        }
+        if (auxiliar1 == -1 || auxiliar2 == -1 || auxiliar3 == -1 || auxiliar4 == -1 || auxiliar5 == -1 || auxiliar6 == -1 || auxiliar7 == -1 || auxiliar8 == -1){
+            return foraDaRange;
+        }
+    
+        base16[n++] = (auxiliar1 << 3) | (auxiliar2 >> 2);
+        base16[n++] = (auxiliar2 << 6 & 0xC0) | (auxiliar3 << 1) | (auxiliar4 >> 4);
+        base16[n++] = (auxiliar4 << 4 & 0xF0) | (auxiliar5 >> 1);
+        base16[n++] = (auxiliar5 << 7 & 0x80) | (auxiliar6 << 2) | (auxiliar7 >> 3);
+        base16[n++] = (auxiliar7 << 5 & 0xE0) | (auxiliar8);
+    }
+    base16[n] = '\0';
+    return ok;
+
+}   
 /* ------------------------------------------------- 
 ---------------------------------------------------- 
 ------------------------------------------------- */
@@ -299,61 +368,50 @@ tipoErros CodificarBase64 (byte *conjuntoDeBytes, unsigned long long numeroDeByt
 
 /* ------------------------------------------------- 
 ------------------------------------------------- */
-// Como resolver final de linha
-// tipoErros DecodificarBase64 (char *codificacaoBase64, tipoFinalLinha finalLinha, byte *saida, unsigned long long numeroDeBytes){
-// /* definindo variaveis */
-//     char *Base64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
-//     unsigned short gruposDe4, restoBytes, grupo, indiceSaida, indiceEntrada, contador;
-
-//     /* tipoErros*/
-//     if (numeroDeBytes == 0)
-//         return numeroDeBytesInvalido;
-
-//     if (codificacaoBase64 == NULL)
-//         return bytesPassadosVazio;
-
-//     if (finalLinha != 1 || finalLinha != 0)
-//         return finalLinhaInvalido;
-        
-//     /* para auxiliar casos */
-//     gruposDe4 = numeroDeBytes/4; /* grupos de bytes sem sobrar caso */
-//     restoBytes = numeroDeBytes%4;
+tipoErros DecodificarBase64 (char *base64, tipoFinalLinha finalDeLinha, byte *base16, unsigned long long *numeroEmBase16){
     
-//     indiceSaida = 0;
-//     indiceEntrada = 0;
-//     /* andar de 1 em 1 em cada grupo */
-//     for (grupo = 0; grupo < gruposDe4; grupo++){
-//         saida[indiceSaida++] = Base64[((codificacaoBase64 [indiceEntrada] << 2) & 0xFC) | (codificacaoBase64 [indiceEntrada+1] & 0x03)];
-//         saida[indiceSaida++] = Base64[((codificacaoBase64 [indiceEntrada+1] << 2) & 0xF0) | (codificacaoBase64 [indiceEntrada+2] & 0x0F)];
-//         saida[indiceSaida++] = Base64[((codificacaoBase64 [indiceEntrada+2] << 2) & 0xC0) | (codificacaoBase64 [indiceEntrada+3] & 0x0F)];
-//     }
+    /* definindo variaveis */
+    char *guiaBase64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
+    short auxiliar1 = -1,auxiliar2 = -1,auxiliar3 = -1,auxiliar4 = -1;
+    unsigned short i, a, n = 0;
 
-//     /* se houverem casos restantes, completar com '=' */
-//     if (restoBytes == 1){
-//         saida[indiceSaida++] = Base64[((codificacaoBase64 [indiceEntrada] << 2) & 0xFC) | (codificacaoBase64 [indiceEntrada+1] & 0x03)];
-//         saida[indiceSaida++] = Base64[((codificacaoBase64 [indiceEntrada+1] << 2) & 0xF0) | (codificacaoBase64 [indiceEntrada+2] & 0x0F)];
-//         saida[indiceSaida++] = Base64[(codificacaoBase64 [indiceEntrada+2] << 2) & 0xC0];
-//     }
+    /* tipoErros*/
+    if (numeroEmBase16 == 0)
+        return numeroDeBytesInvalido;
 
-//     else if (restoBytes == 2){
-//         saida[indiceSaida++] = Base64[((codificacaoBase64 [indiceEntrada] << 2) & 0xFC) | (codificacaoBase64 [indiceEntrada+1] & 0x03)];
-//         saida[indiceSaida++] = Base64[((codificacaoBase64 [indiceEntrada+1] << 2) & 0xF0) | (codificacaoBase64 [indiceEntrada+2] & 0x0F)];
+    if (base64 == NULL)
+        return bytesPassadosVazio;
+
+    if (finalDeLinha != 1 || finalDeLinha != 0)
+        return finalLinhaInvalido;
     
-//         saida[indiceSaida++] = '=';
-
-//     }
-
-//     else if (restoBytes == 1){
-//         saida[indiceSaida++] = Base64[((codificacaoBase64 [indiceEntrada] << 2) & 0xFC) | (codificacaoBase64 [indiceEntrada+1] & 0x03)];
-            
-//         saida[indiceSaida++] = '=';
-//         saida[indiceSaida++] = '=';
+    /* procurar de 4 em 4 */
+    for (i = 0; base64[i] != '\0'; i = i + 4){
+        for (a = 0; a < 64; a++){
+            if (base64[i] == guiaBase64[a]){
+                auxiliar1 = a; /* a = posicao na tabela */
+            }
+            if (base64[i+1] == guiaBase64[a]){
+                auxiliar2 = a; 
+            }
+            if (base64[i+2] == guiaBase64[a]){
+                auxiliar3 = a;
+            }
+            if (base64[i+3] == guiaBase64[a]){
+                auxiliar4 = a;
+            }
+        }
+        if (auxiliar1 == -1 || auxiliar2 == -1 || auxiliar3 == -1 || auxiliar4 == -1){
+            return foraDaRange;
+        }
     
-//     }
+        base16[n++] = (auxiliar1 << 2) | (auxiliar2 >> 4);
+        base16[n++] = (auxiliar2 << 4 & 0xF0) | (auxiliar3 >> 2);
+        base16[n++] = (auxiliar3 << 6 & 0xC0) | (auxiliar4);
+    }
+    base16[n] = '\0';
+    return ok;
 
-
-//     saida[indiceSaida] = '\0';
-//     return ok;
-// }   
+}   
 
 /* $RCSfile$ */

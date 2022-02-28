@@ -18,8 +18,6 @@ $Log$ */
 #include <stdio.h>
 #include <stdlib.h>
 
-// TUDO errado
-
 #define OK										0
 #define NUMERO_ARGUMENTOS_INVALIDO              1
 #define NULO                                    2
