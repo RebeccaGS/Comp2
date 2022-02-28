@@ -27,14 +27,13 @@ $Log$ */
 #define EOS				      					'\0'
 
 int main (int argc, char *argv[]) {
-
     /* definir variaveis usadas */
     char *base16;
     byte *base10;
-    unsigned long long *numeroEmBase10 = 0;
+    unsigned long long numeroEmBase10 = 0;
     
     char *verificacao;
-    unsigned short i = 0;
+    unsigned short i = 0, n = 0;
 
     /* se possui ao menos 2 args */
     if (argc < 2){
@@ -48,25 +47,31 @@ int main (int argc, char *argv[]) {
     if (len %2 != 0){
         len = len + 2;
         base16 = malloc (len * sizeof (char));
-        for (int j = 1; j < len; j++){            
-            base16[j] = argv[1][j-1];
+        for (i = 1; i < len; i++){            
+            base16[i] = argv[1][i-1];
         }
         base16[0] = '0';
         base16[len] = EOS;
     }
 
-    if (base16 == NULL){
+    if (base16 == NULL){        
         exit (NULO);
+        free(base16);
     }
-  
-    //numeroEmBase10 = strlen(base16)/2;
-    printf("a:%s\n",base16);
-    printf("--------------");
 
-    //base10 = malloc (numeroEmBase10 * sizeof (byte));
-    
+    /* (len - 1) pois 1 eh EOS */
+    numeroEmBase10 = (len-1)/2;
+
+    base10 = malloc ((len-1) * sizeof (byte));
+
+    if (base10 == NULL){
+        exit (NULO);
+        free(base10);
+        free(base16);
+    }
+
     /* enviar argumentos para conversao */
-    tipoErros retorno = DecodificarBase16(base16,base10,numeroEmBase10);
+    tipoErros retorno = DecodificarBase16(base16,base10,&numeroEmBase10);
 
     /* conferir se o retorno ta ok */
     if (retorno != ok)
@@ -74,7 +79,19 @@ int main (int argc, char *argv[]) {
 
     else{
         /* printar bytes na tela na tela */
-        printf("%s\n", base10);
+        for (i = 0; i < numeroEmBase10; i++){
+            /* resposta deve conter 3 digitos */
+            if (base10[i] < 10){
+                printf("(%c%c)16 = (00%d)10\n", base16[n],base16[n+1], base10[i]);
+            }
+            else if (base10[i] < 100){
+                printf("(%c%c)16 = (0%d)10\n", base16[n],base16[n+1], base10[i]);    
+            }
+            else {
+                printf("(%c%c)16 = (%d)10\n", base16[n],base16[n+1], base10[i]);
+            }
+            n = n+2;
+        }
     }
     
     free(base10);

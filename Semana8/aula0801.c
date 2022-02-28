@@ -23,7 +23,7 @@ tipoErros CodificarBase16(byte *conjuntoDeBytes, unsigned long long numeroDeByte
 
     /* tipoErros*/
     if (numeroDeBytes == 0)
-        return numBytesInvalido;
+        return numeroDeBytesInvalido;
 
     if (conjuntoDeBytes == NULL)
         return bytesPassadosVazio;
@@ -47,18 +47,39 @@ tipoErros CodificarBase16(byte *conjuntoDeBytes, unsigned long long numeroDeByte
 /* ------------------------------------------------- 
 ------------------------------------------------- */
 tipoErros DecodificarBase16 (char *base16, byte *base10, unsigned long long *numeroEmBase10){
-    
+
     /* definindo variaveis*/
     char *tabelaBase16 = "0123456789ABCDEF";
-    unsigned short i;
+    short i, n = 0, a, auxiliar1 = -1, auxiliar2 = -1;
+
+    if (base16 == NULL){
+        return bytesPassadosVazio;
+    }
+    if (numeroEmBase10 == 0){
+        return numeroDeBytesInvalido;
+    }
 
     /* procurar de 2 em 2 */
     for (i = 0; base16[i] != '\0'; i = i + 2){
-        //if (base16[i] != ); // fazer pra se base 16 for diferente de toda tabela base 16
-        printf("%c%c \n",base16[i],base16[i+1]);
-        numeroEmBase10++;
+        for (a = 0; a < 16; a++){
+            if (base16[i] == tabelaBase16[a]){
+                auxiliar1 = a; /* a = posicao na tabela */
+            }
+        }
+        if (auxiliar1 == -1){
+            return foraDaRange;
+        }
+    
+        for (a = 0; a < 16; a++){
+            if (base16[i+1] == tabelaBase16[a]){
+                auxiliar2 = a; /* a = posicao na tabela */
+            }
+        }    
+        if (auxiliar2 == -1){
+            return foraDaRange;
+        }
+        base10[n++] = auxiliar1 << 4 | auxiliar2;
     }
-    printf("%llu",numeroEmBase10); // ta errado
     return ok;
 }
 
