@@ -15,31 +15,30 @@ $Log$ */
 #include <string.h>
 #include <stdio.h>
 
-tipoErros CodificarBase16(byte *conjuntoDeBytes, unsigned long long numeroDeBytes, char *saida)
+tipoErros CodificarBase16(byte *base10, unsigned long long numeroDeBytes, char *base16)
 {
     /* definindo variaveis*/
-    char *tabelaBase16 = "0123456789ABCDEF";
-    unsigned long long i, indiceSaida;
+    char *guiaBase16 = "0123456789ABCDEF";
+    unsigned long long i, n = 0;
 
     /* tipoErros*/
     if (numeroDeBytes == 0)
         return numeroDeBytesInvalido;
 
-    if (conjuntoDeBytes == NULL)
+    if (base10 == NULL)
         return bytesPassadosVazio;
 
     /* percorrer de 1 em 1 nos elementos na base 16 */
-    indiceSaida = 0;
     for (i = 0; i < numeroDeBytes; i++)
     {
         /* pra caso 1, onde ha necessidade de transicionar a pos em 4 antes de &00001111 */
-        saida[indiceSaida++] = tabelaBase16[(conjuntoDeBytes[i] >> 4) & 0x0F];
+        base16[n++] = guiaBase16[(base10[i] >> 4) & 0x0F];
         
         /* pra caso 2, onde pos ja esta correta, necessitando apenas de &00001111 */
-        saida[indiceSaida++] = tabelaBase16[conjuntoDeBytes[i] & 0x0F];
+        base16[n++] = guiaBase16[base10[i] & 0x0F];
     }
 
-    saida[indiceSaida] = '\0';
+    base16[n] = '\0';
     return ok;
 }
 
@@ -80,7 +79,7 @@ tipoErros DecodificarBase16 (char *base16, byte *base10, unsigned long long *num
         }
         base10[n++] = auxiliar1 << 4 | auxiliar2;
     }
-    // adicionar '\0'
+    base10[n] = '\0';
     return ok;
 }
 
@@ -89,8 +88,7 @@ tipoErros DecodificarBase16 (char *base16, byte *base10, unsigned long long *num
 ----------------------------------------------------
 ------------------------------------------------- */
 
-tipoErros CodificarBase32 (byte *conjuntoDeBytes, unsigned long long numeroDeBytes, tipoAlfabetoBase32 alfabeto, char *saida){
-    // 0 - Desabilitado e 1 - Habilitado
+tipoErros CodificarBase32 (byte *base16, unsigned long long numeroDeBytes, tipoAlfabetoBase32 alfabeto, char *base32){
     /* definindo variaveis */
     char *Base32 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567=";
     char *Base32Estendido = "0123456789ABCDEFGHIJKLMNOPQRSTUV=";
@@ -100,7 +98,7 @@ tipoErros CodificarBase32 (byte *conjuntoDeBytes, unsigned long long numeroDeByt
     if (numeroDeBytes == 0)
         return numeroDeBytesInvalido;
 
-    if (conjuntoDeBytes == NULL)
+    if (numeroDeBytes == NULL)
         return bytesPassadosVazio;
 
     
