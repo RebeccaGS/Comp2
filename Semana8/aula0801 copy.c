@@ -251,7 +251,7 @@ tipoErros DecodificarBase32 (char *base32, tipoAlfabetoBase32 alfabeto, byte *ba
     /* procurar de 8 em 8 */
     for (i = 0; i < (len-8); i = i + 8){
         for (aux = 0; aux < 8; aux++){
-            for (a = 0; a < 33; a++){
+            for (a = 0; a < 64; a++){
                 if (base32[i] == guiaBase32[a]){
                     auxiliar[aux] = a; /* a = posicao na tabela */
                 }
@@ -273,7 +273,7 @@ tipoErros DecodificarBase32 (char *base32, tipoAlfabetoBase32 alfabeto, byte *ba
         /* conferencia de pads */
         if (base32[i] != '='){
             for (aux = 0; aux < 8; aux++){
-                for (a = 0; a < 33; a++){
+                for (a = 0; a < 64; a++){
                     if (base32[i] == guiaBase32[a]){
                         auxiliar[aux] = a; /* a = posicao na tabela */
                     }
@@ -435,10 +435,7 @@ tipoErros DecodificarBase64 (char *base64, tipoFinalLinha finalDeLinha, byte *ba
     short auxiliar1 = -1,auxiliar2 = -1,auxiliar3 = -1,auxiliar4 = -1;
     unsigned short i, a, n = 0;
     int tamanhoBase64 = strlen(base64);
-    unsigned short numeroPads = 0, aux;
-
-    short auxiliar[4] = {-1,-1,-1,-1};
-
+    
     /* tipoErros*/
     if (numeroEmBase16 == 0)
         return numeroDeBytesInvalido;
@@ -456,63 +453,30 @@ tipoErros DecodificarBase64 (char *base64, tipoFinalLinha finalDeLinha, byte *ba
     
 
     /* procurar de 4 em 4 */
-    for (i = 0; i < (tamanhoBase64-4); i = i + 4){
-        for (aux = 0; aux < 4; aux++){
-            for (a = 0; a < 64; a++){
-                if (base64[i] == guiaBase64[a]){
-                    auxiliar[aux] = a; /* a = posicao na tabela */
-                }
+    for (i = 0; base64[i] != '\0'; i = i + 4){
+        for (a = 0; a < 64; a++){
+            if (base64[i] == guiaBase64[a]){
+                auxiliar1 = a; /* a = posicao na tabela */
             }
-            if (auxiliar[aux] == -1){
-                return foraDaRange;
+            if (base64[i+1] == guiaBase64[a]){
+                auxiliar2 = a; 
             }
+            if (base64[i+2] == guiaBase64[a]){
+                auxiliar3 = a;
+            }
+            if (base64[i+3] == guiaBase64[a]){
+                auxiliar4 = a;
+            }
+        }
+        if (auxiliar1 == -1 || auxiliar2 == -1 || auxiliar3 == -1 || auxiliar4 == -1){
+            return foraDaRange;
         }
     
         base16[n++] = (auxiliar1 << 2) | (auxiliar2 >> 4);
         base16[n++] = (auxiliar2 << 4 & 0xF0) | (auxiliar3 >> 2);
         base16[n++] = (auxiliar3 << 6 & 0xC0) | (auxiliar4);
     }
-
-    for (; i < tamanhoBase64; i = i + 4){
-        /* conferencia de pads */
-        if (base64[i] != '='){
-            for (aux = 0; aux < 4; aux++){
-                for (a = 0; a < 64; a++){
-                    if (base64[i] == guiaBase64[a]){
-                        auxiliar[aux] = a; /* a = posicao na tabela */
-                    }
-                }
-            }
-        }
-        
-        else{
-            numeroPads++;
-        }    
-    }
-
-    if (numeroPads == 0){
-        base16[n++] = (auxiliar1 << 2) | (auxiliar2 >> 4);
-        base16[n++] = (auxiliar2 << 4 & 0xF0) | (auxiliar3 >> 2);
-        base16[n++] = (auxiliar3 << 6 & 0xC0) | (auxiliar4);
-    }
-
-    if (numeroPads == 1){
-        base16[n++] = (auxiliar1 << 2) | (auxiliar2 >> 4);
-        base16[n++] = (auxiliar2 << 4 & 0xF0) | (auxiliar3 >> 2);
-        base16[n++] = (auxiliar3 << 6 & 0xC0);
-    }
-
-    else if (numeroPads == 2){
-        base16[n++] = (auxiliar1 << 2) | (auxiliar2 >> 4);
-        base16[n++] = (auxiliar2 << 4 & 0xF0);
-    }
-
-    else if (numeroPads == 3){
-        base16[n++] = (auxiliar1 << 2);
-    }
-
     base16[n] = '\0';
-    numeroEmBase16 = strlen(base16);
     return ok;
 
 }   
@@ -521,9 +485,6 @@ tipoErros DecodificarBase64 (char *base64, tipoFinalLinha finalDeLinha, byte *ba
 
 
 // final de linha    sim
-// pad 64            sim   
-// pad 32            sim
+// pad 64               
+// pad 32            
 // alfabeto          sim
-
-// ha logica em botar o '=' no guia de decod? se nao, lembrar q ta 65 e nao 64 / 33 e nao 32
-// trocar ordem de conferir pad!!!!!!!!!!!!!!!!!!!!! 64 65 32 33
