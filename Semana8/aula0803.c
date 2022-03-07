@@ -51,16 +51,13 @@ int main (int argc, char *argv[]) {
         base16[0] = '0';
         base16[len] = EOS;
     }
-
+   
     if (base16 == NULL){        
         exit (NULO);
         free(base16);
     }
 
-    /* (len - 1) pois 1 eh EOS */
-    numeroEmBase10 = (len-1)/2;
-
-    base10 = malloc ((len-1) * sizeof (byte));
+    base10 = malloc (len/2 * sizeof (byte));
 
     if (base10 == NULL){
         exit (NULO);
@@ -69,7 +66,7 @@ int main (int argc, char *argv[]) {
     }
 
     /* enviar argumentos para conversao */
-    tipoErros retorno = DecodificarBase16(base16,base10,&numeroEmBase10);
+    tipoErros retorno = DecodificarBase16(argv[1],base10,&numeroEmBase10);
 
     /* conferir se o retorno ta ok */
     if (retorno != ok)
@@ -79,16 +76,7 @@ int main (int argc, char *argv[]) {
         /* printar bytes na tela na tela */
         for (i = 0; i < numeroEmBase10; i++){
             /* resposta deve conter 3 digitos */
-            if (base10[i] < 10){
-                printf("(%c%c)16 = (00%d)10\n", base16[n],base16[n+1], base10[i]);
-            }
-            else if (base10[i] < 100){
-                printf("(%c%c)16 = (0%d)10\n", base16[n],base16[n+1], base10[i]);    
-            }
-            else {
-                printf("(%c%c)16 = (%d)10\n", base16[n],base16[n+1], base10[i]);
-            }
-            n = n+2;
+            printf("%03u ",base10[i]);
         }
     }
     

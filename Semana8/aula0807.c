@@ -36,7 +36,7 @@ int main (int argc, char *argv[]) {
     unsigned long long numeroEmBase16 = 0;
     
     char *verificacao;
-    unsigned short i = 0, n = 0;
+    unsigned short i = 0;
 
     /* se possui ao menos 2 args */
     if (argc < 3){
@@ -45,7 +45,7 @@ int main (int argc, char *argv[]) {
     }
 
     /* Pegar alfabeto */
-    finalDeLinha = strtoul(argv[i++], &verificacao, 10);
+    finalDeLinha = strtoul(argv[++i], &verificacao, 10);
     if (errno == EINVAL){
   		printf ("finalDeLinha invalido.\n");
         exit (BASE_INVALIDA);
@@ -80,11 +80,8 @@ int main (int argc, char *argv[]) {
         free(base64);
     }
 
-    /* (len - 1) pois 1 eh EOS */
-    numeroEmBase16 = (len-1)/2;
-
     /* len pois base16 tb possui final de string */
-    base16 = malloc ((len) * sizeof (byte));
+    base16 = malloc ((3*len/4) * sizeof (byte));
 
     if (base16 == NULL){
         exit (NULO);
@@ -93,23 +90,17 @@ int main (int argc, char *argv[]) {
     }
 
     /* enviar argumentos para conversao */
-    tipoErros retorno = Decodificarbase64 (base64, finalDeLinha, base16, &numeroEmBase16);
+    tipoErros retorno = DecodificarBase64 (base64, finalDeLinha, base16, &numeroEmBase16);
 
     /* conferir se o retorno ta ok */
     if (retorno != ok)
         printf ("Erro executando a funcao. Erro numero %u.\n", retorno);
 
-    else{
+    else{ 
         /* printar bytes na tela na tela */
         for (i = 0; i < numeroEmBase16; i++){
             /* resposta deve conter 2 digitos */
-            if (base16[i] < 100){
-                printf("(%c%c)16 = (0%d)10\n", base64[n],base64[n+1], base16[i]);    
-            }
-            else {
-                printf("(%c%c)16 = (%d)10\n", base64[n],base64[n+1], base16[i]);
-            }
-            n = n+2;
+            printf("%02X ",base16[i]);
         }
     }
     

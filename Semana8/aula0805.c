@@ -36,7 +36,7 @@ int main (int argc, char *argv[]) {
     unsigned long long numeroEmBase16 = 0;
     
     char *verificacao;
-    unsigned short i = 0, n = 0;
+    unsigned short i = 0;
 
     /* se possui ao menos 2 args */
     if (argc < 3){
@@ -45,7 +45,7 @@ int main (int argc, char *argv[]) {
     }
 
     /* Pegar alfabeto */
-    alfabeto = strtoul(argv[i++], &verificacao, 10);
+    alfabeto = strtoul(argv[++i], &verificacao, 10);
     if (errno == EINVAL){
   		printf ("alfabeto invalido.\n");
         exit (BASE_INVALIDA);
@@ -80,10 +80,7 @@ int main (int argc, char *argv[]) {
         free(base32);
     }
 
-    /* (len - 1) pois 1 eh EOS */
-    numeroEmBase16 = (len-1)/2;
-
-    base16 = malloc ((len-1) * sizeof (byte));
+    base16 = malloc ((5*len/8) * sizeof (byte));
 
     if (base16 == NULL){
         exit (NULO);
@@ -102,15 +99,10 @@ int main (int argc, char *argv[]) {
         /* printar bytes na tela na tela */
         for (i = 0; i < numeroEmBase16; i++){
             /* resposta deve conter 2 digitos */
-            if (base16[i] < 100){
-                printf("(%c%c)16 = (0%d)10\n", base32[n],base32[n+1], base16[i]);    
-            }
-            else {
-                printf("(%c%c)16 = (%d)10\n", base32[n],base32[n+1], base16[i]);
-            }
-            n = n+2;
+            printf("%02X ",base16[i]);
         }
     }
+    printf("\n");
     
     free(base32);
     free(base16);

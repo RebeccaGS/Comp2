@@ -14,7 +14,7 @@ Initial revision
  */
 
 
-#include "aula0801.h"
+#include "aula0801.c"
 #include <errno.h>
 #include <limits.h>
 #include <stdio.h>
@@ -29,14 +29,14 @@ Initial revision
 #define ERRO_CHAMADA_FUNCAO                     5
 #define NULO                                    6
 #define FORA_RANGE                              7
+#define NUM_ARG                                 8
 #define EOS				      					'\0'
 
 int main (int argc, char *argv[]) {
-
     /* definir variaveis usadas */
-    byte *conjuntoDeBytes;
+    byte *base10;
     unsigned long long numeroDeBytes;
-    char *saida;
+    char *base16;
 
     char *verificacao;
     unsigned short i = 1, n;
@@ -66,50 +66,67 @@ int main (int argc, char *argv[]) {
         exit (CONTEM_CARACTERE_INVALIDO);
     }
   
-    conjuntoDeBytes = malloc (numeroDeBytes * sizeof (byte));
+    base10 = malloc (numeroDeBytes * sizeof (byte));
     
-    if (conjuntoDeBytes == NULL){
+    if (base10 == NULL){
         exit (NULO);
     }
   
-    saida = malloc ((2*numeroDeBytes+1) * sizeof (char));
+    base16 = malloc ((2*numeroDeBytes+1) * sizeof (char));
     
-    if (saida == NULL){
-        free(conjuntoDeBytes);
+    if (base16 == NULL){
+        free(base10);
         exit (NULO);
     }
     
-    
+    if ((argc-2)!= numeroDeBytes){
+        printf ("Numero de argumentos invalido");
+        exit (NUM_ARG);
+    }
     /* pegar bytes listados */
+
     for (n = 0; n < numeroDeBytes; n++){
-        if (argv[i] > 255 || argv[i] < 0){
+        base10[n] = (byte) strtoul (argv[n+2], &verificacao, 10);
+        if (base10[n] > 255 || base10[n] < 0){
             printf("apenas numeros entre 0-255");
             exit (FORA_RANGE);
         }
-        conjuntoDeBytes[n] = strtod(argv[i], &verificacao);
-        i++;
+        if (errno == EINVAL){
+            printf ("byte invalido.\n");
+            exit (BASE_INVALIDA);
+        }
+
+        if (errno == ERANGE){
+            printf ("Valor fornecido para byte ultrapassa o valor maximo permitido para unsigned short (%d)\n",UINT_MAX);
+            exit (VALOR_MAXIMO_EXCEDIDO);
+        }
+        
+        if (*verificacao != EOS){
+            printf ("byte contem caractere invalido.\n");
+            printf ("Caractere invalido: \'%c\'\n", *verificacao);
+            exit (CONTEM_CARACTERE_INVALIDO);
+        }
     }
 
     if (errno == ERANGE)
   	{
-        free(conjuntoDeBytes);
-        free(saida);
+        free(base10);
+        free(base16);
   	    printf ("Valor fornecido ultrapassa o valor maximo permitido para unsigned char (%u)\n",CHAR_MAX);
         exit (VALOR_MAXIMO_EXCEDIDO);
   	}
     
     if (*verificacao != EOS)
     {
-        free(conjuntoDeBytes);
-        free(saida);
+        free(base10);
+        free(base16);
         printf ("Argumento fornecido contem caractere invalido.\n");
         printf ("Primeiro caractere invalido: \'%c\'\n", *verificacao);
         exit (CONTEM_CARACTERE_INVALIDO);
     }
 
     /* enviar argumentos para conversao */
-    tipoErros retorno = CodificarBase16(conjuntoDeBytes,numeroDeBytes,saida);
-    printf("%u",retorno);
+    tipoErros retorno = CodificarBase16(base10,numeroDeBytes,base16);
 
     /* conferir se o retorno ta ok */
     if (retorno != ok)
@@ -117,10 +134,10 @@ int main (int argc, char *argv[]) {
 
     else{
         /* printar bytes na tela na tela */
-        printf("%s\n", saida);
+        printf("%s\n", base16);
     }
     
-    free(conjuntoDeBytes);
-    free(saida);
+    free(base10);
+    free(base16);
     return OK;
 }

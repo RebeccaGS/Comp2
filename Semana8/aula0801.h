@@ -16,7 +16,7 @@ $Log$ */
 typedef unsigned char byte;
 
 typedef enum {ok = 0, numeroDeBytesInvalido = 1, bytesPassadosVazio = 2, foraDaRange = 3,
-                            caracterInvalido = 4, finalLinhaInvalido = 5} tipoErros;
+                            caracterInvalido = 4, finalLinhaInvalido = 5, alfabetoInvalido = 6, numeroPadsInvalido =7} tipoErros;
 typedef enum {basico = 0, estendido = 1} tipoAlfabetoBase32;
 typedef enum {desabilitado = 0, habilitado = 1} tipoFinalLinha;
 
