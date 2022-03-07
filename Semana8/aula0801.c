@@ -441,7 +441,7 @@ tipoErros DecodificarBase64 (char *base64, tipoFinalLinha finalDeLinha, byte *ba
     unsigned short numeroPads = 0, aux;
 
     short auxiliar[4] = {-1,-1,-1,-1};
-
+    *numeroEmBase16 = 0;
     /* tipoErros*/
     if (numeroEmBase16 == NULL)
         return numeroDeBytesInvalido;
@@ -456,7 +456,6 @@ tipoErros DecodificarBase64 (char *base64, tipoFinalLinha finalDeLinha, byte *ba
         tamanhoBase64 = tamanhoBase64 - 2;
         base64[tamanhoBase64] = '\0';
     }
-    printf("strlen(base64): %d\nbase64: %s\n",strlen(base64),base64);
     if (strlen(base64) % 4 != 0){
         return foraDaRange;
     }
@@ -469,7 +468,6 @@ tipoErros DecodificarBase64 (char *base64, tipoFinalLinha finalDeLinha, byte *ba
                     auxiliar[aux] = a; /* a = posicao na tabela */
                 }
             }
-            printf("2");
             if (auxiliar[aux] == -1){
                 return foraDaRange;
             }
@@ -478,8 +476,7 @@ tipoErros DecodificarBase64 (char *base64, tipoFinalLinha finalDeLinha, byte *ba
         base16[n++] = (auxiliar[0] << 2) | (auxiliar[1] >> 4);
         base16[n++] = (auxiliar[1] << 4 & 0xF0) | (auxiliar[2] >> 2);
         base16[n++] = (auxiliar[2] << 6 & 0xC0) | (auxiliar[3]);
-
-        numeroEmBase16 = numeroEmBase16 + 3;
+        *numeroEmBase16 = *numeroEmBase16 + 3;
     }
 
     for (; i < tamanhoBase64; i = i + 4){
@@ -506,22 +503,20 @@ tipoErros DecodificarBase64 (char *base64, tipoFinalLinha finalDeLinha, byte *ba
         base16[n++] = (auxiliar[0] << 2) | (auxiliar[1]>> 4);
         base16[n++] = (auxiliar[1] << 4 & 0xF0) | (auxiliar[2] >> 2);
         base16[n++] = (auxiliar[2] << 6 & 0xC0) | (auxiliar[3]);
-        numeroEmBase16 = numeroEmBase16 + 3;
+        *numeroEmBase16 = *numeroEmBase16 + 3;
     }
 
     if (numeroPads == 1){
         base16[n++] = (auxiliar[0] << 2) | (auxiliar[1]>> 4);
         base16[n++] = (auxiliar[1] << 4 & 0xF0) | (auxiliar[2] >> 2);
-        numeroEmBase16 = numeroEmBase16 + 2;
+        *numeroEmBase16 = *numeroEmBase16 + 2;
     }
 
     else if (numeroPads == 2){
         base16[n++] = (auxiliar[0] << 2) | (auxiliar[1]>> 4);
-        numeroEmBase16 = numeroEmBase16 + 1;
+        *numeroEmBase16 = *numeroEmBase16 + 1;
     }
-
     return ok;
-
 }   
 
 /* $RCSfile$ */

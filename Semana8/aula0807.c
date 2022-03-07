@@ -63,40 +63,24 @@ int main (int argc, char *argv[]) {
     }
 
     /* pegar bytes */
-    base64 = argv[2];
-    int len = strlen(base64);
-    if (len %2 != 0){
-        len = len + 2;
-        base64 = malloc (len * sizeof (char));
-        for (i = 1; i < len; i++){            
-            base64[i] = argv[2][i-1];
-        }
-        base64[0] = '0';
-        base64[len] = EOS;
-    }
 
-    if (base64 == NULL){        
-        exit (NULO);
-        free(base64);
-    }
-
-    /* len pois base16 tb possui final de string */
-    base16 = malloc ((3*len/4) * sizeof (byte));
+    base16 = malloc ((3*strlen(argv[2])/4) * sizeof (byte));
 
     if (base16 == NULL){
         exit (NULO);
         free(base64);
         free(base16);
     }
-
+    printf("argv[2]: %s\n",argv[2]);
     /* enviar argumentos para conversao */
-    tipoErros retorno = DecodificarBase64 (base64, finalDeLinha, base16, &numeroEmBase16);
+    tipoErros retorno = DecodificarBase64 (argv[2], finalDeLinha, base16, &numeroEmBase16);
 
     /* conferir se o retorno ta ok */
     if (retorno != ok)
         printf ("Erro executando a funcao. Erro numero %u.\n", retorno);
 
     else{ 
+        printf("%s k %d", base16,numeroEmBase16);
         /* printar bytes na tela na tela */
         for (i = 0; i < numeroEmBase16; i++){
             /* resposta deve conter 2 digitos */
