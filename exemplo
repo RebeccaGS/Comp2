@@ -1,5 +1,32 @@
 // fread -> leitura de arquivo qualquer
 // fwrite -> escrita de arquivo qualquer
 
-// fgets -> leitura de arquivo texto
+// fgets -> leitura de arquivo texto - vetor onde guardar oq leu (char*)
 // fprintf -> escrita de arquivo texto
+
+
+#include <stdio.h>
+#include <stdlib.h>
+#include "aula0901.h"
+
+tipoErros
+ExibirConteudoArquivo (char *nomeArquivo){ //str len leitura?
+    
+    FILE *leitura;
+    char bytesLidos;
+    int tamanhoArquivo;
+
+    /* abre arquivo para leitura */
+    leitura = fopen(nomeArquivo, "r");
+    tamanhoArquivo = strlen(leitura);
+
+    /* le arquivo */ /* unsigned fread (void *buffer, int numero_de_bytes, int count, FILE *fp) */
+    if tamanhoArquivo != fread(&bytesLidos, sizeof(char), tamanhoArquivo, leitura);
+
+    /* imprime arquivo */
+    printf("\nO CONTEÚDO DO ARQUIVO É:\n %s \n", bytesLidos);
+
+    fclose(leitura);
+
+    return ok;
+}
