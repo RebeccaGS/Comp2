@@ -20,6 +20,7 @@
 		"errno.h": "c",
 		"unistd.h": "c",
 		"exemplo": "c",
-		"aula0801.h": "c"
+		"aula0801.h": "c",
+		"arquivo3": "c"
 	}
 }

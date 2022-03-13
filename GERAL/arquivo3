@@ -1,0 +1,81 @@
+/* Universidade Federal do Rio de Janeiro
+ * Escola Politecnica
+ * Departamento de Eletronica e Computacao
+ * EEL270 - Computacao II - Turma 2020/4 - PLE-1
+ * Prof. Marcelo Luiz Drumond Lanza
+ * Autor: Luiz Carlos Aguiar Carrion
+ * Descricao: Programa de testes da funcao que converte
+ * arquivo formato dos para unix
+ *
+ * $Author: luiz.carrion $
+ * $Date: 2020/10/19 04:52:56 $
+ * $Log: aula0806.c,v $
+ * Revision 1.1  2020/10/19 04:52:56  luiz.carrion
+ * Initial revision
+ *
+*/
+
+#include <stdio.h>
+#include <stdlib.h>
+
+#include "aula08.h"
+
+#define NUMERO_MINIMO_ARGUMENTOS		2
+#define NUMERO_MAXIMO_ARGUMENTOS		3
+
+#define OK					0
+#define NUMERO_ARGUMENTOS_INVALIDO		1
+#define ORIGINAL_NULO				2
+#define ERRO_ABRIR_ORIGINAL			3
+#define ERRO_ABRIR_TEMP				4
+#define ERRO_ABRIR_CONVERTIDO			5
+
+int main (int argc, char *argv[]) {
+
+	tipoErros verificaErros;
+
+	char *original, *convertido;
+
+	printf ("\n\n");
+
+	if (argc < NUMERO_MINIMO_ARGUMENTOS || argc > NUMERO_MAXIMO_ARGUMENTOS) {
+		printf ("Erro (%u): Argumentos fornecidos = %u | Necessita de no minimo %u e no maximo %u\n\n",
+		NUMERO_ARGUMENTOS_INVALIDO, argc, NUMERO_MINIMO_ARGUMENTOS, NUMERO_MAXIMO_ARGUMENTOS);
+
+		exit (NUMERO_ARGUMENTOS_INVALIDO);
+	}
+
+	original = argv[1];
+
+	if (!(argv[2])) {
+		convertido = NULL;
+	} else {
+		convertido = argv[2];
+	}
+
+	verificaErros = ConverterArquivoFormatoDosFormatoUnix (original, convertido);
+
+	if (verificaErros == originalNulo) {
+		printf ("Erro (%u): Nome do arquivo de origem nao pode ser nulo", ORIGINAL_NULO);
+
+		exit (ORIGINAL_NULO);
+	} else if (verificaErros == erroAbrirArquivoOriginal) {
+		printf ("Erro (%u): Erro ao abrir o arquivo de origem", ERRO_ABRIR_ORIGINAL);
+	
+		exit (ERRO_ABRIR_ORIGINAL);
+	} else if (verificaErros == erroAbrirArquivoTemporario) {
+		printf ("Erro (%u): Erro ao abrir o arquivo temporario", ERRO_ABRIR_TEMP);
+
+		exit (ERRO_ABRIR_TEMP);
+	} else if (verificaErros == erroAbrirArquivoConvertido) {
+		printf ("Erro (%u): Erro ao abrir o arquivo convertido", ERRO_ABRIR_CONVERTIDO);
+
+		exit (ERRO_ABRIR_CONVERTIDO);
+	}
+
+	printf ("Arquivo convertido com sucesso!\n\n");
+
+	return OK;	
+}
+
+/* $RCSfile: aula0806.c,v $ */	

@@ -1,4 +1,4 @@
-#include "aula0901.h"
+#include "aula0901.c"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -14,7 +14,7 @@ int main (int argc, char *argv[]) {
     /* pegar variavel */
     nomeArquivo = argv[1];
 
-    if(argc != 1){
+    if(argc != 2){
         printf("%s", "Favor, colocar: <nome do arquivo>\n");
         exit (NUMERO_ARGUMENTOS_INVALIDO);
     }

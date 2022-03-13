@@ -3,10 +3,16 @@
 
 typedef unsigned char byte;
 
-typedef enum {ok = 0, erroAbrirNomeArquivo = 1 } tipoErros;
+typedef enum {ok = 0, arquivoVazio = 1} tipoErros;
 
 tipoErros
 ExibirConteudoArquivo (char * /* (E) */);
+
+tipoErros
+ConverterArquivoFormatoUnixParaFormatoDos (char *, char *);
+
+tipoErros
+ConverterArquivoFormatoDosParaFormatoUnix (char *, char *);
 
 #endif
 

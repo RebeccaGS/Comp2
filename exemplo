@@ -140,91 +140,91 @@
 // #define ENTER				'\n'
 // #define EOS				'\0'
 
-// tipoErros ExibirConteudoArquivo (char *original) {
+tipoErros ExibirConteudoArquivo (char *original) {
 	
-// 	FILE *arquivo;
+	FILE *arquivo;
 
-// 	unsigned indice, indiceConteudo;
+	unsigned indice, indiceConteudo;
 
-// 	unsigned indiceCaractereAtual = 0;
+	unsigned indiceCaractereAtual = 0;
 
-// 	unsigned indiceCaractereLinhaAtual;
+	unsigned indiceCaractereLinhaAtual;
 
-// 	char caractereAtual;
+	char caractereAtual;
 
-// 	char linhaAtual[TAMANHO_MAXIMO_LINHA];
+	char linhaAtual[TAMANHO_MAXIMO_LINHA];
 	
-// 	char conteudoArquivo[TAMANHO_MAXIMO_LINHA * QUANTIDADE_LINHAS];
+	char conteudoArquivo[TAMANHO_MAXIMO_LINHA * QUANTIDADE_LINHAS];
 
-// 	unsigned comeco, fim, faltaEspaco;
+	unsigned comeco, fim, faltaEspaco;
 
-// 	printf ("\n\n");
+	printf ("\n\n");
 
-// 	if (!original) {
-// 		return originalNulo;
-// 	}
+	if (!original) {
+		return originalNulo;
+	}
 
-// 	/* Tentando abrir o arquivo */
-// 	if (!(arquivo = fopen (original, "r"))) {
-// 		return erroAbrirArquivoOriginal;
-// 	}
+	/* Tentando abrir o arquivo */
+	if (!(arquivo = fopen (original, "r"))) {
+		return erroAbrirArquivoOriginal;
+	}
 	
 	
-// 	while (fgets(linhaAtual, TAMANHO_MAXIMO_LINHA, arquivo)) {
+	while (fgets(linhaAtual, TAMANHO_MAXIMO_LINHA, arquivo)) {
 	
-// 		indiceCaractereLinhaAtual = 0;
+		indiceCaractereLinhaAtual = 0;
 
-// 		do {
-// 			caractereAtual = linhaAtual[indiceCaractereLinhaAtual];
-// 			conteudoArquivo[indiceCaractereAtual] = caractereAtual;
+		do {
+			caractereAtual = linhaAtual[indiceCaractereLinhaAtual];
+			conteudoArquivo[indiceCaractereAtual] = caractereAtual;
 
-// 			indiceCaractereLinhaAtual++;
-// 			indiceCaractereAtual++;
-// 		} while (linhaAtual[indiceCaractereLinhaAtual] != ENTER);
-// 	}
+			indiceCaractereLinhaAtual++;
+			indiceCaractereAtual++;
+		} while (linhaAtual[indiceCaractereLinhaAtual] != ENTER);
+	}
 
-// 	conteudoArquivo[indiceCaractereAtual] = EOS;
+	conteudoArquivo[indiceCaractereAtual] = EOS;
 
-// 	comeco = 0;
+	comeco = 0;
 
-// 	for (indiceConteudo = 0; conteudoArquivo[indiceConteudo] != EOS; indiceConteudo++){
+	for (indiceConteudo = 0; conteudoArquivo[indiceConteudo] != EOS; indiceConteudo++){
 		
-// 		fim = indiceConteudo;
+		fim = indiceConteudo;
 	
-// 		if ((indiceConteudo + 1) % 80 == 0  || conteudoArquivo[indiceConteudo + 1] == EOS) {
-// 			faltaEspaco = 0;
-// 			printf ("%012X-%012X | ", comeco, fim);
+		if ((indiceConteudo + 1) % 80 == 0  || conteudoArquivo[indiceConteudo + 1] == EOS) {
+			faltaEspaco = 0;
+			printf ("%012X-%012X | ", comeco, fim);
 
-// 			for (indice = comeco; indice < fim+1; indice++) {
-// 				printf ("%02X ", conteudoArquivo[indice]);
-// 				faltaEspaco++;
-// 			}
+			for (indice = comeco; indice < fim+1; indice++) {
+				printf ("%02X ", conteudoArquivo[indice]);
+				faltaEspaco++;
+			}
 
-// 			while (faltaEspaco % 80 != 0) {
-// 				printf ("   ");
-// 				faltaEspaco++;
-// 			}
+			while (faltaEspaco % 80 != 0) {
+				printf ("   ");
+				faltaEspaco++;
+			}
 
-// 			printf ("| ");
+			printf ("| ");
 
-// 			for (indice = comeco; indice < fim+1; indice++) {
-// 				if (conteudoArquivo[indice] <= 0x20 || conteudoArquivo[indice] >= 0X7F) {
-// 					printf (".");
-// 				} else {
-// 					printf ("%c", conteudoArquivo[indice]);
-// 				}
-// 			}
+			for (indice = comeco; indice < fim+1; indice++) {
+				if (conteudoArquivo[indice] <= 0x20 || conteudoArquivo[indice] >= 0X7F) {
+					printf (".");
+				} else {
+					printf ("%c", conteudoArquivo[indice]);
+				}
+			}
 
-// 			comeco = fim + 1;
+			comeco = fim + 1;
 
-// 			printf ("\n");
-// 		}
-// 	}
+			printf ("\n");
+		}
+	}
 
-// 	printf ("\n\n");
+	printf ("\n\n");
 
 
-// 	fclose (arquivo);
+	fclose (arquivo);
 
-// 	return ok;
-// }
+	return ok;
+}
