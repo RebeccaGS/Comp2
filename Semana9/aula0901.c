@@ -66,10 +66,10 @@ ConverterArquivoFormatoUnixParaFormatoDos (char *original, char *convertido){
 		return arquivoVazio;
 	}
 
-    escrita = fopen(convertido, "a"); // em a msm? quero ler linha a linha e escrevendo 
-    if (escrita == NULL){             // por tar vazio inicialmente, ta NULL?
-		return arquivoVazio;
-	}
+    escrita = fopen(convertido, "a");  
+    // if (escrita == NULL){             
+	// 	return arquivoVazio;
+	// }
 
     /* descobrir tamanho do arquivo */
     fseek(leitura, 0, SEEK_END);          /* ir ate final do arquivo */
@@ -82,14 +82,14 @@ ConverterArquivoFormatoUnixParaFormatoDos (char *original, char *convertido){
     /* le arquivos em for, se achar um /n, reescreve add um /r */
     while (!feof(leitura)){ /* anda ate final do arquivo*/  
         getline(&bytesLidos, &tamanhoArquivo, leitura); /* le arq linha a linha */
-        fwrite(bytesLidos, 1, sizeof(bytesLidos), escrita); // sizeof... ou tamanhoArquivo?
-        escrita[5] = '\r';
-        //printf("%s", bytesLidos);
-        
+        fputs(bytesLidos,escrita);
+        //fwrite(bytesLidos, 1, sizeof(bytesLidos), escrita); // sizeof... ou tamanhoArquivo?
+        // le arquivo linha a linha SEMPRE parando no \n ou final de arquivo ou..?
+        fputc('\r',escrita);
     }
+
     fclose(leitura);
     fclose(escrita);
-
     return ok;
 }
 
