@@ -7,8 +7,17 @@
 #Descricao: arquivo GNUmakefile
 
 #$Author: rebecca.simao $
-#$Date: 2022/01/18 07:06:54 $
+#$Date: 2022/03/07 21:37:09 $
 #$Log: GNUmakefile,v $
+#Revision 1.17  2022/03/07 21:37:09  rebecca.simao
+#consertado
+#
+#Revision 1.16  2022/02/22 01:56:06  rebecca.simao
+#gnu com 08 adicionados
+#
+#Revision 1.15  2022/02/02 04:06:25  rebecca.simao
+#versao finalizada.
+#
 #Revision 1.14  2022/01/18 07:06:54  rebecca.simao
 #*** empty log message ***
 #
@@ -149,12 +158,21 @@ AULA0704OBJS  = aula0704.o aula0701.o
 AULA0705OBJS  = aula0705.o aula0701.o
 AULA0706OBJS  = aula0706.o aula0701.o
 
+AULA0802OBJS  = aula0802.o
+AULA0803OBJS  = aula0803.o
+AULA0804OBJS  = aula0804.o
+AULA0805OBJS  = aula0805.o
+AULA0806OBJS  = aula0806.o
+AULA0807OBJS  = aula0807.o
+
+
 LIBMATEMATICARECURSAOOBJS = aula0201a.o aula0301a.o aula0401a.o aula0403a.o
 LIBMATEMATICADOWHILEOBJS = aula0201b.o aula0301b.o aula0401b.o aula0403b.o aula0403e.o
 LIBMATEMATICAFOROBJS = aula0201c.o aula0301c.o aula0401c.o aula0403c.o
 LIBMATEMATICAWHILEOBJS = aula0201d.o aula0301d.o aula0401d.o aula0403d.o
 LIBMATEMATICAOBJS = aula0601.o
 LIBMONITOROBJS = aula0701.o
+LIBBASEOBJS = aula0801.o
 
 LIBMATEMATICARECURSAO = libmatematicarecursao.a
 LIBMATEMATICADOWHILE = libmatematicadowhile.a
@@ -162,6 +180,7 @@ LIBMATEMATICAFOR = libmatematicafor.a
 LIBMATEMATICAWHILE = libmatematicawhile.a
 LIBMATEMATICA = libmatematica.a
 LIBMONITOR = libmonitor.a
+LIBBASE = libbase.a
 
 AULA01  = aula0101 aula0102 aula0103
 AULA02  = aula0202a aula0202b aula0202c aula0202d
@@ -170,10 +189,11 @@ AULA04  = aula0402a aula0402b aula0402c aula0402d aula0404a aula0404b aula0404c 
 AULA05  = aula0502a aula0502b aula0503a aula0503b aula0505a aula0505b aula0506a aula0506b
 AULA06  = aula0602 aula0603 aula0604 aula0605 aula0606
 AULA07  = aula0702 aula0703 aula0704 aula0705 aula0706
+AULA08  = aula0802 aula0803 aula0804 aula0805 aula0806 aula0807
 
-EXECS = $(AULA01) $(AULA02) $(AULA03) $(AULA04) $(AULA05) $(AULA06) $(AULA07)
+EXECS = $(AULA01) $(AULA02) $(AULA03) $(AULA04) $(AULA05) $(AULA06) $(AULA07) $(AULA08)
 
-LIBS = $(LIBMATEMATICARECURSAO) $(LIBMATEMATICADOWHILE) $(LIBMATEMATICAFOR) $(LIBMATEMATICAWHILE) $(LIBMATEMATICA) $(LIBMONITOR)
+LIBS = $(LIBMATEMATICARECURSAO) $(LIBMATEMATICADOWHILE) $(LIBMATEMATICAFOR) $(LIBMATEMATICAWHILE) $(LIBMATEMATICA) $(LIBMONITOR) $(LIBBASE)
 
 ALL = $(EXECS) $(LIBS)
 
@@ -197,6 +217,7 @@ aula06: $(AULA06)
 
 aula07: $(AULA07)
 
+aula08: $(AULA08)
 
 aula0101: $(AULA0101OBJS)
 	$(LD) $(LFLAGS) -o $@ $(AULA0101OBJS)
@@ -339,26 +360,51 @@ aula0606: $(AULA0606OBJS)
 
  
 aula0702: $(AULA0702OBJS) $(LIBMONITOR) 
-	$(LD) $(LFLAGS) -o $@ $(AULA0702OBJS) -L. -lmonitor -lm  
+	$(LD) $(LFLAGS) -o $@ $(AULA0702OBJS) -L. -lmonitor
 	cp $@ $@-$(OS)-$(CC)-$(DIALETO)   
 
 aula0703: $(AULA0703OBJS) $(LIBMONITOR) 
-	$(LD) $(LFLAGS) -o $@ $(AULA0703OBJS) -L. -lmonitor -lm  
+	$(LD) $(LFLAGS) -o $@ $(AULA0703OBJS) -L. -lmonitor
 	cp $@ $@-$(OS)-$(CC)-$(DIALETO)   
 
 aula0704: $(AULA0704OBJS) $(LIBMONITOR) 
-	$(LD) $(LFLAGS) -o $@ $(AULA0704OBJS) -L. -lmonitor -lm  
+	$(LD) $(LFLAGS) -o $@ $(AULA0704OBJS) -L. -lmonitor 
 	cp $@ $@-$(OS)-$(CC)-$(DIALETO)   
 
 aula0705: $(AULA0705OBJS) $(LIBMONITOR) 
-	$(LD) $(LFLAGS) -o $@ $(AULA0705OBJS) -L. -lmonitor -lm  
+	$(LD) $(LFLAGS) -o $@ $(AULA0705OBJS) -L. -lmonitor 
 	cp $@ $@-$(OS)-$(CC)-$(DIALETO)   
  
 aula0706: $(AULA0706OBJS) $(LIBMONITOR) 
-	$(LD) $(LFLAGS) -o $@ $(AULA0706OBJS) -L. -lmonitor -lm  
+	$(LD) $(LFLAGS) -o $@ $(AULA0706OBJS) -L. -lmonitor
 	cp $@ $@-$(OS)-$(CC)-$(DIALETO) 
             
- 
+
+aula0802: $(AULA0802OBJS) $(LIBBASE) 
+	$(LD) $(LFLAGS) -o $@ $(AULA0802OBJS) -L. -lbase
+	cp $@ $@-$(OS)-$(CC)-$(DIALETO) 
+          
+aula0803: $(AULA0803OBJS) $(LIBBASE) 
+	$(LD) $(LFLAGS) -o $@ $(AULA0803OBJS) -L. -lbase
+	cp $@ $@-$(OS)-$(CC)-$(DIALETO) 
+          
+aula0804: $(AULA0804OBJS) $(LIBBASE) 
+	$(LD) $(LFLAGS) -o $@ $(AULA0804OBJS) -L. -lbase
+	cp $@ $@-$(OS)-$(CC)-$(DIALETO) 
+            
+aula0805: $(AULA0805OBJS) $(LIBBASE) 
+	$(LD) $(LFLAGS) -o $@ $(AULA0805OBJS) -L. -lbase
+	cp $@ $@-$(OS)-$(CC)-$(DIALETO)
+  
+aula0806: $(AULA0806OBJS) $(LIBBASE) 
+	$(LD) $(LFLAGS) -o $@ $(AULA0806OBJS) -L. -lbase
+	cp $@ $@-$(OS)-$(CC)-$(DIALETO)
+  
+aula0807: $(AULA0807OBJS) $(LIBBASE) 
+	$(LD) $(LFLAGS) -o $@ $(AULA0807OBJS) -L. -lbase
+	cp $@ $@-$(OS)-$(CC)-$(DIALETO)
+  
+              
 libmatematicarecursao.a: $(LIBMATEMATICARECURSAOOBJS)
 	ar -r -c $@ $(LIBMATEMATICARECURSAOOBJS)
 
@@ -377,6 +423,9 @@ libmatematica.a: $(LIBMATEMATICAOBJS)
 libmonitor.a: $(LIBMONITOROBJS)
 	ar -r -c $@ $(LIBMONITOROBJS) 
     
+libbase.a: $(LIBBASEOBJS)
+	ar -r -c $@ $(LIBBASEOBJS) 
+
   
 .PHONY: clean clean-all clean-objs clean-bsd clean-linux clean-gcc clean-clang clean-ansi clean-c89 clean-c90 clean-c99 clean-c11
 

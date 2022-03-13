@@ -9,7 +9,6 @@ int main (int argc, char *argv[]) {
 
     /* definir variaveis usadas */
     char *original,*convertido;
-    unsigned short i;
 
     /* pegar variavel */
     original = argv[1];

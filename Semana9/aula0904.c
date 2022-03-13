@@ -9,13 +9,13 @@ int main (int argc, char *argv[]) {
 
     /* definir variaveis usadas */
     char *original,*convertido;
-    unsigned short i;
 
     /* pegar variavel */
     original = argv[1];
+    convertido = argv[2];
 
-    if(argc != 2){
-        printf("%s", "Favor, colocar: <nome do arquivo original>\n");
+    if(argc != 3){
+        printf("%s", "Favor, colocar: <nome do arquivo original> <nome do arquivo convertido>\n");
         exit (NUMERO_ARGUMENTOS_INVALIDO);
     }
 

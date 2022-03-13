@@ -14,6 +14,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "aula0901.h"
+#include <string.h>
 
 #define  CARRIAGE_RETURN       '\r' /* DOS: \n\r || UNIX: \n */
 #define  LINE_FEED             '\n'
@@ -59,6 +60,7 @@ ConverterArquivoFormatoUnixParaFormatoDos (char *original, char *convertido){
     FILE *leitura, *escrita;
     char *bytesLidos;
     int tamanhoArquivo;
+    short filedes = -1;
 
     /* abre arquivo para leitura e escrita */
     leitura = fopen(original, "rb"); /* rb: le em bytes */
@@ -67,9 +69,12 @@ ConverterArquivoFormatoUnixParaFormatoDos (char *original, char *convertido){
 	}
 
     escrita = fopen(convertido, "a");  
-    // if (escrita == NULL){             
-	// 	return arquivoVazio;
-	// }
+    if (escrita == NULL){                // uso o filedes ou o escrita para continuar? ou um: if NULL use filedes, else, use escrita?
+	    filedes = mkstemp(bytesLidos);
+        if (filedes<0){
+            return falhaCriacaoArquivoTemporario;
+        }
+	}
 
     /* descobrir tamanho do arquivo */
     fseek(leitura, 0, SEEK_END);          /* ir ate final do arquivo */
@@ -95,7 +100,43 @@ ConverterArquivoFormatoUnixParaFormatoDos (char *original, char *convertido){
 
 
 tipoErros
-ConverterArquivoFormatoDosParaFormatoUnix (char *original, char *convertido);
+ConverterArquivoFormatoDosParaFormatoUnix (char *original, char *convertido){
     //     /* le arquivos em for, se achar um /r, reescreve retirando ele */
+    FILE *leitura, *escrita;
+    char *bytesLidos;
+    int tamanhoArquivo;
+    short filedes = -1;
 
+    /* abre arquivo para leitura e escrita */
+    leitura = fopen(original, "rb"); /* rb: le em bytes */
+    if (leitura == NULL){
+		return arquivoVazio;
+	}
 
+    escrita = fopen(convertido, "a");  
+    if (escrita == NULL){                // uso o filedes ou o escrita para continuar? ou um: if NULL use filedes, else, use escrita?
+	    filedes = mkstemp(bytesLidos);
+        if (filedes<0){
+            return falhaCriacaoArquivoTemporario;
+        }
+	}
+
+    /* descobrir tamanho do arquivo */
+    fseek(leitura, 0, SEEK_END);          /* ir ate final do arquivo */
+    tamanhoArquivo = ftell(leitura);      /* falar quantos bytes foram andados */
+    rewind(leitura);                      /* retornar ao inicio do arquivo para le-lo */
+
+    /* alocar memoria */
+    bytesLidos = malloc(tamanhoArquivo * sizeof(bytesLidos));
+
+    /* le arquivos em for, se achar um /n, reescreve add um /r */
+    while (!feof(leitura)){ /* anda ate final do arquivo*/  
+        getline(&bytesLidos, &tamanhoArquivo, leitura); /* le arq linha a linha */
+        bytesLidos[strlen(bytesLidos)-1] = '\0';
+        fputs(bytesLidos,escrita);
+        }
+
+    fclose(leitura);
+    fclose(escrita);
+    return ok;
+}
