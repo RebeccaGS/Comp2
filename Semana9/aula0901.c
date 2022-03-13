@@ -15,6 +15,9 @@
 #include <stdlib.h>
 #include "aula0901.h"
 
+#define  CARRIAGE_RETURN       '\r' /* DOS: \n\r || UNIX: \n */
+#define  LINE_FEED             '\n'
+ 
 tipoErros
 ExibirConteudoArquivo (char *nomeArquivo){
     
@@ -49,10 +52,50 @@ ExibirConteudoArquivo (char *nomeArquivo){
 }
 
 // documentacao: https://phoenixnap.com/kb/convert-dos-to-unix
+// formato dos tem /n/r formato unix tem /n 
 tipoErros
-ConverterArquivoFormatoUnixParaFormatoDos (char *original, char *convertido);
+ConverterArquivoFormatoUnixParaFormatoDos (char *original, char *convertido){
+
+    FILE *leitura, *escrita;
+    char *bytesLidos;
+    int tamanhoArquivo;
+
+    /* abre arquivo para leitura e escrita */
+    leitura = fopen(original, "rb"); /* rb: le em bytes */
+    if (leitura == NULL){
+		return arquivoVazio;
+	}
+
+    escrita = fopen(convertido, "a"); // em a msm? quero ler linha a linha e escrevendo 
+    if (escrita == NULL){             // por tar vazio inicialmente, ta NULL?
+		return arquivoVazio;
+	}
+
+    /* descobrir tamanho do arquivo */
+    fseek(leitura, 0, SEEK_END);          /* ir ate final do arquivo */
+    tamanhoArquivo = ftell(leitura);      /* falar quantos bytes foram andados */
+    rewind(leitura);                      /* retornar ao inicio do arquivo para le-lo */
+
+    /* alocar memoria */
+    bytesLidos = malloc(tamanhoArquivo * sizeof(bytesLidos));
+
+    /* le arquivos em for, se achar um /n, reescreve add um /r */
+    while (!feof(leitura)){ /* anda ate final do arquivo*/  
+        getline(&bytesLidos, &tamanhoArquivo, leitura); /* le arq linha a linha */
+        fwrite(bytesLidos, 1, sizeof(bytesLidos), escrita); // sizeof... ou tamanhoArquivo?
+        escrita[5] = '\r';
+        //printf("%s", bytesLidos);
+        
+    }
+    fclose(leitura);
+    fclose(escrita);
+
+    return ok;
+}
+
 
 tipoErros
 ConverterArquivoFormatoDosParaFormatoUnix (char *original, char *convertido);
+    //     /* le arquivos em for, se achar um /r, reescreve retirando ele */
 
 
