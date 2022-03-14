@@ -448,6 +448,10 @@ libmonitor.a: $(LIBMONITOROBJS)
 libbase.a: $(LIBBASEOBJS)
 	ar -r -c $@ $(LIBBASEOBJS) 
 
+libarquivos.a: $(LIBARQUIVOSOBJS)
+	ar -r -c $@ $(LIBARQUIVOSOBJS) 
+
+
 .PHONY: clean clean-all clean-objs clean-bsd clean-linux clean-gcc clean-clang clean-ansi clean-c89 clean-c90 clean-c99 clean-c11
 
 clean:

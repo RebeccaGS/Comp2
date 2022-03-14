@@ -7,9 +7,14 @@
 // tem o txt em fopen?
 
 // FALTAM
-// 01 -> tipoErros // Print correto // erro em testes
-// 02 ->
-// 03 -> 
+// conferir tipoErros e errosTestes
+// GNU e BSM - Feitos [CHECK] Testados [] - se der errado, ver o comentario la embaixo sobre bibliotecas
+// aula 0902 - Print correto
+// aula 0905
+// aula 0906
+// aula 0907
+
+
 
 #include <stdio.h>
 #include <stdlib.h>

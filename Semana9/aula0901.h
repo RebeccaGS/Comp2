@@ -3,7 +3,7 @@
 
 typedef unsigned char byte;
 
-typedef enum {ok = 0, arquivoVazio = 1, falhaCriacaoArquivoTemporario = 2} tipoErros;
+typedef enum {ok = 0, arquivoVazio = 1, falhaCriacaoArquivoTemporario = 2, argumentosEmExcesso = 3} tipoErros;
 
 tipoErros
 ExibirConteudoArquivo (char * /* (E) */);
