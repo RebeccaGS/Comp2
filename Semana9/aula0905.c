@@ -3,7 +3,7 @@
 #include <unistd.h>
 #include "aula0901.c"
 
-// ler sobre optind naquele site
+// ler sobre optind naquele site https://daemoniolabs.wordpress.com/2011/10/07/usando-com-as-funcoes-getopt-e-getopt_long-em-c/
 
 /* func que contem informacoes para uso do programa */
 void mostrar_infos() {
@@ -71,5 +71,4 @@ int main(int argc, char **argv){
     }
 
     return ok;
-
 }

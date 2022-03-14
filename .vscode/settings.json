@@ -22,5 +22,6 @@
 		"exemplo": "c",
 		"aula0801.h": "c",
 		"arquivo3": "c"
-	}
+	},
+	"C_Cpp.errorSquiggles": "Disabled"
 }

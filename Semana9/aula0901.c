@@ -29,7 +29,7 @@ ExibirConteudoArquivo (char *nomeArquivo){
     
     FILE *leitura;
     char *bytesLidos;
-    int tamanhoArquivo;
+    int tamanhoArquivo, i;
 
     /* abre arquivo para leitura */
     leitura = fopen(nomeArquivo, "rb"); /* rb: le em bytes */
@@ -46,11 +46,29 @@ ExibirConteudoArquivo (char *nomeArquivo){
     bytesLidos = malloc(tamanhoArquivo * sizeof(bytesLidos));
 
     /* ler arquivo */
-    fread(bytesLidos, tamanhoArquivo, 1, leitura); 
-  
-    /* imprime arquivo */
-    printf("%s \n", bytesLidos);
-
+    while (!feof(leitura)){ /* anda ate final do arquivo*/  
+        getline(&bytesLidos, &tamanhoArquivo, leitura); /* le arq linha a linha */
+        printf("%08X | ", bytesLidos[0]);
+        for (i = 1; i < 17; i++){
+            if (i >= strlen(bytesLidos)){
+                printf("   ");
+            }
+            else{
+                printf("%02X ", bytesLidos[i]);
+            }
+        }
+        printf("| ");
+        for (i = 0; bytesLidos[i] != '\0'; i++){
+            if (bytesLidos[i] < 0x20 || bytesLidos[i] > 0x7F){
+                printf(".");
+            }
+            else{
+                printf("%c", bytesLidos[i]);
+            }
+        }
+        printf("\n");
+    }    
+    
     /* fechar arquivo */
     fclose(leitura);
 
@@ -63,9 +81,9 @@ tipoErros
 ConverterArquivoFormatoUnixParaFormatoDos (char *original, char *convertido){
 
     FILE *leitura, *escrita;
-    char *bytesLidos;
+    char *bytesLidos, *nomeTemporario;
     int tamanhoArquivo;
-    short filedes = -1;
+    short filedes = -1, temporario = 0;
 
     /* abre arquivo para leitura e escrita */
     leitura = fopen(original, "rb"); /* rb: le em bytes */
@@ -74,11 +92,13 @@ ConverterArquivoFormatoUnixParaFormatoDos (char *original, char *convertido){
 	}
 
     escrita = fopen(convertido, "a");  
-    if (escrita == NULL){                // uso o filedes ou o escrita para continuar? ou um: if NULL use filedes, else, use escrita?
-	    filedes = mkstemp(bytesLidos);
+    if (escrita == NULL){
+        nomeTemporario = "nomeTemporario-XXXXXX";                // uso o filedes ou o escrita para continuar? ou um: if NULL use filedes, else, use escrita?
+	    filedes = mkstemp(nomeTemporario);
         if (filedes<0){
             return falhaCriacaoArquivoTemporario;
         }
+        temporario = 1;
 	}
 
     /* descobrir tamanho do arquivo */
@@ -93,9 +113,11 @@ ConverterArquivoFormatoUnixParaFormatoDos (char *original, char *convertido){
     while (!feof(leitura)){ /* anda ate final do arquivo*/  
         getline(&bytesLidos, &tamanhoArquivo, leitura); /* le arq linha a linha */
         fputs(bytesLidos,escrita);
-        //fwrite(bytesLidos, 1, sizeof(bytesLidos), escrita); // sizeof... ou tamanhoArquivo?
-        // le arquivo linha a linha SEMPRE parando no \n ou final de arquivo ou..?
         fputc('\r',escrita);
+    }
+
+    if (temporario == 1){
+        fputc("backup-AAAAMMDD_hhmmss",escrita);
     }
 
     fclose(leitura);

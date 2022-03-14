@@ -44,7 +44,7 @@ int main(int argc, char **argv) {
         {"estado"    , required_argument , 0               , 'e'},
         {"cadastrar" , no_argument       , &flag_cadastrar , 1  },
         {0           , 0                 , 0               , 0  },
-    } ;
+    
 
     if ( argc < 2 ) show_help(argv[0]) ;
 
