@@ -3,16 +3,12 @@ Escola Politecnica
 Departamento de Eletronica e de Computacao
 EEL270 - Computacao II - Turma 2021/2
 Prof. Marcelo Luiz Drumond Lanza
-Autor: Rebecca Gomes Simao
-Descricao: func teste para converter base 16 em 32.
-
-$Author$
-$Date$
-$Log$ */
+Autor:
+Descricao: func teste para converter base 16 em 32.*/
 
 
-// mudar pra .h
-#include "aula0801.c"
+
+#include "aula0801.h"
 #include <errno.h>
 #include <limits.h>
 #include <stdio.h>
@@ -132,3 +128,5 @@ int main (int argc, char *argv[]) {
     free(base32);
     return OK;
 }
+
+/* $RCSfile: aula0804.c,v $ */

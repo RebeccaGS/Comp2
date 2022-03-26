@@ -3,12 +3,9 @@ Escola Politecnica
 Departamento de Eletronica e de Computacao
 EEL270 - Computacao II - Turma 2021/2
 Prof. Marcelo Luiz Drumond Lanza
-Autor: Rebecca Gomes Simao
-Descricao: Codigo que calcula ultimo numero do RG
-
-$Author$
-$Date$
-$Log$ */
+Autor:
+Descricao: programa de testes que printa numero de rg completo incluindo o ultimo - recebe no formato  X X X X X X X X X
+*/
 
 /* recebe 8 digitos - tratamento de erro */
 /* deve ser printado assim: XX.XXX.XXX-X */
@@ -39,11 +36,9 @@ $Log$ */
 int main (int argc, char **argv){
     
     /* definir variaveis usadas */
-    char entrada [COMPRIMENTO_RG];
+    char entrada [COMPRIMENTO_RG+2];
     char saida;
     int i;
-    char *verificacao;
-    int numero;
     
     /* tratamento de erros - numero de argumentos */
     if (argc != 9){
@@ -52,17 +47,43 @@ int main (int argc, char **argv){
     }
     
     /* pegar argumentos a serem usados */
-    for (i = 0; i<8; i++){
-        if (strlen(argv[i+1]) != 1){
-            printf("Cada digito deve estar entre 0 e 9.");
-            exit(TAMANH0_ARGUMENTO_INVALIDO);
+    for (i = 0; i<10; i++){
+        if (i < 8){
+            if (strlen(argv[i+1]) != 1){
+                printf("Cada digito deve estar entre 0 e 9.");
+                exit(TAMANH0_ARGUMENTO_INVALIDO);
+            }
         }
-        entrada[i] = argv[i+1][0];
+        if (i == 2 || i == 6){
+            entrada[i] = '.';
+        }
+        else if (i < 2)
+            entrada[i] = argv[i+1][0];   
+        
+        else if (i < 6)
+            entrada[i] = argv[i][0]; 
+        
+        else
+            entrada[i] = argv[i-1][0];  
+        
     }
     entrada[i] = EOS;
-
     /* enviar argumentos coletados para calculo de seu ultimo digito */
     tipoErros retorno = GerarDigitosVerificadoresRg(entrada, &saida);
+
+    /* conferir se o retorno ta ok */
+    if (retorno != ok)
+        printf ("Erro executando a funcao. Erro numero %u.\n", retorno);
+
+    else{
+        /* printar rg na tela */
+        printf("%s-%c\n", entrada,saida);
+    }
+    return OK;
+}
+
+/* $RCSfile: aula0505a.c,v $ */
+ificadoresRg(entrada, &saida);
 
     /* conferir se o retorno ta ok */
     if (retorno != ok)

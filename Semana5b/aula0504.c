@@ -3,7 +3,7 @@ Escola Politecnica
 Departamento de Eletronica e de Computacao
 EEL270 - Computacao II - Turma 2021/2
 Prof. Marcelo Luiz Drumond Lanza
-Autor: Rebecca Gomes Simao
+Autor:
 Descricao: Codigo que calcula ultimo numero do RG e verifica validação 
 
 $Author$
@@ -61,7 +61,7 @@ GerarDigitosVerificadoresRg(char *entrada , char *saida)
         }
     }
     /* passa ultimo digito pra saida*/
-    *saida = (11 - somaDosProdutos % 11) + '0'; 
+    *saida = (11 - somaDosProdutos % 11) + '0';
     return ok;
 }
 
@@ -93,7 +93,7 @@ ValidarRg (char *rg){
     for (indice = 0; indice < 10; indice++){
         rg_valido[indice] = rg[indice];
     }
-    rg_valido[10]=EOS;
+    /*rg_valido[10]=EOS;*/
     /* manda envia a copia para calculo do ultimo digito*/
     tipoErros retorno = GerarDigitosVerificadoresRg (rg_valido,&saida);
 

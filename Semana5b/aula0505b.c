@@ -3,24 +3,16 @@ Escola Politecnica
 Departamento de Eletronica e de Computacao
 EEL270 - Computacao II - Turma 2021/2
 Prof. Marcelo Luiz Drumond Lanza
-Autor: Rebecca Gomes Simao
-Descricao: implementação de um programa de testes para a função GerarDigitosVerificadoresRg.
-Este programa deverá receber os 8 primeiros dígitos do RG desejado através de um único
-argumento da linha de comando (CLI) no formato "XX.XXX.XXX" (sem as aspas). 
-O programa deverá exibir o RG cpmpleto no formato "XX.XXX.XXX-X" (sem as aspas).
-Todos os tratamentos de erro necessários e que não possam realizados na função
-GerarDigitosVerificadoresRg deverão ser implementados neste programa.
-
-$Author$
-$Date$
-$Log$ */
+Autor:
+Descricao: programa de testes que printa numero de rg completo incluindo o ultimo - recebe no formato XX.XXX.XXX-X
+*/
 
 /*
 56.843.539
 RG: 56.843.539-4
 */
 
-#include "aula0504.c"
+#include "aula0504.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -42,11 +34,7 @@ int main(int argc, char **argv)
 {
 
     /* definir variaveis usadas */
-    char entrada [COMPRIMENTO_RG];
     char saida;
-    char *rgDado;
-    int i;
-    int numero;
 
     /* tratamento de erros - numero de argumentos */
     if (argc != 2){
@@ -54,19 +42,8 @@ int main(int argc, char **argv)
         exit (NUMERO_ARGUMENTOS_INVALIDO);
     }
 
-    /* pegar variaveis a serem usadas */
-    rgDado = argv[1][0];
-    for (i = 0; i < 2; i++)
-        entrada[i] = rgDado[i] - '0';   
-    
-    for (i = 3; i < 6; i++)
-        entrada[i-1] = rgDado[i] - '0'; 
-    
-    for (i = 7; i < 10; i++)
-        entrada[i-2] = rgDado[i] - '0';   
-
     /* enviar argumentos coletados para calculo de seu ultimo digito */
-    tipoErros retorno = GerarDigitosVerificadoresRg(entrada, &saida);
+    tipoErros retorno = GerarDigitosVerificadoresRg(argv[1], &saida);
 
     /* conferir se o retorno ta ok */
     if (retorno != ok)
@@ -74,15 +51,8 @@ int main(int argc, char **argv)
 
     else{
         /* printar rg na tela */
-        for (numero = 0; numero < COMPRIMENTO_RG; numero++){
-            if (numero == 2 || numero == 5)
-                printf(".");
-            if (numero == 8)
-                printf("-");
-            printf("%u", entrada[numero]);
-        }
-        printf("\n");
+        printf("%s-%c\n", argv[1],saida);
     }
     return OK;
 }
-/* $RCSfile$ */
+/* $RCSfile: aula0505b.c,v $ */

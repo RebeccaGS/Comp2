@@ -3,17 +3,14 @@ Escola Politecnica
 Departamento de Eletronica e de Computacao
 EEL270 - Computacao II - Turma 2021/2
 Prof. Marcelo Luiz Drumond Lanza
-Autor: Rebecca Gomes Simao
+Autor:
 Descricao: Codigo que calcula ultimo numero do RG
-
-$Author$
-$Date$
-$Log$ */
+*/
 
 /* recebe 8 digitos - tratamento de erro */
 /* deve ser printado assim: XX.XXX.XXX-X */
 
-#include "aula0501.c"
+#include "aula0501.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -94,4 +91,4 @@ int main (int argc, char **argv){
     return OK;
 }
 
-/* $RCSfile$ */
+/* $RCSfile: aula0502a.c,v $ */

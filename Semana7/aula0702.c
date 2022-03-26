@@ -5,15 +5,8 @@ Escola Politecnica
 Departamento de Eletronica e de Computacao
 EEL270 - Computacao II - Turma 2021/2
 Prof. Marcelo Luiz Drumond Lanza
-Autor: REBECCA GOMES SIMAO
+Autor:
 Descricao: testes para MostrarMonitor e GerarDistribuicaoInicial
-
-$Author: rebecca.simao $
-$Date: 2022/02/01 06:21:50 $
-$Log: aula0702.c,v $
-Revision 1.1  2022/02/01 06:21:50  rebecca.simao
-Initial revision
-
 */
 
 #ifdef __linux__
@@ -21,7 +14,7 @@ Initial revision
 #endif
 
 
-#include "aula0701.c"
+#include "aula0701.h"
 #include <stdlib.h>
 #include <unistd.h> /* useconds_t */
 #include <stdio.h>
@@ -49,7 +42,7 @@ int main (int argc, char *argv[]) {
     float percentualApagados;
     unsigned short i = 1; /* indice dos for */
     char *verificacao;
-
+    
     /* se possui os 5 args */
     if (argc != 6){
         printf("%s", "<tempo-congelamento>  <numero-linhas> <numero-colunas> <percentual-defeituosos> <percentual-apagados>\n");
@@ -133,7 +126,7 @@ int main (int argc, char *argv[]) {
   	}
     
     
-    /* enviar argumentos para montagem de matrizprodutos */
+    /* enviar argumentos */
     tipoErros retorno = GerarDistribuicaoInicial(monitor,numeroMaximoLinhas, numeroMaximoColunas,percentualDefeituosos, percentualApagados);
     /* conferir se o retorno ta ok */
     if (retorno != ok){

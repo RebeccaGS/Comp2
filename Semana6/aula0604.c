@@ -4,12 +4,8 @@ Escola Politecnica
 Departamento de Eletronica e de Computacao
 EEL270 - Computacao II - Turma 2021/2
 Prof. Marcelo Luiz Drumond Lanza
-Autor: REBECCA GOMES SIMAO
+Autor:
 Descricao: implementacao de determinantesMatriz
-
-$Author$
-$Date$
-$Log$
 */
 
 
@@ -21,7 +17,7 @@ $Log$
 
 #define EOS				      					'\0'
 
-#include "aula0601.c"
+#include "aula0601.h"
 #include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -116,4 +112,4 @@ int main (int argc, char **argv){
 
 }
 
-/* $RCSfile$ */
+/* $RCSfile: aula0604.c,v $ */

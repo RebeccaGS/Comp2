@@ -1,29 +1,17 @@
-/*
- * [prog2.c]
- * Programa que exemplifica o uso da função
- * getopt_long().
- *
- * [Autor]
- * Marcos Paulo Ferreira (Daemonio)
- * undefinido gmail com
- * daemoniolabs.wordpress.com
- *
- * Ter Out  4 23:12:49 BRT 2011
- */
-
 #include <stdio.h>
 #include <stdlib.h>
-/* para getopt_long() */
-#include <getopt.h>
+/* para getopt() */
+#include <unistd.h>
 
+/* Mostra a ajuda */
 void show_help(char *name) {
     fprintf(stderr, "\
             [uso] %s <opcoes>\n\
-            -h, --help          mostra essa tela e sai.\n\
-            -n, --nome=NOME     seta o seu nome.\n\
-            -i, --idade=IDADE   seta sua idade.\n\
-            -e, --estado=ESTADO seta seu estado.\n\
-            -c, --cadastrar     cadastra no banco de dados.\n", name) ;
+            -h         mostra essa tela e sai.\n\
+            -n NOME    seta o seu nome.\n\
+            -i IDADE   seta sua idade.\n\
+            -e ESTADO  seta seu estado.\n\
+            -c         cadastra no banco de dados.\n", name) ;
     exit(-1) ;
 }
 
@@ -33,36 +21,28 @@ int main(int argc, char **argv) {
     /* Variáveis que receberão os argumentos
      * das opções. */
     char *nome=NULL, *idade=NULL, *estado=NULL ;
-    int flag_cadastrar = 0 ;
+    char flag_cadastrar = 0 ;
 
-    /* Estrutura de opcoes. Veja que o último
-     * elemento deve ser NULL. */
-    const struct option stopcoes[] = {
-        {"help"      , no_argument       , 0               , 'h'},
-        {"nome"      , required_argument , 0               , 'n'},
-        {"idade"     , required_argument , 0               , 'i'},
-        {"estado"    , required_argument , 0               , 'e'},
-        {"cadastrar" , no_argument       , &flag_cadastrar , 1  },
-        {0           , 0                 , 0               , 0  },
-    
-
+    /* Chama ajuda. */
     if ( argc < 2 ) show_help(argv[0]) ;
 
-    while( (opt = getopt_long(argc, argv, "hn:i:e:c", stopcoes, NULL)) > 0 ) {
+    /* getopt() retorna o caractere de uma opção a cada
+     * iteração e -1 para marcar o fim do processo. */
+    while( (opt = getopt(argc, argv, "hn:i:e:c")) > 0 ) {
         switch ( opt ) {
-            case 'h': /* -h ou --help */
+            case 'h': /* help */
                 show_help(argv[0]) ;
                 break ;
-            case 'n': /* -n ou --nome */
+            case 'n': /* opção -n */
                 nome = optarg ;
                 break ;
-            case 'i': /* -i ou --idade */
+            case 'i': /* opção -i */
                 idade = optarg ;
                 break ;
-            case 'e': /* -e ou --estado */
+            case 'e': /* opção -e */
                 estado = optarg ;
                 break ;
-            case 'c': /* -c ou --cadastrar */
+            case 'c': /* opção -c */
                 flag_cadastrar = 1 ;
                 break ;
             default:
@@ -71,6 +51,7 @@ int main(int argc, char **argv) {
         }
     }
 
+    /* Mostra os dados na tela. */
     printf("Seus dados: \n\
             Nome   : %s\n\
             Idade  : %s\n\

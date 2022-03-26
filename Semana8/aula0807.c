@@ -3,20 +3,18 @@ Escola Politecnica
 Departamento de Eletronica e de Computacao
 EEL270 - Computacao II - Turma 2021/2
 Prof. Marcelo Luiz Drumond Lanza
-Autor: Rebecca Gomes Simao
-Descricao: Funcao teste para desconverter na base 32 -> 16
-
-$Author$
-$Date$
-$Log$ */
+Autor:
+Descricao: Funcao teste para desconverter na base 64*/
 
 
-// mudar pra .h
-#include "aula0801.c"
+
+#include "aula0801.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <errno.h>
 #include <limits.h>
+#include <string.h>
 
 #define OK										0
 #define NUMERO_ARGUMENTOS_INVALIDO              1
@@ -63,33 +61,51 @@ int main (int argc, char *argv[]) {
     }
 
     /* pegar bytes */
+    base64 = argv[2];
+    int len = strlen(base64);
+    if (len %2 != 0){
+        len = len + 2;
+        base64 = malloc (len * sizeof (char));
+        for (i = 1; i < len; i++){            
+            base64[i] = argv[2][i-1];
+        }
+        base64[0] = '0';
+        base64[len] = EOS;
+    }
 
-    base16 = malloc ((3*strlen(argv[2])/4) * sizeof (byte));
+    if (base64 == NULL){        
+        exit (NULO);
+        free(base64);
+    }
+
+    /* len pois base16 tb possui final de string */
+    base16 = malloc ((3*len/4) * sizeof (byte));
 
     if (base16 == NULL){
         exit (NULO);
         free(base64);
         free(base16);
     }
-    printf("argv[2]: %s\n",argv[2]);
+
     /* enviar argumentos para conversao */
-    tipoErros retorno = DecodificarBase64 (argv[2], finalDeLinha, base16, &numeroEmBase16);
+    tipoErros retorno = DecodificarBase64 (base64, finalDeLinha, base16, &numeroEmBase16);
 
     /* conferir se o retorno ta ok */
     if (retorno != ok)
         printf ("Erro executando a funcao. Erro numero %u.\n", retorno);
 
     else{ 
-        printf("%s k %d", base16,numeroEmBase16);
         /* printar bytes na tela na tela */
         for (i = 0; i < numeroEmBase16; i++){
             /* resposta deve conter 2 digitos */
             printf("%02X ",base16[i]);
         }
     }
+    printf("\n");
     
     free(base64);
     free(base16);
 
     return OK;
 }
+/* $RCSfile: aula0807.c,v $ */

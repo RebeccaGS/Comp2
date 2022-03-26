@@ -3,20 +3,17 @@ Escola Politecnica
 Departamento de Eletronica e de Computacao
 EEL270 - Computacao II - Turma 2021/2
 Prof. Marcelo Luiz Drumond Lanza
-Autor: Rebecca Gomes Simao
-Descricao: Funcao teste para desconverter na base 32 -> 16
-
-$Author$
-$Date$
-$Log$ */
+Autor:
+Descricao: Funcao teste para desconverter na base 32
+*/
 
 
-// mudar pra .h
-#include "aula0801.c"
+#include "aula0801.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <errno.h>
 #include <limits.h>
+#include <string.h>
 
 #define OK										0
 #define NUMERO_ARGUMENTOS_INVALIDO              1
@@ -109,3 +106,5 @@ int main (int argc, char *argv[]) {
 
     return OK;
 }
+
+/* $RCSfile: aula0805.c,v $ */

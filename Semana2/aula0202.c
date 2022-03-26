@@ -3,17 +3,8 @@ Escola Politecnica
 Departamento de Eletronica e de Computacao
 EEL270 - Computacao II - Turma 2021/2
 Prof. Marcelo Luiz Drumond Lanza
-Autor: Rebecca Gomes Simao
+Autor:
 Descricao: contem o código fonte de um programa de testes para a função de fibonacci
-
-$Author: rebecca.simao $
-$Date: 2022/01/03 17:42:08 $
-$Log: aula0202.c,v $
-Revision 1.1  2022/01/03 17:42:08  rebecca.simao
-Initial revision
-
-Revision 1.1  2021/12/14 00:17:59  rebecca.simao
-Initial revision
 */
 
 

@@ -3,65 +3,8 @@
 #Departamento de Eletronica e de Computacao
 #EEL270 - Computacao II - Turma 2021/2
 #Prof. Marcelo Luiz Drumond Lanza
-#Autor: Rebecca Gomes Simão
+#Autor:
 #Descricao: arquivo GNUmakefile
-
-#$Author: rebecca.simao $
-#$Date: 2022/03/07 21:37:09 $
-#$Log: GNUmakefile,v $
-#Revision 1.17  2022/03/07 21:37:09  rebecca.simao
-#consertado
-#
-#Revision 1.16  2022/02/22 01:56:06  rebecca.simao
-#gnu com 08 adicionados
-#
-#Revision 1.15  2022/02/02 04:06:25  rebecca.simao
-#versao finalizada.
-#
-#Revision 1.14  2022/01/18 07:06:54  rebecca.simao
-#*** empty log message ***
-#
-#Revision 1.13  2022/01/18 06:54:08  rebecca.simao
-#aula0502a e b add e atualizados
-#
-#Revision 1.11  2022/01/10 23:11:13  rebecca.simao
-#versao final
-#aula04
-#
-#Revision 1.10  2022/01/10 21:30:21  rebecca.simao
-#erros corrigidos na lib
-#
-#Revision 1.8  2022/01/10 20:01:27  rebecca.simao
-#add aula0403b atualizada
-#
-#Revision 1.7  2022/01/10 20:00:04  rebecca.simao
-#atualizada com aula0403b
-#
-#Revision 1.6  2022/01/10 19:57:09  rebecca.simao
-#versao atualizada com aula0403a
-#
-#Revision 1.5  2022/01/10 02:25:03  rebecca.simao
-#versao 0401d.c add
-#
-#Revision 1.4  2022/01/10 02:18:27  rebecca.simao
-#UFRJ COMP2
-#com aula0401c.c
-#
-#Revision 1.3  2022/01/10 02:00:53  rebecca.simao
-#add aula0401b.c
-#
-#Revision 1.2  2022/01/10 00:44:41  rebecca.simao
-#GNU ATUALIZADO AULA0402A
-#
-#Revision 1.1  2022/01/03 17:51:03  rebecca.simao
-#Initial revision
-#
-#Revision 1.1  2021/12/14 03:03:26  rebecca.simao
-#Initial revision
-#
-#Revision 1.1  2021/12/10 05:51:14  rebecca.simao
-#Initial revision
-#
 
 
 OS = $(shell uname -s)

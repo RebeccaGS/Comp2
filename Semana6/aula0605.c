@@ -4,12 +4,8 @@ Escola Politecnica
 Departamento de Eletronica e de Computacao
 EEL270 - Computacao II - Turma 2021/2
 Prof. Marcelo Luiz Drumond Lanza
-Autor: REBECCA GOMES SIMAO
+Autor:
 Descricao: implementacao de calcular menor complementar
-
-$Author$
-$Date$
-$Log$
 */
 
 #define OK										0
@@ -20,7 +16,7 @@ $Log$
 
 #define EOS				      					'\0'
 
-#include "aula0601.c"
+#include "aula0601.h"
 #include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -147,4 +143,4 @@ int main (int argc, char **argv){
     return OK;
 }
 
-/* $RCSfile$ */
+/* $RCSfile: aula0605.c,v $ */

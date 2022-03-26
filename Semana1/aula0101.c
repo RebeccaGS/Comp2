@@ -3,20 +3,8 @@ Escola Politecnica
 Departamento de Eletronica e de Computacao
 EEL270 - Computacao II - Turma 2021/2
 Prof. Marcelo Luiz Drumond Lanza
-Autor: Rebecca Gomes Simão
+Autor: 
 Descricao: Exibir nome passado por argumento centralizado
-
-$Author: rebecca.simao $
-$Date: 2022/01/03 17:27:28 $
-$Log: aula0101.c,v $
-Revision 1.2  2022/01/03 17:27:28  rebecca.simao
-versao corrigida.
-
-Revision 1.1  2022/01/03 15:22:32  rebecca.simao
-Initial revision
-
-Revision 1.1  2021/12/10 06:31:53  rebecca.simao
-Initial revision
 */
 
 

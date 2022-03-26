@@ -3,15 +3,8 @@ Escola Politecnica
 Departamento de Eletronica e de Computacao
 EEL270 - Computacao II - Turma 2021/2
 Prof. Marcelo Luiz Drumond Lanza
-Autor: Rebecca Gomes Simao
-Descricao: .h das funcoes com definicoes basicas da aula05 string
-
-$Author: rebecca.simao $
-$Date: 2022/01/18 07:07:10 $
-$Log: aula0504.h,v $
-Revision 1.1  2022/01/18 07:07:10  rebecca.simao
-Initial revision
- */
+Autor:
+Descricao: .h das funcoes com definicoes basicas da aula05 string*/
 
 
 #ifndef   _AULA0504_

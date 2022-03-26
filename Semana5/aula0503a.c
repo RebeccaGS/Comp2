@@ -3,23 +3,15 @@ Escola Politecnica
 Departamento de Eletronica e de Computacao
 EEL270 - Computacao II - Turma 2021/2
 Prof. Marcelo Luiz Drumond Lanza
-Autor: Rebecca Gomes Simao
-Descricao: Crie o arquivo "aula0503a.c" contendo a implementação de um programa de testes
-para a função ValidarRg. Este programa deverá receber os 9 dígitos do RG desejado através 
-de 9 argumentos da linha de comando (CLI). Deverá exibir o RG em questão no formato 
-"XX.XXX.XXX-X" (sem as aspas), indicando se o mesmo é válido ou inválido. Todos os tratamentos
-de erro necessários e que não possam realizados na função ValidarRg deverão ser implementados 
-neste programa.
+Autor:
+Descricao: testa  no formato X X X X X X X X X
 
 Exemplos:
 ./aula0503a 5 6 8 4 3 5 3 9 4
 RG: 56.843.539-4 - valido.
 ./aula0503a 5 6 8 4 3 5 3 9 7
 RG: 56.843.539-7 - invalido.
-
-$Author$
-$Date$
-$Log$ */
+*/
 
 #include "aula0501.h"
 #include <stdio.h>
@@ -113,4 +105,5 @@ int main (int argc, char **argv){
 
 
 
-/* $RCSfile$ */
+/* $RCSfile: aula0503a.c,v $ */
+

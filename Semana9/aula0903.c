@@ -1,9 +1,20 @@
+/* Universidade Federal do Rio de Janeiro
+Escola Politecnica
+Departamento de Eletronica e de Computacao
+EEL270 - Computacao II - Turma 2021/2
+Prof. Marcelo Luiz Drumond Lanza
+Autor:
+Descricao: testes para unix to dos*/
+
 #include "aula0901.c"
 #include <stdio.h>
 #include <stdlib.h>
 
 #define OK										0
 #define NUMERO_ARGUMENTOS_INVALIDO              1
+#define _WITH_GETLINE
+
+#define _XOPEN_SOURCE													500
 
 int main (int argc, char *argv[]) {
 
@@ -27,3 +38,5 @@ int main (int argc, char *argv[]) {
 
     return OK;
 }
+
+/* $RCSfile: aula0903.c,v $ */

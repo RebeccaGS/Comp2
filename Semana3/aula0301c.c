@@ -3,16 +3,8 @@ Escola Politecnica
 Departamento de Eletronica e de Computacao
 EEL270 - Computacao II - Turma 2021/2
 Prof. Marcelo Luiz Drumond Lanza
-Autor: Rebecca Gomes Simao
+Autor:
 Descricao: Funcao calcula MDC utilizando o FOR
-$Author: rebecca.simao $
-$Date: 2022/01/03 18:03:47 $
-$Log: aula0301c.c,v $
-Revision 1.2  2022/01/03 18:03:47  rebecca.simao
-Revisado
-
-Revision 1.1  2021/12/17 00:52:49  rebecca.simao
-Initial revision
 */
 
 #include "aula0301.h"

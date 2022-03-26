@@ -1,9 +1,24 @@
+/* Universidade Federal do Rio de Janeiro
+Escola Politecnica
+Departamento de Eletronica e de Computacao
+EEL270 - Computacao II - Turma 2021/2
+Prof. Marcelo Luiz Drumond Lanza
+Autor:
+Descricao: programa que junta tres arquivos*/
+
+
 #include <stdio.h>
 #include <stdlib.h> /* getopt() */
 #include <unistd.h>
 #include "aula0901.c"
+#include <string.h>
 
-// ler sobre optind naquele site https://daemoniolabs.wordpress.com/2011/10/07/usando-com-as-funcoes-getopt-e-getopt_long-em-c/
+#define _WITH_GETLINE
+#define  _POSIX_C_SOURCE 200809L
+#define  _GNU_SOURCE
+
+#define _XOPEN_SOURCE													500
+#define ARGUMENTOS_INSUFICIENTES              1
 
 /* func que contem informacoes para uso do programa */
 void mostrar_infos() {
@@ -19,7 +34,6 @@ int main(int argc, char **argv){
 
     /* definindo variaveis */
     int optind, i;
-    char *nomeArquivo = NULL, *original = NULL, *convertido = NULL;
     tipoErros retorno;
     
     /* getopt retorna opcao escolhida ou -1, quando no encerramento do looping */
@@ -27,29 +41,48 @@ int main(int argc, char **argv){
         switch (optind) {
 
             /* d | D - converter um arquivo texto do formato Unix para o formato Microsoft (DOS). */
-            case 'd'|'D':
-                retorno = ConverterArquivoFormatoUnixParaFormatoDos (original,convertido);
+            case 'd':
+            case 'D':
+                if (argv[optind] == NULL){
+                    exit(ARGUMENTOS_INSUFICIENTES);
+                }
+                
+                retorno = ConverterArquivoFormatoUnixParaFormatoDos (argv[optind],argv[optind + 1]);
                 
                 if (retorno != ok)
                     printf ("Erro executando a funcao. Erro numero %u.\n", retorno);
+                
                 break;
 
             /* h | H - exibir uma mensagem contendo as informações sobre o uso do programa. */    
-            case 'h'|'H':
+            case 'h':
+            case 'H':
                 mostrar_infos();
                 break;
 
             /* s | S - exibir o conteúdo do arquivo. */
-            case 's'|'S':
-                retorno = ExibirConteudoArquivo (nomeArquivo);
+            case 's':
+            case 'S':
+            
+                if (argv[optind] == NULL){
+                    exit(ARGUMENTOS_INSUFICIENTES);
+                }
+                
+                retorno = ExibirConteudoArquivo (argv[optind]);
                 
                 if (retorno != ok)
                     printf ("Erro executando a funcao. Erro numero %u.\n", retorno);
+                
                 break;
 
             /* u | U - converter um arquivo texto do formato Microsoft para o formato Unix. */
-            case 'u'|'U':
-                retorno = ConverterArquivoFormatoDosParaFormatoUnix (original,convertido);
+            case 'u':
+            case 'U':
+                if (argv[optind] == NULL){
+                    exit(ARGUMENTOS_INSUFICIENTES);
+                }
+                
+                retorno = ConverterArquivoFormatoDosParaFormatoUnix (argv[optind],argv[optind + 1]);
                 
                 if (retorno != ok)
                     printf ("Erro executando a funcao. Erro numero %u.\n", retorno);
@@ -72,3 +105,5 @@ int main(int argc, char **argv){
 
     return ok;
 }
+
+/* $RCSfile: aula0905.c,v $ */

@@ -1,4 +1,13 @@
-#include "aula0504.c"
+/* Universidade Federal do Rio de Janeiro
+Escola Politecnica
+Departamento de Eletronica e de Computacao
+EEL270 - Computacao II - Turma 2021/2
+Prof. Marcelo Luiz Drumond Lanza
+Autor:
+Descricao: testa ValidarRG no formato XX.XXX.XXX-X
+*/
+
+#include "aula0504.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -21,29 +30,12 @@ int main(int argc, char **argv)
 
     /* definir variaveis usadas */
     char entrada [COMPRIMENTO_RG];
-    char saida;
-    char *rgDado;
-    int i;
-    int numero;
 
     /* tratamento de erros - numero de argumentos */
     if (argc != 2){
-        printf("%s", "Digite rg no seguinte formato: >XX.XXX.XXX<\n");
+        printf("%s", "Digite rg no seguinte formato: >XX.XXX.XXX-X<\n");
         exit (NUMERO_ARGUMENTOS_INVALIDO);
     }
-
-    /* pegar variaveis a serem usadas */
-    rgDado = argv[1];
-    printf("\nrgDado: %c\n",rgDado[1]);
-    for (i = 0; i < 2; i++)
-        entrada[i] = rgDado[i] - '0';   
-    
-    for (i = 3; i < 6; i++)
-        entrada[i-1] = rgDado[i] - '0'; 
-    
-    for (i = 7; i < 10; i++)
-        entrada[i-2] = rgDado[i] - '0';   
-    entrada[8] = rgDado[11] - '0';
 
     /* enviar argumentos coletados para calculo de seu ultimo digito */
     tipoErros retorno = ValidarRg(entrada);
@@ -54,20 +46,15 @@ int main(int argc, char **argv)
 
     else{
         /* printar rg na tela */
-        for (numero = 0; numero < COMPRIMENTO_RG; numero++){
-            if (numero == 2 || numero == 5)
-                printf(".");
-            if (numero == 8)
-                printf("-");
-            printf("%u", entrada[numero]);
-        }
+        printf("%s", entrada);
         if (retorno == rgInvalido){
-            printf(" - invalido.");
+            printf(" - invalido.\n");
         }
         else{
-            printf(" - valido.");
+            printf(" - valido.\n");
         }
-        printf("\n");
     }
     return OK;
 }
+
+/* $RCSfile: aula0506b.c,v $ */

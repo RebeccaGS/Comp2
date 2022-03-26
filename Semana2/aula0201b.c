@@ -3,17 +3,8 @@ Escola Politecnica
 Departamento de Eletronica e de Computacao
 EEL270 - Computacao II - Turma 2021/2
 Prof. Marcelo Luiz Drumond Lanza
-Autor: Rebecca Gomes Simao
+Autor:
 Descricao: fibonacci usando do... while
-
-$Author: rebecca.simao $
-$Date: 2022/01/03 17:41:07 $
-$Log: aula0201b.c,v $
-Revision 1.1  2022/01/03 17:41:07  rebecca.simao
-Initial revision
-
-Revision 1.1  2021/12/14 02:31:39  rebecca.simao
-Initial revision
 */
 
 

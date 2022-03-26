@@ -3,11 +3,9 @@ Escola Politecnica
 Departamento de Eletronica e de Computacao
 EEL270 - Computacao II - Turma 2021/2
 Prof. Marcelo Luiz Drumond Lanza
-Autor: REBECCA GOMES SIMAO
+Autor:
 Descricao: calcular o valor da série harmônica alternada usando recursividade
-$Author$
-$Date$
-$Log$*/
+*/
 
 /*
 S(n) = 0 se n é igual a 0.
@@ -31,4 +29,4 @@ CalcularSerieHarmonicaAlternada (unsigned short int termo){
     return CalcularSerieHarmonicaAlternada (termo - 1) + 1/CalcularExponencial(termo,termo);
 }
 
-/*$RCSfile$*/
+/*$RCSfile: aula0403a.c,v $*/

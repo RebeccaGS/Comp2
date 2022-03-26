@@ -1,15 +1,11 @@
-
 /* Universidade Federal do Rio de Janeiro
 Escola Politecnica
 Departamento de Eletronica e de Computacao
 EEL270 - Computacao II - Turma 2021/2
 Prof. Marcelo Luiz Drumond Lanza
-Autor: Rebecca Gomes Simao
-Descricao: algoritmos de conversao de bytes: 16; 32; 64, e seus respectivos metodos de desconversao.
+Autor:
+Descricao: algoritmos de conversao de bytes: 16; 32; 64.*/
 
-$Author$
-$Date$
-$Log$ */
 
 #include "aula0801.h"
 #include <string.h>
@@ -101,7 +97,7 @@ tipoErros CodificarBase32 (byte *base16, unsigned long long numeroDeBytes, tipoA
     /* definindo variaveis */
     char *guiaBase32Simples = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567=";
     char *guiaBase32Estendido = "0123456789ABCDEFGHIJKLMNOPQRSTUV=";
-    unsigned short gruposDe5, restoBytes, grupo, indiceSaida, indiceEntrada, contador;
+    unsigned short gruposDe5, restoBytes, grupo, indiceSaida, indiceEntrada;
     char *guia;
 
     /* tipoErros*/
@@ -237,7 +233,7 @@ tipoErros DecodificarBase32 (char *base32, tipoAlfabetoBase32 alfabeto, byte *ba
     char *guiaBase32;
     int len;
     unsigned short numeroPads = 0;
-
+    *numeroEmBase16 = 0;
     short auxiliar[8] = {-1,-1,-1,-1,-1,-1,-1,-1}; 
     unsigned short i, a, n = 0, aux;
 
@@ -284,7 +280,7 @@ tipoErros DecodificarBase32 (char *base32, tipoAlfabetoBase32 alfabeto, byte *ba
         base16[n++] = (auxiliar[4] << 7 & 0x80) | (auxiliar[5] << 2) | (auxiliar[6] >> 3);
         base16[n++] = (auxiliar[6] << 5 & 0xE0) | (auxiliar[7]);
     
-        numeroEmBase16 = numeroEmBase16 + 5;
+        *numeroEmBase16 = *numeroEmBase16 + 5;
     }
     
 
@@ -314,7 +310,7 @@ tipoErros DecodificarBase32 (char *base32, tipoAlfabetoBase32 alfabeto, byte *ba
         base16[n++] = (auxiliar[3] << 4 & 0xF0) | (auxiliar[4] >> 1);
         base16[n++] = (auxiliar[4] << 7 & 0x80) | (auxiliar[5] << 2) | (auxiliar[6] >> 3);
         base16[n++] = (auxiliar[6] << 5 & 0xE0) | (auxiliar[7]);
-        numeroEmBase16 = numeroEmBase16 + 5;
+        *numeroEmBase16 = *numeroEmBase16 + 5;
     }
 
     if (numeroPads == 1){
@@ -322,25 +318,25 @@ tipoErros DecodificarBase32 (char *base32, tipoAlfabetoBase32 alfabeto, byte *ba
         base16[n++] = (auxiliar[1] << 6 & 0xC0) | (auxiliar[2] << 1) | (auxiliar[3] >> 4);
         base16[n++] = (auxiliar[3] << 4 & 0xF0) | (auxiliar[4] >> 1);
         base16[n++] = (auxiliar[4] << 7 & 0x80) | (auxiliar[5] << 2) | (auxiliar[6] >> 3);
-        numeroEmBase16 = numeroEmBase16 + 4;
+        *numeroEmBase16 = *numeroEmBase16 + 4;
     }
 
     else if (numeroPads == 3){
         base16[n++] = (auxiliar[0] << 3) | (auxiliar[1] >> 2);
         base16[n++] = (auxiliar[1] << 6 & 0xC0) | (auxiliar[2] << 1) | (auxiliar[3] >> 4);
         base16[n++] = (auxiliar[3] << 4 & 0xF0) | (auxiliar[4] >> 1);
-        numeroEmBase16 = numeroEmBase16 + 3;
+        *numeroEmBase16 = *numeroEmBase16 + 3;
     }
 
     else if (numeroPads == 4){
         base16[n++] = (auxiliar[0] << 3) | (auxiliar[1] >> 2);
         base16[n++] = (auxiliar[1] << 6 & 0xC0) | (auxiliar[2] << 1) | (auxiliar[3] >> 4);
-        numeroEmBase16 = numeroEmBase16 + 2;
+        *numeroEmBase16 = *numeroEmBase16 + 2;
     }
 
     else if (numeroPads == 6){
         base16[n++] = (auxiliar[0] << 3) | (auxiliar[1] >> 2);
-        numeroEmBase16 = numeroEmBase16 + 1;
+        *numeroEmBase16 = *numeroEmBase16 + 1;
     }
 
     return ok;
@@ -439,9 +435,9 @@ tipoErros DecodificarBase64 (char *base64, tipoFinalLinha finalDeLinha, byte *ba
     unsigned short i, a, n = 0;
     int tamanhoBase64 = strlen(base64);
     unsigned short numeroPads = 0, aux;
-
-    short auxiliar[4] = {-1,-1,-1,-1};
     *numeroEmBase16 = 0;
+    short auxiliar[4] = {-1,-1,-1,-1};
+
     /* tipoErros*/
     if (numeroEmBase16 == NULL)
         return numeroDeBytesInvalido;
@@ -456,6 +452,7 @@ tipoErros DecodificarBase64 (char *base64, tipoFinalLinha finalDeLinha, byte *ba
         tamanhoBase64 = tamanhoBase64 - 2;
         base64[tamanhoBase64] = '\0';
     }
+    
     if (strlen(base64) % 4 != 0){
         return foraDaRange;
     }
@@ -476,6 +473,7 @@ tipoErros DecodificarBase64 (char *base64, tipoFinalLinha finalDeLinha, byte *ba
         base16[n++] = (auxiliar[0] << 2) | (auxiliar[1] >> 4);
         base16[n++] = (auxiliar[1] << 4 & 0xF0) | (auxiliar[2] >> 2);
         base16[n++] = (auxiliar[2] << 6 & 0xC0) | (auxiliar[3]);
+
         *numeroEmBase16 = *numeroEmBase16 + 3;
     }
 
@@ -516,7 +514,9 @@ tipoErros DecodificarBase64 (char *base64, tipoFinalLinha finalDeLinha, byte *ba
         base16[n++] = (auxiliar[0] << 2) | (auxiliar[1]>> 4);
         *numeroEmBase16 = *numeroEmBase16 + 1;
     }
+
     return ok;
+
 }   
 
-/* $RCSfile$ */
+/* $RCSfile: aula0801.c,v $ */

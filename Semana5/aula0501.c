@@ -3,12 +3,9 @@ Escola Politecnica
 Departamento de Eletronica e de Computacao
 EEL270 - Computacao II - Turma 2021/2
 Prof. Marcelo Luiz Drumond Lanza
-Autor: Rebecca Gomes Simao
+Autor:
 Descricao: Codigo que calcula ultimo numero do RG e verifica validação
-
-$Author$
-$Date$
-$Log$ */
+*/
 
 /* recebe 8 digitos - tratamento de erro */
 /* deve ser printado assim: XX.XXX.XXX-X */
@@ -48,7 +45,8 @@ GerarDigitosVerificadoresRg(byte rg[COMPRIMENTO_RG])
 }
 
 tipoErros
-ValidarRg (byte rg[COMPRIMENTO_RG] /* entrada */){    
+ValidarRg (byte rg[COMPRIMENTO_RG] /* entrada */)
+{       
     /* definir variaveis usadas*/
     byte rg_valido [COMPRIMENTO_RG];
     unsigned short indice;
@@ -78,4 +76,4 @@ ValidarRg (byte rg[COMPRIMENTO_RG] /* entrada */){
     return ok;
 }
 
-/* $RCSfile$ */
+/* $RCSfile: aula0501.c,v $ */

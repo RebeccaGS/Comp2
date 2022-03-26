@@ -3,20 +3,8 @@ Escola Politecnica
 Departamento de Eletronica e de Computacao
 EEL270 - Computacao II - Turma 2021/2
 Prof. Marcelo Luiz Drumond Lanza
-Autor: Rebecca Gomes Simao
+Autor:
 Descricao: Funcao que testa a aula0301c.c, que por sua vez calcula MDC utilizando WHILE
-
-$Author: rebecca.simao $
-$Date: 2022/01/03 19:07:24 $
-$Log: aula0302.c,v $
-Revision 1.2  2022/01/03 19:07:24  rebecca.simao
-Revisada 2
-
-Revision 1.1  2022/01/03 18:06:22  rebecca.simao
-Initial revision
-
-Revision 1.1  2021/12/17 00:56:43  rebecca.simao
-Initial revision
 */
 
 

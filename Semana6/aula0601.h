@@ -4,17 +4,13 @@ Escola Politecnica
 Departamento de Eletronica e de Computacao
 EEL270 - Computacao II - Turma 2021/2
 Prof. Marcelo Luiz Drumond Lanza
-Autor: REBECCA GOMES SIMAO
+Autor:
 Descricao: arquivo .h da aula 06
-
-$Author$
-$Date$
-$Log$
 */
 
 
 #ifndef   _AULA0601_
-#define   _AULA0601_    "@(#)aula0601.h $Revision$"
+#define   _AULA0601_    "@(#)aula0601.h $Revision: 1.1 $"
 
 #define LINHAS_MATRIZES      100
 #define COLUNAS_MATRIZES     100
@@ -59,4 +55,4 @@ CalcularDeterminanteMatriz (unsigned short, /* ordem da matriz (E) */
 
 #endif  
 
-/* $RCSfile$ */
+/* $RCSfile: aula0601.h,v $ */

@@ -3,12 +3,8 @@ Escola Politecnica
 Departamento de Eletronica e de Computacao
 EEL270 - Computacao II - Turma 2021/2
 Prof. Marcelo Luiz Drumond Lanza
-Autor: Rebecca Gomes Simao
-Descricao: prototipo das funcoes e definicoes do roteiro 08
-
-$Author$
-$Date$
-$Log$ */
+Autor:
+Descricao: prototipo das funcoes e definicoes do roteiro 08*/
 
 #ifndef   _AULA08_
 #define   _AULA08_    ""@(#)aula08.h $Revision$""
@@ -40,4 +36,6 @@ tipoErros
 DecodificarBase64 (char *, tipoFinalLinha , byte *, unsigned long long *);
 
 #endif
-/* $RCSfile$ */
+
+/* $RCSfile: aula0801.h,v $ */
+

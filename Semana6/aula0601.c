@@ -4,14 +4,9 @@ Escola Politecnica
 Departamento de Eletronica e de Computacao
 EEL270 - Computacao II - Turma 2021/2
 Prof. Marcelo Luiz Drumond Lanza
-Autor: REBECCA GOMES SIMAO
+Autor:
 Descricao: implementacao da aula 06
-
-$Author$
-$Date$
-$Log$
 */
-
 
 #include "aula0601.h"
 #include <stdio.h> /* incluir NULL */
@@ -256,4 +251,4 @@ CalcularComplementoAlgebrico (unsigned short ordem, /* ordem da matriz (E) */
 }
 
 
-/* $RCSfile$ */
+/* $RCSfile: aula0601.c,v $ */

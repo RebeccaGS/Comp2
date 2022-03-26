@@ -4,12 +4,8 @@ Escola Politecnica
 Departamento de Eletronica e de Computacao
 EEL270 - Computacao II - Turma 2021/2
 Prof. Marcelo Luiz Drumond Lanza
-Autor: REBECCA GOMES SIMAO
+Autor:
 Descricao: implementacao da aula 06
-
-$Author$
-$Date$
-$Log$
 */
 
 #define OK										0
@@ -127,4 +123,4 @@ int main (int argc, char **argv){
 
 }
 
-/* $RCSfile$ */
+/* $RCSfile: aula0603.c,v $ */

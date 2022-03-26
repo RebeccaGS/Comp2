@@ -1,79 +1,4 @@
-fazer: 
-- comentar aula0501.h entendendo tudo! (exemplos 47.h e 47.c)
-
-
-------------------------------------------------------------------------------------------------------
------------------------------------------------------------------------------------------------------
-    // ANOTACOES:
-// fazer todos os testes possiveis no moba
-// verificar logica das de baixo
-// tipo erros duma das 3 ali
-//
-
-//
-//
-//
-
-// GERAL -------------------------------------------------------------------------------
-// 01: implementada [] / testada [] / tipo erros []
-// 02: testado [] / erros implementados []
-// BSD []         / GNU []        / testado [] 
-
-// .c nao .h
-
-
-
-    // QUANDO RECEBE LETRAS: AVISAR DIGITO INVALIDO
-
-    testes:
-    02
-    03
-    04
-    05
-    06
-
-    testar com:
-    a) todos os pixels apagados (sem pixels defeituosos).
-    b) todos os pixels apagados (com pixels defeituosos).
-    c) todos os pixels acesos (sem pixels defeituosos).
-    d) todos os pixels acesos (com pixels defeituosos).
-    e) todos os pixels com defeito.
-    f) distribuição aleatória com as três possibilidades.
-
-    // TODOS apagados com defeituosos? seria 100 apagados e defeituosos?
-
-    teste de erros:
-    a) mais de 100 no percentual
-    b) menos de 0 no percentual
-(!!)c) com letra 
-(!!)d) mais argumentos
-    e) menos argumentos
-    f) mais de 800 em colunas ou linhas
-
-    
-------------------------------------------------------------------------------------------------------
-------------------------------------------------------------------------------------------------------
-  
-    CLEAR - System
-    #if defined _WIN32
-    system("cls");
-        //clrscr(); // including header file : conio.h
-    #elif defined (__LINUX__) || defined(__gnu_linux__) || defined(__linux__)
-        system("clear");
-        //std::cout<< u8"\033[2J\033[1;1H"; //Using ANSI Escape Sequences 
-    #elif defined (__APPLE__)
-        system("clear");
-    #endif
-    
-    //https://www.ibm.com/support/pages/example-using-c-api-usleep
-
-------------------------------------------------------------------------------------------------------
-------------------------------------------------------------------------------------------------------
-
-GNU E BSD:
-
-make -DGCC - compila/linkedita usando o gcc e o dialeto ANSI (somente FreeBSD).
-make -DCLANG - compila/linkedita usando o clang e o dialeto ANSI (somente FreeBSD).
+host02:
 
 make -DCLANG -DC89 aula08
 make -DCLANG -DC11 aula08
@@ -84,31 +9,13 @@ make -DGCC -DC11 aula08
 make -DGCC -DC99 aula08
 make -DGCC -DC90 aula08
 
-make cc=GCC - compila/linkedita usando o gcc e o dialeto ANSI (somente CentOS).
-make cc=CLANG - compila/linkedita usando o clang e o dialeto ANSI (somente CentOS).
-make cc=CLANG dialeto=C99 - compila/linkedita usando o clang e o dialeto C99 (somente CentOS).
-make cc=GCC dialeto=C90
+----------------------------------------------
+host03:
 
 make cc=GCC dialeto=C11 aula08
 make cc=GCC dialeto=C89 aula08
 make cc=GCC dialeto=C99 aula08
-make cc=CLANG dialeto=C90 aula08-----------------------
+make cc=CLANG dialeto=C90 aula08
 make cc=CLANG dialeto=C11 aula08
-make cc=CLANG dialeto=C89 aula08 -----------------------
+make cc=CLANG dialeto=C89 aula08
 make cc=CLANG dialeto=C99 aula08
-
-C90, C89, C99 ou C11.
-
-/* Universidade Federal do Rio de Janeiro
-Escola Politecnica
-Departamento de Eletronica e de Computacao
-EEL270 - Computacao II - Turma 2021/2
-Prof. Marcelo Luiz Drumond Lanza
-Autor: Rebecca Gomes Simao
-Descricao: <descrição sucinta dos objetivos do programa>
-
-$Author$
-$Date$
-$Log$ */
-
-/* $RCSfile$ */

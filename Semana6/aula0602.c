@@ -3,12 +3,8 @@ Escola Politecnica
 Departamento de Eletronica e de Computacao
 EEL270 - Computacao II - Turma 2021/2
 Prof. Marcelo Luiz Drumond Lanza
-Autor: Rebecca Gomes Simao
-Descricao: Implementacao da func MultiplicarMatrizes
-
-$Author$
-$Date$
-$Log$ */
+Autor:
+Descricao: Implementacao da func MultiplicarMatrizes*/
 
 
 #define OK										0
@@ -187,4 +183,4 @@ int main (int argc, char **argv){
 }
 
 
-/* $RCSfile$ */
+/* $RCSfile: aula0602.c,v $ */

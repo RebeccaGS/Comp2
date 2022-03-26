@@ -3,18 +3,11 @@ Escola Politecnica
 Departamento de Eletronica e de Computacao
 EEL270 - Computacao II - Turma 2021/2
 Prof. Marcelo Luiz Drumond Lanza
-Autor: Rebecca Gomes Simao
-Descricao: converte base 10 em 16.
-
-$Author: rebecca.simao $
-$Date: 2022/02/17 10:57:09 $
-$Log: aula0802.c,v $
-Revision 1.1  2022/02/17 10:57:09  rebecca.simao
-Initial revision
- */
+Autor:
+Descricao: converte base 10 em 16.*/
 
 
-#include "aula0801.c"
+#include "aula0801.h"
 #include <errno.h>
 #include <limits.h>
 #include <stdio.h>
@@ -141,3 +134,5 @@ int main (int argc, char *argv[]) {
     free(base16);
     return OK;
 }
+
+/* $RCSfile: aula0802.c,v $ */

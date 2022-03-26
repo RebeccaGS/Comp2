@@ -3,11 +3,9 @@ Escola Politecnica
 Departamento de Eletronica e de Computacao
 EEL270 - Computacao II - Turma 2021/2
 Prof. Marcelo Luiz Drumond Lanza
-Autor: REBECCA GOMES SIMAO
+Autor:
 Descricao: calcular o valor da série harmônica alternada usando do...while e biblioteca math
-$Author$
-$Date$
-$Log$*/
+*/
 
 
 /*
@@ -47,4 +45,4 @@ CalcularSerieHarmonicaAlternada (unsigned short int termo){
     return resultado;
 }
 
-/*$RCSfile$*/
+/*$RCSfile: aula0403e.c,v $*/

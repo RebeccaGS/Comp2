@@ -4,18 +4,8 @@ Escola Politecnica
 Departamento de Eletronica e de Computacao
 EEL270 - Computacao II - Turma 2021/2
 Prof. Marcelo Luiz Drumond Lanza
-Autor: REBECCA GOMES SIMAO
+Autor:
 Descricao: arquivo .c da aula 07
-
-$Author: rebecca.simao $
-$Date: 2022/02/02 04:05:07 $
-$Log: aula0701.c,v $
-Revision 1.2  2022/02/02 04:05:07  rebecca.simao
-versao finalizada
-
-Revision 1.1  2022/02/01 06:20:59  rebecca.simao
-Initial revision
-
 */
 
 #ifdef __linux__

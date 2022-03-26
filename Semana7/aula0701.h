@@ -4,24 +4,18 @@ Escola Politecnica
 Departamento de Eletronica e de Computacao
 EEL270 - Computacao II - Turma 2021/2
 Prof. Marcelo Luiz Drumond Lanza
-Autor: REBECCA GOMES SIMAO
+Autor:
 Descricao: arquivo .h da aula 07
-
-$Author: rebecca.simao $
-$Date: 2022/02/01 06:21:34 $
-$Log: aula0701.h,v $
-Revision 1.1  2022/02/01 06:21:34  rebecca.simao
-Initial revision
-
 */
 
 #include <unistd.h> /* useconds_t */
+
 #ifdef __linux__
 #define _XOPEN_SOURCE  500
 #endif
 
 #ifndef   _AULA0701_
-#define   _AULA0701_    "@(#)aula0701.h $Revision: 1.1 $"
+#define   _AULA0701_    "@(#)aula0701.h $Revision: 1.2 $"
 
 #define NUMERO_MAXIMO_LINHAS      250
 #define NUMERO_MAXIMO_COLUNAS     800
@@ -79,7 +73,9 @@ PreencherPoligono (useconds_t tempoEspera, /* E */
                              unsigned numeroMaximoColunas, /* E */
                              unsigned linha, /* E */
                              unsigned coluna /* E */ );
-                       
+
+int roundfloat(float);  
+           
 #endif
 
 /* $RCSfile: aula0701.h,v $ */

@@ -4,15 +4,8 @@ Escola Politecnica
 Departamento de Eletronica e de Computacao
 EEL270 - Computacao II - Turma 2021/2
 Prof. Marcelo Luiz Drumond Lanza
-Autor: REBECCA GOMES SIMAO
+Autor:
 Descricao: testes para preencher poligono
-
-$Author: rebecca.simao $
-$Date: 2022/02/01 06:24:59 $
-$Log: aula0706.c,v $
-Revision 1.1  2022/02/01 06:24:59  rebecca.simao
-Initial revision
-
 */
 
 #ifdef __linux__
@@ -109,29 +102,30 @@ int main (int argc, char **argv) {
         exit (CONTEM_CARACTERE_INVALIDO);
     }
 
-    percentualDefeituosos = strtof (argv[i++], &verificacao);
-    if (errno == ERANGE){
-  	  	printf ("Valor fornecido para percentual de defeituosos ultrapassa o valor maximo permitido para unsigned short (%f)\n",FLT_MAX);
-        exit (VALOR_MAXIMO_EXCEDIDO);
-  	}
-    
-    if (*verificacao != EOS){
+    if(sscanf(argv[i], "%f", &percentualDefeituosos) == 0){
         printf ("Percentual de defeituosos contem caractere invalido.\n");
-        printf ("Caractere invalido: \'%c\'\n", *verificacao);
+        printf ("Input invalido: \'%s\'\n", argv[i]);
         exit (CONTEM_CARACTERE_INVALIDO);
     }
+    i++;
     
-    percentualApagados = strtof (argv[i++], &verificacao);
     if (errno == ERANGE){
   		printf ("Valor fornecido para percentual de defeituosos ultrapassa o valor maximo permitido para unsigned short (%f)\n",FLT_MAX);
         exit (VALOR_MAXIMO_EXCEDIDO);
   	}
     
-    if (*verificacao != EOS){
-        printf ("Percentual de defeituosos contem caractere invalido.\n");
-        printf ("Caractere invalido: \'%c\'\n", *verificacao);
+
+    if(sscanf(argv[i], "%f", &percentualApagados) == 0){
+        printf ("Percentual de apagados contem caractere invalido.\n");
+        printf ("Input invalido: \'%s\'\n", argv[i]);
         exit (CONTEM_CARACTERE_INVALIDO);
     }
+    i++;
+    
+    if (errno == ERANGE){
+  	  	printf ("Valor fornecido para percentual de apagados ultrapassa o valor maximo permitido para unsigned short (%f)\n",FLT_MAX);
+        exit (VALOR_MAXIMO_EXCEDIDO);
+  	}
 
     
     linha = strtoul(argv[i++], &verificacao, 10);
@@ -220,7 +214,7 @@ int main (int argc, char **argv) {
         exit (NUMERO_ARGUMENTOS_INVALIDO);
     }
 
-    /* enviar argumentos para montagem de matrizprodutos */
+    /* enviar argumentos */
     tipoErros retorno = GerarDistribuicaoInicial(monitor,numeroMaximoLinhas, numeroMaximoColunas,percentualDefeituosos, percentualApagados);
     if (retorno != ok){
         printf ("Erro executando a funcao GerarDistribuicaoInicial. Erro numero %u.\n", retorno);

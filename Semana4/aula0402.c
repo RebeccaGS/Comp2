@@ -3,28 +3,8 @@ Escola Politecnica
 Departamento de Eletronica e de Computacao
 EEL270 - Computacao II - Turma 2021/2
 Prof. Marcelo Luiz Drumond Lanza
-Autor: Rebecca Gomes Simão
+Autor:
 Descricao: Funcao que referencia os metodos dos arquivos em c
-$Author: rebecca.simao $
-$Date: 2022/01/11 18:59:46 $
-$Log: aula0402.c,v $
-Revision 1.6  2022/01/11 18:59:46  rebecca.simao
-erro atualizado
-
-Revision 1.5  2022/01/11 05:44:00  rebecca.simao
-atualizado
-
-Revision 1.4  2022/01/10 23:08:21  rebecca.simao
-versao final
-
-Revision 1.3  2022/01/10 05:36:58  rebecca.simao
-atualizado.
-
-Revision 1.2  2022/01/10 00:46:31  rebecca.simao
-versao atualizada.
-
-Revision 1.1  2022/01/10 00:16:41  rebecca.simao
-Initial revision
 */
 
 

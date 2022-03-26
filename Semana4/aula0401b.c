@@ -3,26 +3,35 @@ Escola Politecnica
 Departamento de Eletronica e de Computacao
 EEL270 - Computacao II - Turma 2021/2
 Prof. Marcelo Luiz Drumond Lanza
-Autor: Rebecca Gomes Simão
-Descricao: Calcular exponencial usando recursividade
-$Author$
-$Date$
-$Log$*/
+Autor:
+Descricao: Calcular exponencial usando do... while
+*/
 
 #include "aula0401.h"
 
-#define INFINITY              0
+#define INFINITY    1.0/0.0
 
 long double
 CalcularExponencial (double numero, int expoente){
-
+    int sinal = 1;
     int expoenteusado = 0;
     long double resultado = 1;
 
     /*se expoente eh 0, retorna 1*/
     if(expoente == 0)
         return 1.0;
-
+    
+    /*se num 0 e exp > 0, retorna 0*/
+    if(numero == 0 && expoente>0)
+        return 0.0;
+        
+    /*proceder com numero negativo*/
+    if(numero<0){
+        numero = -numero;
+        if(expoente%2!=0)
+            sinal = -1;
+    }
+    
     /*expoente negativo*/
     if(expoente < 0){
         /*retorna infinito no 0 elevado a neg*/
@@ -40,10 +49,10 @@ CalcularExponencial (double numero, int expoente){
         expoenteusado = expoente;
 
     /*multiplica numero por ele mesmo ate o expoente chegar a 0,
-    sendo resultado inicial = 1*/
+ *     sendo resultado inicial = 1*/
     do
     {
-        resultado = resultado * numero;	/* resultado *= numero */
+        resultado = sinal*resultado * numero;	/* resultado *= numero */
         expoenteusado--;
     }while(expoenteusado != 0);
     
@@ -51,4 +60,5 @@ CalcularExponencial (double numero, int expoente){
 
 }
 
-/*$RCSfile: $*/
+/*$RCSfile: aula0401b.c,v $*/
+

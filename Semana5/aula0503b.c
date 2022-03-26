@@ -3,24 +3,15 @@ Escola Politecnica
 Departamento de Eletronica e de Computacao
 EEL270 - Computacao II - Turma 2021/2
 Prof. Marcelo Luiz Drumond Lanza
-Autor: Rebecca Gomes Simao
-Descricao: Crie o arquivo "aula0503b.c" contendo a implementação de um programa
-de testes para a função ValidarRg. Este programa deverá receber os 9 dígitos do
-RG desejado através de um único argumento da linha de comando (CLI) no formato
-"XX.XXX.XXX-X" (sem as aspas). Deverá exibir o RG em questão no formato "XX.XXX.XXX-X"
-(sem as aspas), indicando se o mesmo é válido ou inválido. Todos os tratamentos de
-erro necessários e que não possam realizados na função ValidarRg deverão ser implementados
-neste programa. Esta função deverá utilizar a função GerarDigitosVerificadoresRg na sua implementação.
+Autor:
+Descricao: testa ValidarRG no formato XX.XXX.XXX-X
 
 Exemplos:
 ./aula0503a 56.843.539-4
 RG: 56.843.539-4 - valido.
 ./aula0503a 56.843.539-7
 RG: 56.843.539-7 - invalido.
-
-$Author$
-$Date$
-$Log$ */
+*/
 
 #include "aula0501.h"
 #include <stdio.h>
@@ -58,14 +49,14 @@ int main (int argc, char **argv){
     /* pegar variaveis a serem usadas */
     rgDado = argv[1];
     for (i = 0; i < 2; i++)
-        bytes[i] = rgDado[i] - '0';   
+        bytes[i] = rgDado[i];   
     
     for (i = 3; i < 6; i++)
-        bytes[i-1] = rgDado[i] - '0'; 
+        bytes[i-1] = rgDado[i]; 
     
     for (i = 7; i < 10; i++)
-        bytes[i-2] = rgDado[i] - '0';      
-    bytes[8] = rgDado[11] - '0';
+        bytes[i-2] = rgDado[i];      
+    bytes[8] = rgDado[11];
 
     /* enviar argumentos coletados para calculo de seu ultimo digito */
     tipoErros retorno = ValidarRg(bytes);
@@ -95,4 +86,5 @@ int main (int argc, char **argv){
 
 }
 
-/* $RCSfile$ */
+/* $RCSfile: aula0503b.c,v $ */
+

@@ -4,12 +4,8 @@ Escola Politecnica
 Departamento de Eletronica e de Computacao
 EEL270 - Computacao II - Turma 2021/2
 Prof. Marcelo Luiz Drumond Lanza
-Autor: REBECCA GOMES SIMAO
+Autor:
 Descricao: testes para printar reta
-
-$Author$
-$Date$
-$Log$
 */
 
 #ifdef __linux__
@@ -104,30 +100,32 @@ int main (int argc, char **argv) {
         exit (CONTEM_CARACTERE_INVALIDO);
     }
 
-    percentualDefeituosos = strtof (argv[i++], &verificacao);
+    if(sscanf(argv[i], "%f", &percentualDefeituosos) == 0){
+        printf ("Percentual de defeituosos contem caractere invalido.\n");
+        printf ("Input invalido: \'%s\'\n", argv[i]);
+        exit (CONTEM_CARACTERE_INVALIDO);
+    }
+    i++;
+    
     if (errno == ERANGE){
   		printf ("Valor fornecido para percentual de defeituosos ultrapassa o valor maximo permitido para unsigned short (%f)\n",FLT_MAX);
         exit (VALOR_MAXIMO_EXCEDIDO);
   	}
     
-    if (*verificacao != EOS){
-        printf ("Percentual de defeituosos contem caractere invalido.\n");
-        printf ("Caractere invalido: \'%c\'\n", *verificacao);
-        exit (CONTEM_CARACTERE_INVALIDO);
-    }
-    
-    percentualApagados = strtof (argv[i++], &verificacao);
-    if (errno == ERANGE){
-  		printf ("Valor fornecido para percentual de defeituosos ultrapassa o valor maximo permitido para unsigned short (%f)\n",FLT_MAX);
-        exit (VALOR_MAXIMO_EXCEDIDO);
-  	}
-    
-    if (*verificacao != EOS){
-        printf ("Percentual de defeituosos contem caractere invalido.\n");
-        printf ("Caractere invalido: \'%c\'\n", *verificacao);
-        exit (CONTEM_CARACTERE_INVALIDO);
-    }
 
+    if(sscanf(argv[i], "%f", &percentualApagados) == 0){
+        printf ("Percentual de apagados contem caractere invalido.\n");
+        printf ("Input invalido: \'%s\'\n", argv[i]);
+        exit (CONTEM_CARACTERE_INVALIDO);
+    }
+    i++;
+    
+    if (errno == ERANGE){
+  	  	printf ("Valor fornecido para percentual de apagados ultrapassa o valor maximo permitido para unsigned short (%f)\n",FLT_MAX);
+        exit (VALOR_MAXIMO_EXCEDIDO);
+  	}
+   
+   
     linhaA = strtoul(argv[i++], &verificacao, 10);
     if (errno == EINVAL){
   		printf ("LinhaA invalida.\n");
@@ -192,7 +190,7 @@ int main (int argc, char **argv) {
         exit (CONTEM_CARACTERE_INVALIDO);
     }
 
-    /* enviar argumentos para montagem de matrizprodutos */
+    /* enviar argumentos */
     tipoErros retorno = GerarDistribuicaoInicial(monitor,numeroMaximoLinhas, numeroMaximoColunas,percentualDefeituosos, percentualApagados);
     if (retorno != ok){
         printf ("Erro executando a funcao GerarDistribuicaoInicial. Erro numero %u.\n", retorno);
@@ -226,4 +224,4 @@ int main (int argc, char **argv) {
     return OK;
 }
 
-/* $RCSfile$ */
+/* $RCSfile: aula0704.c,v $ */

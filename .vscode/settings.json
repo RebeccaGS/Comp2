@@ -21,7 +21,9 @@
 		"unistd.h": "c",
 		"exemplo": "c",
 		"aula0801.h": "c",
-		"arquivo3": "c"
+		"arquivo3": "c",
+		"aula0401.h": "c",
+		"arquivo1": "c"
 	},
 	"C_Cpp.errorSquiggles": "Disabled"
 }
